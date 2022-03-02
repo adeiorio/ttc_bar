@@ -2,83 +2,100 @@
 
 ## Steps for setup:
 
-1. release CMSSW_10_6_29
-2. Set up NanoAOD tools
+1. Set up NanoAOD tools
    ```bash
-   cd $CMSSW_BASE/src
-
+   cmsrel CMSSW_10_6_29
+   cd CMSSW_10_6_29/src
    git clone https://github.com/cms-nanoAOD/nanoAOD-tools.git PhysicsTools/NanoAODTools
-
    cd PhysicsTools/NanoAODTools
-
    cmsenv
-
-   scram b
+   scram b -j8
    ```
 
-3. Set up TTC codes
+2. Set up TTC codes
    ```bash
    cd python/postprocessing
-
-   ##clone this repository
-
-   git clone https://github.com/menglu21/TTC.git analysis
-
+   git clone -b lep_mvaID git@github.com:ExtraYukawa/ttc_bar.git analysis
+   
    cd $CMSSW_BASE/src
-
-   scram b
+   scram b -j8
    ```
     Noticed that the `crab_help.py` is written in python3, hence the `scram b` in CMSSW would leave some error message. Since this crab helper normally would not be included by other codes, you can ignore these errors.
 
-4. Substitute some outdated files with `init.sh`
+3. Substitute some outdated files with `init.sh`
    ```bash
    cd $CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis
-
-   source init.sh
+   ```
+   BELOW SHOULD BE CHANGED TO BE VALID FOR EACH YEAR SPECIFIABLE WITH A PARAMETER WITH ONE SCRIPT 
+   ```
+   source init.sh (FOR 2017)
+   source init_2018.sh (FOR 2018)
    ```
 
 ## submit jobs
+using the configure files under 'configs', to make a test:
+```
+cd crab
+```
+MAKE BELOW CONFIGURABLE FOR EACH YEAR
+```
+crab submit -c configs/2018/test_EgammaB_cfg.py
+rm crab_Egamma_B/inputs/*.tgz
+```
+Or for a local test do:
+```
+cd $CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis/test 
+python localrun.py -m -i /eos/cms/store/group/phys_top/ExtraYukawa/input_for_tests/DY_UL18NanoAODv9_M-50_MLM.root --year 2018 -o $CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis/test -n 100
+```
 
-cd analysis/crab
+and to submit all jobs:
+```
+cd crab
+crab submit -c configs/2018/EgammaB_cfg.py
+rm crab_Egamma_B/inputs/*.tgz 
+```
 
-using the configure files under 'configs', namely,
+You can also check `crab/auto_crab_example` to run crab jobs automatically.
 
-crab submit -c configs/DoubleEGB_cfg.py
+Note that the output will be /store/group/phys_top/ExtraYukawa/test/ because:
+```
+config.Site.storageSite = "T2_CH_CERN"
+#config.Site.storageSite = "T3_CH_CERNBOX"
+config.Data.outLFNDirBase = "/store/group/phys_top/ExtraYukawa/test/"
+```
 
-rm crab_DoubleEG_B/inputs/*.tgz 
+To write to your user cernbox area:
+```
+config.Site.storageSite = "T3_CH_CERNBOX"
+```
+See ```https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3FAQ#Can_I_send_CRAB_output_to_CERNBO```
 
-You can also check `crab/auto_crab_example` to run crab jobs batchly and automatically.
+To add the outputs:
+```
+ADD HERE ALSO THE METHOD TO HANDLE ALL OUTPUT FOLDERS AT ONCE WITH crab_helper
+python ../scripts/haddnano.py combined.root /eos/cms/store/group/phys_top/ExtraYukawa/test/.../*.root
+```
 
 ## corrections
 
-the modules (most of them are corrections) used can be seen from analysis/crab/crab_script.py, 
-
+the modules (most of them are corrections) used can be seen from analysis/crab/crab_script.py.
 N.B. the egamma correction is already applied default in NanoAOD
 
 #### for MC:
 
 countHistogramsModule(): store the opsitive and negative events number for weight apply
-
 puWeight_2017(): pileup reweight
-
 PrefCorr(): L1-prefiring correction
-
-muonIDISOSF2017(): muon ID/ISO SF
-
+muonIDISOSF2017(): muon ID/ISO SFe
 muonScaleRes2017(): muon momentum correction, i.e., the Rochester correction
-
 eleRECOSF2017(): electron RECO SF
-
 eleIDSF2017(): electron IS SF
-
 jmeCorrections_UL2017MC(): JetMET correction
-
 btagSF2017UL(): b tag SF
 
 #### for Data:
 
 muonScaleRes2017(): muon momentum correction, i.e., the Rochester correction
-
 jmeCorrections_UL2017*(): JetMET correction
 
 ### 1. pileup reweight 
@@ -86,7 +103,7 @@ jmeCorrections_UL2017*(): JetMET correction
 
 #### data
 
-according to https://twiki.cern.ch/twiki/bin/view/CMS/PileupJSONFileforData#Centrally_produced_ROOT_histogra, use histograms under /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions17/13TeV/PileUp/UltraLegacy/, combine three histograms to a single one with name “pileup, pileup_plus, pileup_minus”
+according to https://twiki.cern.ch/twiki/bin/view/CMS/PileupJSONFileforData#Centrally_produced_ROOT_histogra, use histograms under /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions17/13TeV/PileUp/UltraLegacy/, combine three histograms to a single one with name pileup, pileup_plus, pileup_minus
 
 #### MC
 
@@ -96,7 +113,6 @@ move "mcPileupUL2017.root" and "PileupHistogram-goldenJSON-13tev-UL2017-99bins_w
 
 ### 2. prefiring correction 
 (needed files are in others/for_prefiring, can be used directly)
-
 details are here: Pre-firing: https://twiki.cern.ch/twiki/bin/viewauth/CMS/L1ECALPrefiringWeightRecipe#Accessing_the_UL2017_maps, in order to use the current NanoAOD module, extract separate rootfiles from https://github.com/cms-data/PhysicsTools-PatUtils/raw/master/L1PrefiringMaps.root
 
 #### data & MC
