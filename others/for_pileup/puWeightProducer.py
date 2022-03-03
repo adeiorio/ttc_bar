@@ -137,6 +137,12 @@ puWeight_2016_postAPV = lambda: puWeightProducer(pufile_mc2016,
                                          "pileup",
                                          verbose=False,
                                          doSysVar=True)
+
+puAutoWeight_2016_preAPV = lambda: puWeightProducer(
+    "auto", pufile_data2016_preAPV, "pu_mc", "pileup", verbose=False)
+puAutoWeight_2016_postAPV = lambda: puWeightProducer(
+    "auto", pufile_data2016_postAPV, "pu_mc", "pileup", verbose=False)
+
 puAutoWeight_2016 = lambda: puWeightProducer(
     "auto", pufile_data2016, "pu_mc", "pileup", verbose=False)
 
