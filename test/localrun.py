@@ -23,7 +23,7 @@ def main():
   usage = 'usage: %prog [options]'
   parser = optparse.OptionParser(usage)
   parser.add_option('--year', dest='year', help='which year sample', default='2018', type='string')
-  parser.add_option('-m', dest='ismc', help='to apply sf correction or not', default=True, action='store_true')
+  parser.add_option('-m', dest='ismc', help='to apply sf correction or not', default=False, action='store_true')
   parser.add_option('-n','--nEve', dest='nEvent', help='number of event', type='int', action='store')
   parser.add_option('-i', '--in', dest='inputs', help='input directory with files', default=None, type='string')
   parser.add_option('-d', dest='ismc', help='to apply sf correction or not', action='store_false')
@@ -32,7 +32,8 @@ def main():
 
   if opt.ismc:
     if opt.year == "2016a":
-      p = PostProcessor(opt.output, [opt.inputs], modules=[countHistogramsModule(),puAutoWeight_2016(),PrefCorr(),muonIDISOSF2016(),muonScaleRes2016a(),eleRECOSF2016(),eleIDSF2016(), TTC2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt",maxEntries=opt.nEvent)
+      #p = PostProcessor(opt.output, [opt.inputs], modules=[countHistogramsModule(),puAutoWeight_2016_preAPV(),PrefCorr(),muonIDISOSF2016(),muonScaleRes2016a(),eleRECOSF2016(),eleIDSF2016(), jmeCorrections_UL2016APVMC(), btagSF2016ULapv(), TTC2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt",maxEntries=opt.nEvent)
+      p = PostProcessor(opt.output, [opt.inputs], modules=[countHistogramsModule(),puAutoWeight_2016_preAPV(),PrefCorr(),muonIDISOSF2016(),muonScaleRes2016a(),eleRECOSF2016(),eleIDSF2016(), jmeCorrections_UL2016APVMC(), TTC2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt",maxEntries=opt.nEvent) #this is w/o btagSF
     if opt.year == "2016b":
       p = PostProcessor(opt.output, [opt.inputs], modules=[countHistogramsModule(),puAutoWeight_2016(),PrefCorr(),muonIDISOSF2016(),muonScaleRes2016b(),eleRECOSF2016(),eleIDSF2016(), TTC2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt",maxEntries=opt.nEvent)
     if opt.year == "2017":
