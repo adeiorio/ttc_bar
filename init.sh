@@ -59,6 +59,8 @@ if [ "${year}" = "2016" ]; then
   rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/*.tgz
   cp $WORKING_PATH/analysis/others/for_jme/Summer19UL16_* $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/
   cp $WORKING_PATH/analysis/others/for_jme/Summer20UL16_* $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/
+  cp $WORKING_PATH/analysis/others/for_jme/Summer20UL16APV_JRV3_MC.tgz $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/
+  cp $WORKING_PATH/analysis/others/for_jme/Summer19UL16APV_V7_DATA.tgz $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/
   cp $WORKING_PATH/analysis/others/for_jme/jetmetHelperRun2.py $WORKING_PATH/modules/jme
   
   echo Updating BJet related
