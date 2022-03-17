@@ -63,6 +63,7 @@ with open(samplejson, 'r') as fin:
     
     # for MC
     if len(value)==2:
+      print(value)
       copyfile('mc_cfg.py',workdir+key+'_cfg.py')
       value[1]=value[1].replace('/', 'sss')
       os.system(r'sed -i "6s/dummy/%s/g" %s' %(value[0],workdir+key+'_cfg.py'))
@@ -71,3 +72,6 @@ with open(samplejson, 'r') as fin:
       os.system(r'sed -i "19s/dummy/%s/g" %s' %(value[1],workdir+key+'_cfg.py'))
       os.system(r'sed -i "19s/sss/\//g" %s' %(workdir+key+'_cfg.py'))
       os.system(r'sed -i "26s/dummy/%s/g" %s' %(value[0],workdir+key+'_cfg.py'))
+
+if year=='2018':
+    os.system(r'sed -i "s/TTC_version9/2018/g" crab_2018_config/*_cfg.py')
