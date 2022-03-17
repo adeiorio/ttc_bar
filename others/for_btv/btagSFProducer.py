@@ -123,7 +123,7 @@ class btagSFProducer(Module):
             },
             'deepjet': {
                 'UL2016apv': {
-                    'inputFileName': "DeepJet_106XUL16preVFPSF_v1.csv",
+                    'inputFileName': "DeepJet_106XUL16preVFPSF_v2_skimmed.csv",
                     'measurement_types': {
                         0: "comb",  # b
                         1: "comb",  # c
@@ -132,7 +132,7 @@ class btagSFProducer(Module):
                     'supported_wp': ["L", "M", "T", "shape_corr"]
                 },
                 'UL2016': {
-                    'inputFileName': "DeepJet_106XUL16postVFPSF_v2.csv",
+                    'inputFileName': "DeepJet_106XUL16postVFPSF_v3_skimmed.csv",
                     'measurement_types': {
                         0: "comb",  # b
                         1: "comb",  # c

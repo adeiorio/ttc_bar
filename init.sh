@@ -13,7 +13,7 @@ echo Initing
 export WORKING_PATH="$CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/"
 echo $WORKING_PATH
 
-if [ ${year}==2016apv ]; then
+if [ "${year}" = "2016apv" ]; then
   echo "Initiating setup for 2016apv......";
 
   echo "Updating pileup"
@@ -36,11 +36,11 @@ if [ ${year}==2016apv ]; then
   
   echo Updating BJet related
   cp $WORKING_PATH/analysis/others/for_btv/btagSFProducer.py $WORKING_PATH/modules/btv
-  cp $WORKING_PATH/analysis/others/for_btv/DeepJet_106XUL16preVFPSF_v1.csv $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/
+  cp $WORKING_PATH/analysis/others/for_btv/DeepJet_106XUL16preVFPSF_v2_skimmed.csv $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/
 
 fi
 
-if [ ${year}==2016 ]; then
+if [ "${year}" = "2016" ]; then
   echo "Initiating setup for 2016......";
 
   echo "Updating pileup"
@@ -63,11 +63,11 @@ if [ ${year}==2016 ]; then
   
   echo Updating BJet related
   cp $WORKING_PATH/analysis/others/for_btv/btagSFProducer.py $WORKING_PATH/modules/btv
-  cp $WORKING_PATH/analysis/others/for_btv/DeepJet_106XUL16postVFPSF_v2.csv $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/
+  cp $WORKING_PATH/analysis/others/for_btv/DeepJet_106XUL16postVFPSF_v3_skimmed.csv $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/
 
 fi
 
-if [ ${year}==2017 ]; then
+if [ "${year}" = "2017" ]; then
   echo "Initiating setup for 2017......";
 
   echo "Updating pileup"
@@ -93,7 +93,7 @@ if [ ${year}==2017 ]; then
 
 fi
 
-if [ ${year}==2018 ]; then
+if [ "${year}" = "2018" ]; then
   echo "Initiating setup for 2018......";
 
   echo "Updating pileup"
