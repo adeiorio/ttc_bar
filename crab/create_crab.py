@@ -74,4 +74,4 @@ with open(samplejson, 'r') as fin:
       os.system(r'sed -i "26s/dummy/%s/g" %s' %(value[0],workdir+key+'_cfg.py'))
 
 if year=='2018':
-    os.system(r'sed -i "s/TTC_version9/2018/g" crab_2018_config/*_cfg.py')
+    os.system(r'sed -i "s/TTC_version9/2018/g" config_crab_2018/*_cfg.py')
