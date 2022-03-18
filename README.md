@@ -26,12 +26,11 @@
    ```bash
    cd $CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis
    ```
-   BELOW SHOULD BE CHANGED TO BE VALID FOR EACH YEAR SPECIFIABLE WITH A PARAMETER WITH ONE SCRIPT 
    ```
    source init.sh 2016apv (FOR 2016APV)
    source init.sh 2016 (FOR 2016)
-   source init.sh (FOR 2017)
-   source init_2018.sh (FOR 2018)
+   source init.sh 2017 (FOR 2017)
+   source init.sh 2018 (FOR 2018)
    ```
 
 ## submit jobs
