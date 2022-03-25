@@ -18,6 +18,8 @@ class puWeightProducer(Module):
                  nvtx_var="Pileup_nTrueInt",
                  doSysVar=True
      ):
+	print("mc histograms:",myfile)
+	print("data histograms:",targetfile)
         self.targeth = self.loadHisto(targetfile, targethist)
         if doSysVar:
             self.targeth_plus = self.loadHisto(targetfile,
