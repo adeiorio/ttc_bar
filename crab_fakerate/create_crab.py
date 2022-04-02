@@ -40,6 +40,8 @@ with open(samplejson, 'r') as fin:
       copyfile('data_cfg.py',workdir+key+'_cfg.py')
       value[1]=value[1].replace('/', 'sss')
       os.system(r'sed -i "6s/dummy/%s/g" %s' %(value[0],workdir+key+'_cfg.py'))
+      if '_A' in value[0]:
+        os.system(r'sed -i "13s/dummy/%s/g" %s' %(scriptpath+'sss'+value[2],workdir+key+'_cfg.py'))
       if '_B' in value[0]:
         os.system(r'sed -i "13s/dummy/%s/g" %s' %(scriptpath+'sss'+value[2],workdir+key+'_cfg.py'))
       if '_C' in value[0]:
