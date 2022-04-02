@@ -11,13 +11,35 @@ import numpy as np
 from numpy import sign
 from numpy import sqrt, cos
 
-def flav_cut(cone_pt):
-  if cone_pt<30:
-    return 0.304
-  if cone_pt>30 and cone_pt<50:
-    return (0.304-0.01254*(cone_pt - 30))
-  if cone_pt>50:
-    return 0.0542
+def flav_cut(cone_pt,year):
+  if year=="2018":
+    if cone_pt<30:
+      return 0.2783
+    if cone_pt>30 and cone_pt<50:
+      return (0.2783-0.011465*(cone_pt - 30))
+    if cone_pt>50:
+      return 0.049
+  if year=="2017":
+    if cone_pt<30:
+      return 0.304
+    if cone_pt>30 and cone_pt<50:
+      return (0.304-0.01254*(cone_pt - 30))
+    if cone_pt>50:
+      return 0.0542
+  if year=="2016":
+    if cone_pt<30:
+      return 0.2489
+    if cone_pt>30 and cone_pt<50:
+      return (0.2489-0.010045*(cone_pt - 30))
+    if cone_pt>50:
+      return 0.048
+  if year=="2016apv":
+    if cone_pt<30:
+      return 0.2598
+    if cone_pt>30 and cone_pt<50:
+      return (0.2489-0.010405*(cone_pt - 30))
+    if cone_pt>50:
+      return 0.0508
 
 class FakeRateProducer(Module):
   def __init__(self , year):
@@ -103,7 +125,7 @@ class FakeRateProducer(Module):
     self.has_EleHLT6 = bool(inputTree.GetBranch("HLT_Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30"))
     self.has_EleHLT7 = bool(inputTree.GetBranch("HLT_Ele23_CaloIdM_TrackIdM_PFJet30"))
     self.has_MuHLT1 = bool(inputTree.GetBranch("HLT_Mu3_PFJet40"))
-    self.has_MuHLT2 = bool(inputTree.GetBranch("HLT_Mu8"))
+    self.has_MuHLT2 = bool(inputTree.GetBranch("HLT_Mu8_TrkIsoVVL"))
     self.has_MuHLT3 = bool(inputTree.GetBranch("HLT_Mu12"))
     self.has_MuHLT4 = bool(inputTree.GetBranch("HLT_Mu15"))
     self.has_MuHLT5 = bool(inputTree.GetBranch("HLT_Mu17"))
@@ -197,7 +219,7 @@ class FakeRateProducer(Module):
   	    additional_looseMuons_pdgid.append(muons[imu].pdgId)
   	    additional_looseMuons_id.append(imu)
         else:
-	  if muon_jet_Ptratio[imu]>0.5 and event.Jet_btagDeepFlavB[muon_closest_jetid[imu]]<flav_cut(muon_conePt[imu]):
+	  if muon_jet_Ptratio[imu]>0.5 and event.Jet_btagDeepFlavB[muon_closest_jetid[imu]]<flav_cut(muon_conePt[imu],self.year):
 	    if (muon_conePt[imu]>20):
               muon_v4_temp.SetPtEtaPhiM(muon_conePt[imu], muons[imu].eta, muons[imu].phi, muons[imu].mass)
               fakeable_Muons.append(muon_v4_temp.Clone())
@@ -298,7 +320,7 @@ class FakeRateProducer(Module):
             additional_vetoElectrons_pdgid.append(electrons[iele].pdgId)
             additional_vetoElectrons_id.append(iele)
 	else:
-	  if electrons[iele].mvaFall17V2noIso_WP90 and electron_jet_Ptratio[iele]>0.6 and event.Jet_btagDeepFlavB[electron_closest_jetid[iele]]<flav_cut(electron_conePt[iele]):
+	  if electrons[iele].mvaFall17V2noIso_WP90 and electron_jet_Ptratio[iele]>0.6 and event.Jet_btagDeepFlavB[electron_closest_jetid[iele]]<flav_cut(electron_conePt[iele],self.year):
 	    if (electron_conePt[iele]>20):
               electron_v4_temp.SetPtEtaPhiM(electron_conePt[iele], electrons[iele].eta, electrons[iele].phi, electrons[iele].mass)
               fakeable_Electrons.append(electron_v4_temp.Clone())
@@ -560,6 +582,7 @@ class FakeRateProducer(Module):
 
     return True
 
+FakeRate2016apv = lambda: FakeRateProducer("2016apv")
 FakeRate2016 = lambda: FakeRateProducer("2016")
 FakeRate2017 = lambda: FakeRateProducer("2017")
 FakeRate2018 = lambda: FakeRateProducer("2018")
