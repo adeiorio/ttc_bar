@@ -10,13 +10,35 @@ import os
 import numpy as np
 from numpy import sign
 
-def flav_cut(cone_pt):
-  if cone_pt<30:
-    return 0.304
-  if cone_pt>30 and cone_pt<50:
-    return (0.304-0.01254*(cone_pt - 30))
-  if cone_pt>50:
-    return 0.0542
+def flav_cut(cone_pt,year):
+  if year=="2018":
+    if cone_pt<30:
+      return 0.2783
+    if cone_pt>30 and cone_pt<50:
+      return (0.2783-0.011465*(cone_pt - 30))
+    if cone_pt>50:
+      return 0.049
+  if year=="2017":
+    if cone_pt<30:
+      return 0.304
+    if cone_pt>30 and cone_pt<50:
+      return (0.304-0.01254*(cone_pt - 30))
+    if cone_pt>50:
+      return 0.0542
+  if year=="2016":
+    if cone_pt<30:
+      return 0.2489
+    if cone_pt>30 and cone_pt<50:
+      return (0.2489-0.010045*(cone_pt - 30))
+    if cone_pt>50:
+      return 0.048
+  if year=="2016apv":
+    if cone_pt<30:
+      return 0.2598
+    if cone_pt>30 and cone_pt<50:
+      return (0.2489-0.010405*(cone_pt - 30))
+    if cone_pt>50:
+      return 0.0508
 
 class TTCProducer(Module):
   def __init__(self , year):
@@ -304,7 +326,7 @@ class TTCProducer(Module):
             additional_looseMuons_pdgid.append(muons[imu].pdgId)
             additional_looseMuons_id.append(imu)
         else:
-	  if muon_jet_Ptratio[imu]>0.5 and event.Jet_btagDeepFlavB[muon_closest_jetid[imu]]<flav_cut(muon_conePt[imu]):
+	  if muon_jet_Ptratio[imu]>0.5 and event.Jet_btagDeepFlavB[muon_closest_jetid[imu]]<flav_cut(muon_conePt[imu],self.year):
             if (event.Muon_corrected_pt[imu]>20):
               muon_v4_temp.SetPtEtaPhiM(event.Muon_corrected_pt[imu], muons[imu].eta, muons[imu].phi, muons[imu].mass)
               fakeable_Muons.append(muon_v4_temp.Clone())
@@ -400,7 +422,7 @@ class TTCProducer(Module):
             additional_vetoElectrons_pdgid.append(electrons[iele].pdgId)
             additional_vetoElectrons_id.append(iele)
         else:
-          if electrons[iele].mvaFall17V2noIso_WP90 and electron_jet_Ptratio[iele]>0.6 and event.Jet_btagDeepFlavB[electron_closest_jetid[iele]]<flav_cut(electron_conePt[iele]):
+          if electrons[iele].mvaFall17V2noIso_WP90 and electron_jet_Ptratio[iele]>0.6 and event.Jet_btagDeepFlavB[electron_closest_jetid[iele]]<flav_cut(electron_conePt[iele],self.year):
             if (electrons[iele].pt>20):
               electron_v4_temp.SetPtEtaPhiM(electrons[iele].pt, electrons[iele].eta, electrons[iele].phi, electrons[iele].mass)
               fakeable_Electrons.append(electron_v4_temp.Clone())
@@ -568,7 +590,10 @@ class TTCProducer(Module):
         tightJets_id_in24.append(ijet)
         jet_v4_all.append(jet_v4_temp.Clone())
 
-      if self.year=="2016" and jets[ijet].btagDeepB > 0.4941:
+      if self.year=="2016apv" and jets[ijet].btagDeepFlavB > 0.2598:
+        tightJets_b_DeepCSVmedium_id.append(ijet)
+
+      if self.year=="2016" and jets[ijet].btagDeepFlavB > 0.2489:
         tightJets_b_DeepCSVmedium_id.append(ijet)
 
       if self.year=="2017" and jets[ijet].btagDeepFlavB > 0.3040:
@@ -587,6 +612,14 @@ class TTCProducer(Module):
       if (ijet in tightJets_b_DeepCSVmedium_id):continue
       #loose/mudium WP
       if self.has_cjet_tag:
+        if self.year=="2016apv" and jets[ijet].btagDeepFlavCvL>0.098 and jets[ijet].btagDeepFlavCvB<0.37:
+          tightJets_c_DeepCSVmedium_id.append(ijet)
+        if self.year=="2016apv" and jets[ijet].btagDeepFlavCvL>0.039 and jets[ijet].btagDeepFlavCvB<0.327:
+          tightJets_c_DeepCSVloose_id.append(ijet)
+        if self.year=="2016" and jets[ijet].btagDeepFlavCvL>0.099 and jets[ijet].btagDeepFlavCvB<0.353:
+          tightJets_c_DeepCSVmedium_id.append(ijet)
+        if self.year=="2016" and jets[ijet].btagDeepFlavCvL>0.039 and jets[ijet].btagDeepFlavCvB<0.305:
+          tightJets_c_DeepCSVloose_id.append(ijet)
         if self.year=="2017" and jets[ijet].btagDeepFlavCvL>0.085 and jets[ijet].btagDeepFlavCvB<0.34:
   	  tightJets_c_DeepCSVmedium_id.append(ijet)
         if self.year=="2017" and jets[ijet].btagDeepFlavCvL>0.03 and jets[ijet].btagDeepFlavCvB<0.4:
@@ -2078,6 +2111,7 @@ class TTCProducer(Module):
 
     return True
 
+TTC2016apv = lambda: TTCProducer("2016apv")
 TTC2016 = lambda: TTCProducer("2016")
 TTC2017 = lambda: TTCProducer("2017")
 TTC2018 = lambda: TTCProducer("2018")

@@ -74,6 +74,11 @@ with open(samplejson, 'r') as fin:
       os.system(r'sed -i "19s/dummy/%s/g" %s' %(value[1],workdir+key+'_cfg.py'))
       os.system(r'sed -i "19s/sss/\//g" %s' %(workdir+key+'_cfg.py'))
       os.system(r'sed -i "26s/dummy/%s/g" %s' %(value[0],workdir+key+'_cfg.py'))
+      if key=='TTto1L':
+        os.system(r'sed -i "24s/-1/10/g" %s' %(workdir+key+'_cfg.py'))
+      if key=='dynlo':
+        os.system(r'sed -i "24s/-1/50/g" %s' %(workdir+key+'_cfg.py'))
+	
 
 if year=='2018':
     os.system(r'sed -i "s/TTC_version9/2018/g" config_crab_2018/*_cfg.py')
