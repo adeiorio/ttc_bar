@@ -234,7 +234,6 @@ class TTCProducer(Module):
     self.is_mc = bool(inputTree.GetBranch("GenJet_pt"))
     self.is_lhe = bool(inputTree.GetBranch("nLHEPart"))
     self.has_cjet_tag = bool(inputTree.GetBranch("Jet_btagDeepFlavCvL"))
-    self.out.branch("jets_hem_event_flag", "B")
 
   def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
     pass
@@ -565,7 +564,6 @@ class TTCProducer(Module):
     tightJets_c_DeepCSVmedium_id = []
     tightJets_c_DeepCSVloose_id = []
 
-    jets_hem_event_flag = False
 
     # require DeltaR between Jets and tight leptons greater than 0.4
     jet_v4_all = []
@@ -585,11 +583,7 @@ class TTCProducer(Module):
 	if jet_v4_temp.DeltaR(fakeableLeptons[ilep])<0.4:pass_jet_lep_Dr=0
 
       if not (pass_jet_lep_Dr>0):continue
-      if not (jets[ijet].jetId==6 and event.Jet_pt_nom[ijet]>15):continue #changed to 15 GeV for HEM
-
-      # Flag jets for HEM
-      if (self.is_mc or run >= 319077) and jets[ijet].eta >= -3.2 and jets[ijet].eta <= -1.3 and jets[ijet].phi >= -1.57 and jets[ijet].phi < -0.87:
-        jets_hem_event_flag = True 
+      if not (jets[ijet].jetId==6 and event.Jet_pt_nom[ijet]>30):continue 
 
       if abs(jets[ijet].eta)<4.7 and abs(jets[ijet].eta)>=2.4: 
         tightJets_id_in47.append(ijet)
@@ -1272,7 +1266,6 @@ class TTCProducer(Module):
     self.out.fillBranch("ttc_mllj2", ttc_mllj2)
     self.out.fillBranch("ttc_mllj3", ttc_mllj3)
     self.out.fillBranch("ttc_mllj4", ttc_mllj4)
-    self.out.fillBranch("jets_hem_event_flag", jets_hem_event_flag)
 
     # WW     WWW     WW ZZZZZZZZZ   region: only 3 tight leptons, no b-jet, mll>4, |Z-91.1876|<15
     # WW     WWW     WW       ZZ            MET>30
