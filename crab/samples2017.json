@@ -30,6 +30,7 @@
 "METE": ["MET_E","/MET/Run2017E-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD","crab_script_dataE.sh"],
 "METF": ["MET_F","/MET/Run2017F-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD","crab_script_dataF.sh"],
 "dy": ["DY","/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"],
+"dynlo": ["DYnlo","/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"],
 "wjet": ["WJets","/WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"],
 "TTto2L": ["TTTo2L2Nu","/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"],
 "TTto1L": ["TTTo1L","/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"],

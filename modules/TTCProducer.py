@@ -564,6 +564,7 @@ class TTCProducer(Module):
     tightJets_c_DeepCSVmedium_id = []
     tightJets_c_DeepCSVloose_id = []
 
+
     # require DeltaR between Jets and tight leptons greater than 0.4
     jet_v4_all = []
     for ijet in range(0, event.nJet):
@@ -582,7 +583,7 @@ class TTCProducer(Module):
 	if jet_v4_temp.DeltaR(fakeableLeptons[ilep])<0.4:pass_jet_lep_Dr=0
 
       if not (pass_jet_lep_Dr>0):continue
-      if not (jets[ijet].jetId==6 and event.Jet_pt_nom[ijet]>30):continue
+      if not (jets[ijet].jetId==6 and event.Jet_pt_nom[ijet]>30):continue 
 
       if abs(jets[ijet].eta)<4.7 and abs(jets[ijet].eta)>=2.4: 
         tightJets_id_in47.append(ijet)
@@ -876,7 +877,7 @@ class TTCProducer(Module):
     ttc_mllj2=-99
     ttc_mllj3=-99
     ttc_mllj4=-99
-    
+ 
     # the two leptons with pt 20, 3th lepton veto
     if len(tightLeptons)+len(fakeableLeptons)==2 and len(looseLeptons)==0:
       ttc_nl=True
