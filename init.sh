@@ -84,6 +84,11 @@ if [ "${year}" = "2017" ]; then
   echo Updateing JME correction
   echo cleaning unused files
   rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/*.tgz
+  rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/DeepCSV_106XUL18SF.csv
+  rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/DeepJet_106XUL18SF.csv
+  rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis/data/roccor.Run2UL.v5/RoccoR2018UL.txt
+  rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis/data/roccor.Run2UL.v5/RoccoR2016bUL.txt
+  rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis/data/roccor.Run2UL.v5/RoccoR2016aUL.txt
   cp $WORKING_PATH/analysis/others/for_jme/Summer19UL17* $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/
   cp $WORKING_PATH/analysis/others/for_jme/jetmetHelperRun2.py $WORKING_PATH/modules/jme
   
