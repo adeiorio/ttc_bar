@@ -27,6 +27,16 @@
 "ttc_s0_rtu04": ["ttc_s0_rtu04","/TS0ToTTQ_MS0-200to700GeV_TuneCP5_13TeV_G2HDM-rtu04-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-rp_106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"],
 "ttc_s0_rtu08": ["ttc_s0_rtu08","/TS0ToTTQ_MS0-200to700GeV_TuneCP5_13TeV_G2HDM-rtu08-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-rp_106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"],
 "ttc_s0_rtu10": ["ttc_s0_rtu10","/TS0ToTTQ_MS0-200to700GeV_TuneCP5_13TeV_G2HDM-rtu10-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-rp_106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"],
-"ttc_a_800_rtc04": ["ttc_a_800_rtc04","/TAToTTQ_MA-800GeV_TuneCP5_13TeV_G2HDM-rtc04-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"],  
-"ttc_a_800_rtu04": ["ttc_a_800_rtu04","/TAToTTQ_MA-800GeV_TuneCP5_13TeV_G2HDM-rtu04-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"]  
+"ttc_a_800_rtc04": ["ttc_a_800_rtc04","/TAToTTQ_MA-800GeV_TuneCP5_13TeV_G2HDM-rtc04-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"],
+"ttc_a_900_rtc04": ["ttc_a_900_rtc04","/TAToTTQ_MA-900GeV_TuneCP5_13TeV_G2HDM-rtc04-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"],  
+"ttc_a_1000_rtc04": ["ttc_a_1000_rtc04","/TAToTTQ_MA-1000GeV_TuneCP5_13TeV_G2HDM-rtc04-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"],    
+"ttc_a_800_rtu04": ["ttc_a_800_rtu04","/TAToTTQ_MA-800GeV_TuneCP5_13TeV_G2HDM-rtu04-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"],
+"ttc_a_900_rtu04": ["ttc_a_900_rtu04","/TAToTTQ_MA-900GeV_TuneCP5_13TeV_G2HDM-rtu04-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"],
+"ttc_a_1000_rtu04": ["ttc_a_1000_rtu04","/TAToTTQ_MA-1000GeV_TuneCP5_13TeV_G2HDM-rtu04-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"],
+"ttc_s0_800_rtc04": ["ttc_s0_800_rtc04","/TS0ToTTQ_MA-800GeV_TuneCP5_13TeV_G2HDM-rtc04-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"],  
+"ttc_s0_900_rtc04": ["ttc_s0_900_rtc04","/TS0ToTTQ_MA-900GeV_TuneCP5_13TeV_G2HDM-rtc04-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"],  
+"ttc_s0_1000_rtc04": ["ttc_s0_1000_rtc04","/TS0ToTTQ_MA-1000GeV_TuneCP5_13TeV_G2HDM-rtc04-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"],  
+"ttc_s0_800_rtu04": ["ttc_s0_800_rtu04","/TS0ToTTQ_MA-800GeV_TuneCP5_13TeV_G2HDM-rtu04-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"],
+"ttc_s0_900_rtu04": ["ttc_s0_900_rtu04","/TS0ToTTQ_MA-900GeV_TuneCP5_13TeV_G2HDM-rtu04-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"],   
+"ttc_s0_1000_rtu04": ["ttc_s0_1000_rtu04","/TS0ToTTQ_MA-1000GeV_TuneCP5_13TeV_G2HDM-rtu04-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"]     
 }
