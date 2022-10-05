@@ -81,3 +81,9 @@ with open(samplejson, 'r') as fin:
 
 if year=='2018':
     os.system(r'sed -i "s/TTC_version9/2018/g" config_crab_2018/*_cfg.py')
+
+if year=='2016apv':
+  os.system(r'sed -i "s/TTC_version9/2016apv/g" config_crab_2016apv/*_cfg.py')
+
+if year=='2016':
+  os.system(r'sed -i "s/TTC_version9/2016postapv/g" config_crab_2016/*_cfg.py')
