@@ -17,6 +17,8 @@
    cd python/postprocessing
    git clone -b lep_mvaID git@github.com:ExtraYukawa/ttc_bar.git analysis
    
+   mv analysis/crab/auto_crab_example/crab_help.py analysis/crab/auto_crab_example/crab_help.py.bak
+   
    cd $CMSSW_BASE/src
    scram b -j8
    ```
@@ -27,11 +29,13 @@
    cd $CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis
    ```
    ```
-   source init.sh 2016apv (FOR 2016APV)
-   source init.sh 2016 (FOR 2016)
-   source init.sh 2017 (FOR 2017)
-   source init.sh 2018 (FOR 2018)
+   source init.sh 2016apv #(FOR 2016APV)
+   source init.sh 2016 #(FOR 2016)
+   source init.sh 2017 #(FOR 2017)
+   source init.sh 2018 #(FOR 2018)
    ```
+
+   mv analysis/crab/auto_crab_example/crab_help.py.bak analysis/crab/auto_crab_example/crab_help.py
 
 ## submit jobs
 using the configure files under 'configs', to make a test:
