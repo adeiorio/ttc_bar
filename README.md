@@ -34,13 +34,20 @@
    source init.sh 2017 #(FOR 2017)
    source init.sh 2018 #(FOR 2018)
    ```
-
+   
+   ```
    mv analysis/crab/auto_crab_example/crab_help.py.bak analysis/crab/auto_crab_example/crab_help.py
+   ```
 
 ## submit jobs
 using the configure files under 'configs', to make a test:
 ```
 cd crab
+```
+create the crab config files (e.g. for 2018)
+(first modify the samples2018.json or samples2018_signal.json and create_crab.py first if necessary)
+```
+python create_crab.py 2018
 ```
 MAKE BELOW CONFIGURABLE FOR EACH YEAR
 ```
