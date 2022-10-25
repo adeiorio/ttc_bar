@@ -38,6 +38,12 @@
    ```
    mv analysis/crab/auto_crab_example/crab_help.py.bak analysis/crab/auto_crab_example/crab_help.py
    ```
+4. If you want to keep GEN info in the ntuples, in 
+https://github.com/ExtraYukawa/ttc_bar/blob/lep_mvaID/crab/keep_and_drop.txt
+remove the following line:
+   ```
+   drop GenPart_*
+   ``` 
 
 ## submit jobs
 using the configure files under 'configs', to make a test:
