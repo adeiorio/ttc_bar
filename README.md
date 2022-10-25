@@ -17,6 +17,8 @@
    cd python/postprocessing
    git clone -b lep_mvaID git@github.com:ExtraYukawa/ttc_bar.git analysis
    
+   mv analysis/crab/auto_crab_example/crab_help.py analysis/crab/auto_crab_example/crab_help.py.bak
+   
    cd $CMSSW_BASE/src
    scram b -j8
    ```
@@ -27,16 +29,31 @@
    cd $CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis
    ```
    ```
-   source init.sh 2016apv (FOR 2016APV)
-   source init.sh 2016 (FOR 2016)
-   source init.sh 2017 (FOR 2017)
-   source init.sh 2018 (FOR 2018)
+   source init.sh 2016apv #(FOR 2016APV)
+   source init.sh 2016 #(FOR 2016)
+   source init.sh 2017 #(FOR 2017)
+   source init.sh 2018 #(FOR 2018)
    ```
+   
+   ```
+   mv analysis/crab/auto_crab_example/crab_help.py.bak analysis/crab/auto_crab_example/crab_help.py
+   ```
+4. If you want to keep GEN info in the ntuples, in 
+https://github.com/ExtraYukawa/ttc_bar/blob/lep_mvaID/crab/keep_and_drop.txt
+remove the following line:
+   ```
+   drop GenPart_*
+   ``` 
 
 ## submit jobs
 using the configure files under 'configs', to make a test:
 ```
 cd crab
+```
+create the crab config files (e.g. for 2018)
+(first modify the samples2018.json or samples2018_signal.json and create_crab.py first if necessary)
+```
+python create_crab.py 2018
 ```
 MAKE BELOW CONFIGURABLE FOR EACH YEAR
 ```
