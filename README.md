@@ -4,6 +4,7 @@
 
 1. Set up NanoAOD tools
    ```bash
+   # At cmslpc first do: source /cvmfs/cms.cern.ch/cmsset_default.csh
    cmsrel CMSSW_10_6_29
    cd CMSSW_10_6_29/src
    git clone https://github.com/cms-nanoAOD/nanoAOD-tools.git PhysicsTools/NanoAODTools
@@ -29,10 +30,10 @@
    cd $CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis
    ```
    ```
-   source init.sh 2016apv #(FOR 2016APV)
-   source init.sh 2016 #(FOR 2016)
-   source init.sh 2017 #(FOR 2017)
-   source init.sh 2018 #(FOR 2018)
+   source init.sh 2016apv #(FOR 2016APV) #Use sh init.sh 2016apv at cmslpc machines
+   source init.sh 2016 #(FOR 2016) #Use sh init.sh 2016 at cmslpc machines
+   source init.sh 2017 #(FOR 2017) #Use sh init.sh 2017 at cmslpc machines
+   source init.sh 2018 #(FOR 2018) #Use sh init.sh 2018 at cmslpc machines
    ```
    
    ```
