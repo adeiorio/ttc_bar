@@ -108,6 +108,7 @@ if [ "${year}" = "2018" ]; then
 
   echo Updateing JME correction
   echo cleaning unused files
+  cp $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/Summer19UL18_V5_DATA.tgz $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/
   rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/*.tgz
   cp $WORKING_PATH/analysis/others/for_jme/Summer19UL18* $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/
   cp $WORKING_PATH/analysis/others/for_jme/jetmetHelperRun2.py $WORKING_PATH/modules/jme
@@ -115,7 +116,8 @@ if [ "${year}" = "2018" ]; then
   echo Updating BJet related
   cp $WORKING_PATH/analysis/others/for_btv/btagSFProducer.py $WORKING_PATH/modules/btv
   cp $WORKING_PATH/analysis/others/for_btv/DeepCSV_106XUL18SF_V1p1.csv $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/
-
+  rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/DeepCSV_106XUL17SF.csv
+  rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/DeepJet_106XUL17SF.csv
 fi
 
 echo Cleaning
