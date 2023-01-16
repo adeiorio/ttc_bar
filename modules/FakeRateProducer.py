@@ -213,11 +213,12 @@ class FakeRateProducer(Module):
  	    tightMuons.append(muon_v4_temp.Clone())
  	    tightMuons_pdgid.append(muons[imu].pdgId)
  	    tightMuons_id.append(imu)
- 	  if (muon_conePt[imu]<20 and event.Muon_corrected_pt[imu]>10):
- 	    muon_v4_temp.SetPtEtaPhiM(event.Muon_corrected_pt[imu], muons[imu].eta, muons[imu].phi, muons[imu].mass)
-  	    additional_looseMuons.append(muon_v4_temp.Clone())
-  	    additional_looseMuons_pdgid.append(muons[imu].pdgId)
-  	    additional_looseMuons_id.append(imu)
+          else:
+            if event.Muon_corrected_pt[imu]>10:
+              muon_v4_temp.SetPtEtaPhiM(event.Muon_corrected_pt[imu], muons[imu].eta, muons[imu].phi, muons[imu].mass)
+              additional_looseMuons.append(muon_v4_temp.Clone())
+              additional_looseMuons_pdgid.append(muons[imu].pdgId)
+              additional_looseMuons_id.append(imu)
         else:
 	  if muon_jet_Ptratio[imu]>0.3 and event.Jet_btagDeepFlavB[muon_closest_jetid[imu]]<flav_cut(muon_conePt[imu],self.year):
 	    if (muon_conePt[imu]>20):
