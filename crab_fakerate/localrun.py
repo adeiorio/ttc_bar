@@ -3,6 +3,7 @@
 # python localrun.py -m -i /eos/cms/store/group/phys_top/ExtraYukawa/input_for_tests/TTTo2L2Nu_2017.root --year 2017 -o $CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis/test -n 1000
 # python localrun.py -m -i /eos/cms/store/group/phys_top/ExtraYukawa/input_for_tests/DY_UL18NanoAODv9_M-50_MLM.root --year 2018 -o $CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis/test -n 1000
 # python localrun.py -d -i /eos/cms/store/group/phys_top/ExtraYukawa/input_for_tests/test_nanoAOD_EGamma_Run2018A.root --year 2018a -o $CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis/test -n 1000000
+# python localrun.py -d -i /eos/cms/store/group/phys_top/ExtraYukawa/input_for_tests/test_nanoAOD_EGamma_Run2018A.root --year 2017b -o $CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis/test -n 100000
 #==============
 
 import os
@@ -66,7 +67,7 @@ def main():
     if opt.year == "2016h":
       p = PostProcessor(".", inputFiles(), modules=[muonScaleRes2016b(),jmeCorrections_UL2016H(),FakeRate2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt")
     if opt.year == "2017b":
-      p = PostProcessor(".", inputFiles(), modules=[muonScaleRes2017(),jmeCorrections_UL2017B(),FakeRate2017()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt")
+      p = PostProcessor(opt.output, [opt.inputs], modules=[muonScaleRes2017(),jmeCorrections_UL2017B(),FakeRate2017()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt", maxEntries=opt.nEvent)
     if opt.year == "2017c":
       p = PostProcessor(".", inputFiles(), modules=[muonScaleRes2017(),jmeCorrections_UL2017C(),FakeRate2017()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt")
     if opt.year == "2017d":
