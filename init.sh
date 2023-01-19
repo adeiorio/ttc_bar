@@ -85,13 +85,13 @@ if [ "${year}" = "2017" ]; then
   echo cleaning unused files
   cp $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/Summer19UL17_V5_DATA.tgz $WORKING_PATH/analysis/others/for_jme/
   rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/*.tgz
-  rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/Summer19UL17_Run*_V5_DATA.tar.gz
   rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/DeepCSV_106XUL18SF.csv
   rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/DeepJet_106XUL18SF.csv
   rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis/data/roccor.Run2UL.v5/RoccoR2018UL.txt
   rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis/data/roccor.Run2UL.v5/RoccoR2016bUL.txt
   rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis/data/roccor.Run2UL.v5/RoccoR2016aUL.txt
   cp $WORKING_PATH/analysis/others/for_jme/Summer19UL17* $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/
+  rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/Summer19UL17_Run*_V5_DATA.tar.gz
   cp $WORKING_PATH/analysis/others/for_jme/jetmetHelperRun2.py $WORKING_PATH/modules/jme
   
   echo Updating BJet related
