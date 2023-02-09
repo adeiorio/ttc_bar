@@ -311,9 +311,9 @@ class TTCProducer(Module):
       # following cuts are preseletion for MVA muon ID
       if abs(muons[imu].eta)>2.4 or muons[imu].sip3d>8 or abs(muons[imu].dxy)>0.05 or abs(muons[imu].dz)>0.1 or muons[imu].miniPFRelIso_all>0.4: continue
       if not (muons[imu].looseId and event.Muon_corrected_pt[imu]>10):continue
-      if muons[imu].tightCharge==2:
+      if muons[imu].mediumId and muons[imu].tightCharge==2:
         if muons[imu].mvaTTH>-0.2:
-          if (event.Muon_corrected_pt[imu]>20 and muons[imu].mediumId):
+          if (event.Muon_corrected_pt[imu]>20):
             muon_v4_temp.SetPtEtaPhiM(event.Muon_corrected_pt[imu], muons[imu].eta, muons[imu].phi, muons[imu].mass)
             muon_v4_temp_raw.SetPtEtaPhiM(muons[imu].pt, muons[imu].eta, muons[imu].phi, muons[imu].mass)
             tightMuons.append(muon_v4_temp.Clone())
@@ -326,7 +326,7 @@ class TTCProducer(Module):
             additional_looseMuons_pdgid.append(muons[imu].pdgId)
             additional_looseMuons_id.append(imu)
         else:
-	  if muon_jet_Ptratio[imu]>0.3 and event.Jet_btagDeepFlavB[muon_closest_jetid[imu]]<flav_cut(muon_conePt[imu],self.year):
+	  if muon_jet_Ptratio[imu]>0.5 and event.Jet_btagDeepFlavB[muon_closest_jetid[imu]]<flav_cut(muon_conePt[imu],self.year):
             if (event.Muon_corrected_pt[imu]>20):
               muon_v4_temp.SetPtEtaPhiM(event.Muon_corrected_pt[imu], muons[imu].eta, muons[imu].phi, muons[imu].mass)
               fakeable_Muons.append(muon_v4_temp.Clone())
