@@ -36,7 +36,7 @@ class btagSFProducer(Module):
     """
 
     def __init__(
-            self, era, algo='deepjet', selectedWPs=['M', 'shape_corr'],
+            self, era, algo='deepjet', selectedWPs=['L','M','T', 'shape_corr'],
             sfFileName=None, verbose=0, jesSystsForShape=["jes"]
     ):
         self.era = era
