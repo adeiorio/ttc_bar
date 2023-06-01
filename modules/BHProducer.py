@@ -401,9 +401,10 @@ class BHProducer(Module):
     self.out.fillBranch("nHad_tau", nHad_tau)
 
 
-    # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL17
-    # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL18
+    # https://btv-wiki.docs.cern.ch/ScaleFactors/
     # https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookNanoAOD#Jets
+    # *** jetId==2 means: pass tight ID, fail tightLepVeto
+    # *** jetId==6 means: pass tight and tightLepVeto ID.
     # tightLepVeto PF jets (ak4), UL 2016/2017/2018 (jetId 110=6), medium B-tag WP
     # UL17 DeepCSV=(nanoaod btagDeepB) loose: 0.1355, medium: 0.4506, tight: 0.7738
     # UL18 DeepCSV=(nanoaod btagDeepB) loose: 0.1208, medium: 0.4168, tight: 0.7665
@@ -533,7 +534,7 @@ class BHProducer(Module):
 	if jet_v4_temp.DeltaR(tightLeptons[ilep])<0.4:pass_jet_lep_Dr=0
 
       if not (pass_jet_lep_Dr>0):continue
-      if not (jets[ijet].jetId==6 and event.Jet_pt_nom[ijet]>30):continue 
+      if not (jets[ijet].jetId==6 and event.Jet_pt_nom[ijet]>30):continue #tight jets with pT > 30 GeV
 
       if abs(jets[ijet].eta)<4.7 and abs(jets[ijet].eta)>=2.4: 
         tightJets_id_in47.append(ijet)
