@@ -3,16 +3,16 @@
 ## Steps for setup:
 
 1. Set up NanoAOD tools
-   ```bash
-   # At cmslpc first do: source /cvmfs/cms.cern.ch/cmsset_default.csh
-   # And if you are going to use condor/crab at cmslpc, do: voms-proxy-init --valid 192:00 -voms cms
-   cmsrel CMSSW_10_6_29
-   cd CMSSW_10_6_29/src
-   git clone https://github.com/cms-nanoAOD/nanoAOD-tools.git PhysicsTools/NanoAODTools
-   cd PhysicsTools/NanoAODTools
-   cmsenv
-   scram b -j8
-   ```
+```
+# At cmslpc first do: source /cvmfs/cms.cern.ch/cmsset_default.csh
+# And if you are going to use condor/crab at cmslpc, do: voms-proxy-init --valid 192:00 -voms cms
+cmsrel CMSSW_10_6_29
+cd CMSSW_10_6_29/src
+git clone https://github.com/cms-nanoAOD/nanoAOD-tools.git PhysicsTools/NanoAODTools
+cd PhysicsTools/NanoAODTools
+cmsenv
+scram b -j8
+```
 
 2. Set up TTC codes
    ```bash
@@ -55,7 +55,7 @@ remove the following line:
    drop GenPart_*
    ``` 
 
-## submit jobs
+## submit jobs (TTC)
 using the configure files under 'configs', to make a test:
 ```
 cd crab
