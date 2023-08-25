@@ -15,47 +15,63 @@ scram b -j8
 ```
 
 2. Set up TTC codes
-   ```bash
-   cd python/postprocessing
-   git clone -b lep_mvaID git@github.com:ExtraYukawa/ttc_bar.git analysis
-   
-   mv analysis/crab/auto_crab_example/crab_help.py analysis/crab/auto_crab_example/crab_help.py.bak
-   
-   cd $CMSSW_BASE/src
-   scram b -j8
-   ```
-    Noticed that the `crab_help.py` is written in python3, hence the `scram b` in CMSSW would leave some error message. Since this crab helper normally would not be included by other codes, you can ignore these errors.
+```
+cd python/postprocessing
+git clone -b lep_mvaID git@github.com:ExtraYukawa/ttc_bar.git analysis
+
+mv analysis/crab/auto_crab_example/crab_help.py analysis/crab/auto_crab_example/crab_help.py.bak
+
+cd $CMSSW_BASE/src
+scram b -j8
+```
+Noticed that the `crab_help.py` is written in python3, hence the `scram b` in CMSSW would leave some error message. Since this crab helper normally would not be included by other codes, you can ignore these errors.
 
 3. Substitute some outdated files with `init.sh`
-   ```bash
-   cd $CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis
-   ```
-   ```
-   source init.sh 2016apv #(FOR 2016APV) 
-   source init.sh 2016 #(FOR 2016) 
-   source init.sh 2017 #(FOR 2017) 
-   source init.sh 2018 #(FOR 2018) 
-   ```
-   
-   Or do the following if you are using cmslpc machines:
-   ```
-   sh init.sh 2016apv
-   sh init.sh 2016
-   sh init.sh 2017
-   sh init.sh 2018
-   ```
-   
-   ```
-   # mv analysis/crab/auto_crab_example/crab_help.py.bak analysis/crab/auto_crab_example/crab_help.py
-   ```
+```
+cd $CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis
+```
+```
+source init.sh 2016apv #(FOR 2016APV) 
+source init.sh 2016 #(FOR 2016) 
+source init.sh 2017 #(FOR 2017) 
+source init.sh 2018 #(FOR 2018) 
+```
+
+Or do the following if you are using cmslpc machines:
+```
+sh init.sh 2016apv
+sh init.sh 2016
+sh init.sh 2017
+sh init.sh 2018
+```
+
+```
+# mv analysis/crab/auto_crab_example/crab_help.py.bak analysis/crab/auto_crab_example/crab_help.py
+```
 4. If you want to keep GEN info in the ntuples, in 
 https://github.com/ExtraYukawa/ttc_bar/blob/lep_mvaID/crab/keep_and_drop.txt
 remove the following line:
-   ```
-   drop GenPart_*
-   ``` 
+```
+drop GenPart_*
+``` 
 
-## submit jobs (TTC)
+
+## ** bH+ ** local test
+To create skimmed ntuple with bhplusproducer
+
+cd test
+python localrun_bhplus.py -m -i
+/eos/cms/store/group/phys_top/ExtraYukawa/input_for_tests/BGToTHpm_MH200_TuneCP5_13TeV_G2HDM-rhott06_rhotc04_rhotu00.root --year 2017 -o
+$CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis/test -n 1000
+—-------------------------------
+It will create ntuple with name: ``Events`` tree
+NB: /eos/cms/store/group/phys_top/ExtraYukawa/input_for_tests/BGToTHpm_MH200_TuneCP5_13TeV_G2HDM-rhott06_rhotc04_rhotu00.root is just one file from
+input NANOAODv9 dataset: ``/BGToTHpm_MH-200_TuneCP5_13TeV_G2HDM-rhott06_rhotc04_rhotu00-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM``
+
+### crab jobs for bH+ to follow---> (update later)
+
+
+## Submit crab jobs (TTC)
 using the configure files under 'configs', to make a test:
 ```
 cd crab
