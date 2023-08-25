@@ -1,4 +1,4 @@
-# TTC
+# NanoAOD to Skimmed Ntuple:
 
 ## Steps for setup:
 
@@ -56,8 +56,8 @@ drop GenPart_*
 ``` 
 
 
-## ** bH+ ** local test
-To create skimmed ntuple with bhplusproducer
+## ** bH+ ** Local Test
+To create skimmed ntuple with [bhplusproducer](https://github.com/ExtraYukawa/ttc_bar/blob/lep_mvaID/modules/BHProducer.py)
 ```
 cd test
 python localrun_bhplus.py -m -i
