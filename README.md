@@ -69,7 +69,7 @@ It will create ntuple with name: ``Events`` tree
 NB: ``/eos/cms/store/group/phys_top/ExtraYukawa/input_for_tests/BGToTHpm_MH200_TuneCP5_13TeV_G2HDM-rhott06_rhotc04_rhotu00.root`` is just one file from
 input NANOAODv9 dataset: ``/BGToTHpm_MH-200_TuneCP5_13TeV_G2HDM-rhott06_rhotc04_rhotu00-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM``
 
-### crab jobs for bH+ to follow---> (update later)
+### crab jobs for bH+ to follow---> (working version)
 Please follow a dedicated README inside ``crab`` folder
 
 ## Submit crab jobs (TTC)
