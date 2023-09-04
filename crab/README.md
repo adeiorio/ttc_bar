@@ -1,4 +1,4 @@
-# Crab submission for TTC/BHplus on data/MC/signal samples
+# Crab submission for ``TTC/BHplus`` on data/MC/signal samples
 
 ## Instruction for BHplus crab submission:
 
