@@ -70,7 +70,7 @@ NB: ``/eos/cms/store/group/phys_top/ExtraYukawa/input_for_tests/BGToTHpm_MH200_T
 input NANOAODv9 dataset: ``/BGToTHpm_MH-200_TuneCP5_13TeV_G2HDM-rhott06_rhotc04_rhotu00-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM``
 
 ### crab jobs for bH+ to follow---> (update later)
-
+Please follow a dedicated README inside ``crab`` folder
 
 ## Submit crab jobs (TTC)
 using the configure files under 'configs', to make a test:
