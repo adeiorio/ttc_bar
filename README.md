@@ -11,8 +11,21 @@ cd CMSSW_10_6_29/src
 git clone https://github.com/cms-nanoAOD/nanoAOD-tools.git PhysicsTools/NanoAODTools
 cd PhysicsTools/NanoAODTools
 cmsenv
+```
+
+1.5 Update the haddnano.py shebang
+```
+cd scripts
+```
+Open the haddnano.py file with your favorite text editor and make the first line as: ``` #!/bin/env python3 ``` 
+
+Save the file and compile
+
+```
+cd ../
 scram b -j8
 ```
+
 
 2. Set up TTC codes
 ```
