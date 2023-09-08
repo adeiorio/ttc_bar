@@ -1,8 +1,6 @@
-import os
 import sys
 import optparse
 import ROOT
-import re
 
 from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import PostProcessor
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.countHistogramsModule import *
@@ -39,30 +37,36 @@ def main():
       p = PostProcessor(opt.output, [opt.inputs], modules=[countHistogramsModule(),puWeight_2017(),PrefCorr(),muonIDISOSF2017(),muonScaleRes2017(),eleRECOSF2017(),eleIDSF2017(), jmeCorrections_UL2017MC(),btagSF2017UL(), TTC2017()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt",maxEntries=opt.nEvent)
     if opt.year == "2018":
       p = PostProcessor(opt.output, [opt.inputs], modules=[countHistogramsModule(),puWeight_2018(),muonIDISOSF2018(),muonScaleRes2018(),eleRECOSF2018(),eleIDSF2018(),jmeCorrections_UL2018MC(), btagSF2018UL(),TTC2018()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt",maxEntries=opt.nEvent)
+    #Sequence for Run 3 MC
+    if opt.year == "2022":
+      p = PostProcessor(opt.output, [opt.inputs], modules=[countHistogramsModule(),TTC2022()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt",maxEntries=opt.nEvent)
+    if opt.year == "2022EE":
+      p = PostProcessor(opt.output, [opt.inputs], modules=[countHistogramsModule(),TTC2022EE()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt",maxEntries=opt.nEvent)
+      #puWeight_2018(),muonIDISOSF2018(),muonScaleRes2018(),eleRECOSF2018(),eleIDSF2018(),jmeCorrections_UL2018MC(), btagSF2018UL(),
 
 
 # Sequence for data
   if not (opt.ismc):
     if opt.year == "2016b":
-      print "run on 2016B data"
+      print("run on 2016B data")
       p = PostProcessor(opt.output, [opt.inputs], modules=[muonScaleRes2016a(),jmeCorrections_UL2016B(),TTC2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt", maxEntries=opt.nEvent)
     if opt.year == "2016c":
       p = PostProcessor(opt.output, [opt.inputs], modules=[muonScaleRes2016a(),jmeCorrections_UL2016C(),TTC2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt", maxEntries=opt.nEvent)  
     if opt.year == "2016d":
       p = PostProcessor(opt.output, [opt.inputs], modules=[muonScaleRes2016a(),jmeCorrections_UL2016D(),TTC2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt", maxEntries=opt.nEvent)
     if opt.year == "2016e":
-      print "run on 2016E data"
+      print("run on 2016E data")
       p = PostProcessor(opt.output, [opt.inputs], modules=[muonScaleRes2016a(),jmeCorrections_UL2016E(),TTC2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt", maxEntries=opt.nEvent)
     if opt.year == "2016f_apv":
       p = PostProcessor(opt.output, [opt.inputs], modules=[muonScaleRes2016a(),jmeCorrections_UL2016APVF(),TTC2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt", maxEntries=opt.nEvent)
     if opt.year == "2016f":
-      print "run on 2016F data"
+      print("run on 2016F data")
       p = PostProcessor(opt.output, [opt.inputs], modules=[muonScaleRes2016b(),jmeCorrections_UL2016F(),TTC2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt", maxEntries=opt.nEvent)
     if opt.year == "2016g":
-      print "run on 2016G data"
+      print("run on 2016G data")
       p = PostProcessor(opt.output, [opt.inputs], modules=[muonScaleRes2016b(),jmeCorrections_UL2016G(),TTC2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt", maxEntries=opt.nEvent)
     if opt.year == "2016h":
-      print "run on 2016H data"
+      print("run on 2016H data")
       p = PostProcessor(opt.output, [opt.inputs], modules=[muonScaleRes2016b(),jmeCorrections_UL2016H(),TTC2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt", maxEntries=opt.nEvent)
     if opt.year == "2017b":
       p = PostProcessor(opt.output, [opt.inputs], modules=[muonScaleRes2017(),jmeCorrections_UL2017B(),TTC2017()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt",maxEntries=opt.nEvent)
@@ -82,6 +86,12 @@ def main():
       p = PostProcessor(opt.output, [opt.inputs], modules=[muonScaleRes2018(),jmeCorrections_UL2018C(),TTC2018()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt",maxEntries=opt.nEvent)
     if opt.year == "2018d":
       p = PostProcessor(opt.output, [opt.inputs], modules=[muonScaleRes2018(),jmeCorrections_UL2018D(),TTC2018()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt",maxEntries=opt.nEvent)
+
+    #Sequence for Run 3 data
+    if opt.year == "2022":
+      p = PostProcessor(opt.output, [opt.inputs], modules=[], provenance=True, fwkJobReport=True, jsonInput=runsAndLumis(), outputbranchsel="keep_and_drop.txt", maxEntries=opt.nEvent)
+
+
   p.run()
 
 if __name__ == "__main__":

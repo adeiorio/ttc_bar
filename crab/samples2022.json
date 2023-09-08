@@ -1,0 +1,75 @@
+{
+"EGammaC": ["DoubleEG_C","/EGamma/Run2022C-ReRecoNanoAODv11-v1/NANOAOD","crab_script_dataC.sh"],
+"EGammaD": ["DoubleEG_D","/EGamma/Run2022D-ReRecoNanoAODv11-v1/NANOAOD","crab_script_dataD.sh"],
+"EGammaE": ["DoubleEG_E","/EGamma/Run2022E-ReRecoNanoAODv11-v1/NANOAOD","crab_script_dataE.sh"],
+"EGammaF": ["DoubleEG_F","/EGamma/Run2022F-PromptNanoAODv11_v1-v2/NANOAOD","crab_script_dataF.sh"],
+"EGammaG": ["DoubleEG_G","/EGamma/Run2022G-PromptNanoAODv11_v1-v2/NANOAOD","crab_script_dataG.sh"],
+
+"DoubleMuonC": ["DoubleMuon_C","/DoubleMuon/Run2022C-ReRecoNanoAODv11-v1/NANOAOD","crab_script_dataC.sh"],
+//"DoubleMuonD": ["DoubleMuon_D","/DoubleMuon/Run2018D-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD","crab_script_dataD.sh"],
+"SingleMuonC": ["SingleMuon_C","/SingleMuon/Run2022C-ReRecoNanoAODv11-v1/NANOAOD","crab_script_dataC.sh"], 
+//"SingleMuonD": ["SingleMuon_D","","crab_script_dataD.sh"],
+"MuonD": ["MuonD", "/Muon/Run2022D-ReRecoNanoAODv11-v1/NANOAOD", "crab_script_dataD.sh"]
+"MuonE": ["MuonE", "/Muon/Run2022E-ReRecoNanoAODv11-v1/NANOAOD", "crab_script_dataE.sh"]
+"MuonF": ["MuonF", "/Muon/Run2022F-PromptNanoAODv11_v1-v2/NANOAOD", "crab_script_dataF.sh"]
+"MuonG": ["MuonG", "/Muon/Run2022G-PromptNanoAODv11_v1-v2/NANOAOD", "crab_script_dataG.sh"]
+
+"MuonEGC": ["MuonEG_C","/MuonEG/Run2022C-ReRecoNanoAODv11-v1/NANOAOD","crab_script_dataC.sh"],
+"MuonEGD": ["MuonEG_D","/MuonEG/Run2022D-ReRecoNanoAODv11-v1/NANOAOD","crab_script_dataD.sh"],
+"MuonEGE": ["MuonEG_E","/MuonEG/Run2022E-ReRecoNanoAODv11-v1/NANOAOD","crab_script_dataE.sh"],
+"MuonEGF": ["MuonEG_F","/MuonEG/Run2022F-PromptNanoAODv11_v1-v2/NANOAOD","crab_script_dataF.sh"],
+"MuonEGG": ["MuonEG_G","/MuonEG/Run2022G-PromptNanoAODv11_v1-v2/NANOAOD","crab_script_dataG.sh"],
+
+"METC": ["MET_C","/MET/Run2022C-ReRecoNanoAODv11-v1/NANOAOD","crab_script_dataC.sh"],
+"METD": ["MET_D","/JetMET/Run2022D-ReRecoNanoAODv11-v1/NANOAOD","crab_script_dataD.sh"],
+"METE": ["MET_E","/JetMET/Run2022E-ReRecoNanoAODv11-v1/NANOAOD","crab_script_dataE.sh"],
+"METF": ["MET_F","/JetMET/Run2022F-PromptNanoAODv11_v1-v2/NANOAOD", "crab_script_dataF.sh"],
+"METG": ["MET_G","/JetMET/Run2022G-PromptNanoAODv11_v1-v2/NANOAOD","crab_script_dataG.sh"],
+
+"dy": ["DY","/DYJetsToLL_M-50_TuneCP5_13p6TeV-madgraphMLM-pythia8/Run3Summer22NanoAODv11-forPOG_126X_mcRun3_2022_realistic_v2-v1/NANOAODSIM"],
+//"dynlo": ["DYnlo",""],
+"wjet": ["WJets","/WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"],
+"TTto2L": ["TTto2L2Nu","/TTto2L2Nu_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv11-126X_mcRun3_2022_realistic_postEE_v1-v1/NANOAODSIM"],
+"TTto2LEE": ["TTto2L2NuEE","/TTto2L2Nu_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22NanoAODv11-126X_mcRun3_2022_realistic_v2-v1/NANOAODSIM"],
+
+
+"TTto1L": ["TTTo1L","/TTtoLNu2Q_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22NanoAODv11-126X_mcRun3_2022_realistic_v2-v1/NANOAODSIM"],
+"TTto1LEE": ["TTTo1LEE","/TTtoLNu2Q_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv11-126X_mcRun3_2022_realistic_postEE_v1-v1/NANOAODSIM"],
+
+"t_sch": ["t_sch","/ST_s-channel_4f_leptonDecays_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"],
+"t_tch": ["t_tch","/ST_t-channel_top_5f_InclusiveDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"],
+"tbar_tch": ["tbar_tch","/ST_t-channel_antitop_5f_InclusiveDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"],
+"tW": ["tW","/ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"],
+"tbarW": ["tbarW","/ST_tW_antitop_5f_DS_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"],
+"ttH": ["ttH","/ttHToNonbb_M125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"],
+"ttHH": ["ttHH","/TTHH_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"],
+"ttWH": ["ttWH","/TTWH_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"],
+"ttZH": ["ttZH","/TTZH_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"],
+"ttW": ["ttWLNu","/TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"],
+"ttWToQQ": ["ttWtoQQ","/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"],
+"ttZ": ["ttZ","/TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"],
+"ttZToQQ": ["ttZtoQQ","/TTZToQQ_Dilept_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"],
+"ttWW": ["ttWW","/TTWW_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"],
+"ttWZ": ["ttWZ","/TTWZ_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"],
+"ttZZ": ["tttZ","/TTZZ_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"],
+"tttJ": ["tttJ","/TTTJ_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"],
+"tttW": ["tttW","/TTTW_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"],
+"tttt": ["tttt","/TTTT_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"],
+"tzq": ["tZq","/tZq_ll_4f_ckm_NLO_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"],
+"ww": ["WW_OS","/WWTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"],
+"WLLJJ": ["WLLJJ","/WLLJJ_WToLNu_EWK_TuneCP5_13TeV_madgraph-madspin-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"],
+"ZZJJTo4L": ["ZZJJTo4L","/ZZJJTo4L_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"],
+"WpWpJJ_EWK": ["WpWpJJ_EWK","/WpWpJJ_EWK_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"],
+"WpWpJJ_QCD": ["WpWpJJ_QCD","/WpWpJJ_QCD_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"],
+"ww_dps": ["WW_DPS","/WWTo2L2Nu_TuneCP5_DoubleScattering_13TeV-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"],
+"wz_qcd": ["WZ_QCD","/WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"],
+"zz2l": ["ZZ2L","/ZZTo2L2Nu_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"],
+"www": ["WWW_1","/WWW_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"],
+"www2": ["WWW_2","/WWW_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1_ext1-v2/NANOAODSIM"],
+"wwz": ["WWZ_1","/WWZ_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"],
+"wwz2": ["WWZ_2","/WWZ_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1_ext1-v2/NANOAODSIM"],
+"wzz": ["WZZ_1","/WZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"],
+"wzz2": ["WZZ_2","/WZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1_ext1-v2/NANOAODSIM"],
+"zzz": ["ZZZ_1","/ZZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"],
+"zzz2": ["ZZZ_2","/ZZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1_ext1-v2/NANOAODSIM"]
+}
