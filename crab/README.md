@@ -4,7 +4,7 @@
 
 First check [mc_cfg.py](https://github.com/gourangakole/ttc_bar/blob/lep_mvaID/crab/mc_cfg.py) anf [data_cfg.py](https://github.com/gourangakole/ttc_bar/blob/lep_mvaID/crab/data_cfg.py) files. Put proper paths like below (output store location)
 
-``config.Data.outLFNDirBase = '/store/group/phys_top/ExtraYukawa/BHplus/2017/'``
+``config.Data.outLFNDirBase = '/store/group/phys_b2g/ExYukawa/bHplus/2017/'``
 
 ### Run for configuration files:
 ```
