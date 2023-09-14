@@ -3,6 +3,7 @@
 #==============
 import sys
 import os
+from PhysicsTools.NanoAODTools.postprocessing.analysis.scripts.aux import colors
 
 def join_l(l, sep):
     li = iter(l)
@@ -17,16 +18,16 @@ def perform_operation(action="on"):
     location = join_l(l, "/")
     if action=="on":
         print("moving .git folder to before CMSSW dir...")
-        print ("\033[1;33mmv ../.git "+location+"/\033[0;m")
+        print (colors.colordict['YELLOW']+"mv ../.git "+location+"/"+colors.colordict['CEND'])
         if not os.path.isdir("../.git"):
-            print ("\033[92mAlready moved to "+location+"/"+"  -> go ahead with crab submission\033[00m")
+            print (colors.colordict['GREEN']+"Already moved to "+location+"/"+"  -> go ahead with crab submission"+colors.colordict['CEND'])
         else:
             os.system("mv ../.git "+location+"/") 
     elif action=="off":
         print ("moving .git folder back to analysis dir")
-        print ("\033[1;33mmv "+location+"/.git "+"../\033[0;m")
+        print (colors.colordict['YELLOW']+"mv "+location+"/.git "+"../"+colors.colordict['CEND'])
         if not os.path.isdir(location+"/.git"):
-           print ("\033[92mAlready moved to Analysis dir\033[00m")
+           print (colors.colordict['GREEN']+"Already moved to Analysis dir"+colors.colordict['CEND'])
         else:
             os.system("mv "+location+"/.git "+"../")
  
