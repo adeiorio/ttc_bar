@@ -769,22 +769,21 @@ class TTCProducer(Module):
         if ttc_nl and n_tight_jet > 2:
             ttc_jets = True
 
-        if ttc_nl:
-            if not self.is_jet_corr:
-                if self.is_mc:
-                    met.T1Smear_pt = met.pt
-                    met.T1Smear_phi = met.phi
-                else:
-                    met.T1_pt = met.pt
-                    met.T1_phi = met.phi
+        if not self.is_jet_corr:
+            if self.is_mc:
+                met.T1Smear_pt = met.pt
+                met.T1Smear_phi = met.phi
             else:
-                if self.is_mc:
-                    ttc_met = met.T1Smear_pt
-                    ttc_met_phi = met.T1Smear_phi
-                else:
-                    ttc_met = met.T1_pt
-                    ttc_met_phi = met.T1_phi
+                met.T1_pt = met.pt
+                met.T1_phi = met.phi
 
+        if ttc_nl:
+            if self.is_mc:
+                ttc_met = met.T1Smear_pt
+                ttc_met_phi = met.T1Smear_phi
+            else:
+                ttc_met = met.T1_pt
+                ttc_met_phi = met.T1_phi
 
             if len(tightLeptons) == 2:
                 ttc_2P0F = True
@@ -1204,8 +1203,13 @@ class TTCProducer(Module):
         if WZ_nb and (tightLeptons[0]+tightLeptons[1]).M() > 4 and (tightLeptons[2]+tightLeptons[1]).M() > 4 and (tightLeptons[0]+tightLeptons[2]).M() > 4:
             WZ_leptons = True
 
-        if WZ_leptons and ((self.is_mc and met.T1Smear_pt > 30) or (met.T1_pt > 30 and (not (self.is_mc)))):
-            WZ_MET = True
+        if WZ_leptons:
+            if self.is_mc:
+                if met.T1Smear_pt > 30:
+                    WZ_MET = True
+            else:
+                if met.T1_pt > 30:
+                    WZ_MET = True
 
         if WZ_MET:
             if self.is_mc:
