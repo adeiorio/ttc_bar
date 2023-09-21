@@ -18,8 +18,8 @@ config.JobType.sendPythonFolder = True
 config.section_("Data")
 config.Data.inputDataset = 'dummy'
 config.Data.inputDBS = 'global'
-config.Data.splitting = 'FileBased'
-config.Data.outLFNDirBase = '/store/group/phys_top/ExtraYukawa/TTC_version9/'
+config.Data.splitting = 'FileBased' #Automatic'
+config.Data.outLFNDirBase = '/store/group/phys_b2g/ExYukawa/bHplus/2017/'
 config.Data.unitsPerJob = 1
 config.Data.totalUnits = -1
 config.Data.publication = False
