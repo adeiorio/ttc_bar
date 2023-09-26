@@ -6,7 +6,7 @@ drop nSubJet*
 drop SubJet*
 drop nTrigObj*
 drop TrigObj*
-drop L1*
+drop L1_*
 drop GenPart_*
 drop HLT_AK*
 drop HLT_DoubleMu4*

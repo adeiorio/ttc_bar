@@ -197,9 +197,9 @@ class BHProducer(Module):
     self.out.branch("DY_drll", "F")
     self.out.branch("tightJets_id_in24","I",lenVar="nJet")
     self.out.branch("tightJets_id_in47","I",lenVar="nJet")
-    self.out.branch("tightJets_b_DeepCSVloose_id","I",lenVar="nJet")
-    self.out.branch("tightJets_b_DeepCSVmedium_id","I",lenVar="nJet")
-    self.out.branch("tightJets_b_DeepCSVtight_id","I",lenVar="nJet")
+    self.out.branch("tightJets_b_DeepJetloose_id","I",lenVar="nJet")
+    self.out.branch("tightJets_b_DeepJetmedium_id","I",lenVar="nJet")
+    self.out.branch("tightJets_b_DeepJettight_id","I",lenVar="nJet")
     self.out.branch("tightJets_c_DeepCSVmedium_id","I",lenVar="nJet")
     self.out.branch("tightJets_c_DeepCSVloose_id","I",lenVar="nJet")
     self.out.branch("tightElectrons_id","I",lenVar="nElectron")
@@ -510,9 +510,9 @@ class BHProducer(Module):
     tightJets_id_in24 = []
     tightJets_id_in47 = []
     
-    tightJets_b_DeepCSVloose_id  = []
-    tightJets_b_DeepCSVmedium_id = []
-    tightJets_b_DeepCSVtight_id  = []
+    tightJets_b_DeepJetloose_id  = []
+    tightJets_b_DeepJetmedium_id = []
+    tightJets_b_DeepJettight_id  = []
 
     tightJets_c_DeepCSVmedium_id = []
     tightJets_c_DeepCSVloose_id  = []
@@ -544,35 +544,35 @@ class BHProducer(Module):
 
       # https://btv-wiki.docs.cern.ch/ScaleFactors/UL2016preVFP/
       if self.year=="2016apv" and jets[ijet].btagDeepFlavB > 0.0508:
-        tightJets_b_DeepCSVloose_id.append(ijet)
+        tightJets_b_DeepJetloose_id.append(ijet)
       if self.year=="2016apv" and jets[ijet].btagDeepFlavB > 0.2598:
-        tightJets_b_DeepCSVmedium_id.append(ijet)
+        tightJets_b_DeepJetmedium_id.append(ijet)
       if self.year=="2016apv" and jets[ijet].btagDeepFlavB > 0.6502:
-        tightJets_b_DeepCSVtight_id.append(ijet)
+        tightJets_b_DeepJettight_id.append(ijet)
 
       # https://btv-wiki.docs.cern.ch/ScaleFactors/UL2016postVFP/
       if self.year=="2016" and jets[ijet].btagDeepFlavB > 0.0480:
-        tightJets_b_DeepCSVloose_id.append(ijet)
+        tightJets_b_DeepJetloose_id.append(ijet)
       if self.year=="2016" and jets[ijet].btagDeepFlavB > 0.2489:
-        tightJets_b_DeepCSVmedium_id.append(ijet)
+        tightJets_b_DeepJetmedium_id.append(ijet)
       if self.year=="2016" and jets[ijet].btagDeepFlavB > 0.6377:
-        tightJets_b_DeepCSVtight_id.append(ijet)
+        tightJets_b_DeepJettight_id.append(ijet)
 
       # https://btv-wiki.docs.cern.ch/ScaleFactors/UL2017/
       if self.year=="2017" and jets[ijet].btagDeepFlavB > 0.0532:
-        tightJets_b_DeepCSVloose_id.append(ijet)
+        tightJets_b_DeepJetloose_id.append(ijet)
       if self.year=="2017" and jets[ijet].btagDeepFlavB > 0.3040:
-        tightJets_b_DeepCSVmedium_id.append(ijet)
+        tightJets_b_DeepJetmedium_id.append(ijet)
       if self.year=="2017" and jets[ijet].btagDeepFlavB > 0.7476:
-        tightJets_b_DeepCSVtight_id.append(ijet)
+        tightJets_b_DeepJettight_id.append(ijet)
 
       # https://btv-wiki.docs.cern.ch/ScaleFactors/UL2018/
       if self.year=="2018" and jets[ijet].btagDeepFlavB > 0.0490:
-        tightJets_b_DeepCSVloose_id.append(ijet)
+        tightJets_b_DeepJetloose_id.append(ijet)
       if self.year=="2018" and jets[ijet].btagDeepFlavB > 0.2783:
-        tightJets_b_DeepCSVmedium_id.append(ijet)
+        tightJets_b_DeepJetmedium_id.append(ijet)
       if self.year=="2018" and jets[ijet].btagDeepFlavB > 0.7100:
-        tightJets_b_DeepCSVtight_id.append(ijet)
+        tightJets_b_DeepJettight_id.append(ijet)
       
     # HT (sum of all tightjets)
     HT=0
@@ -582,7 +582,7 @@ class BHProducer(Module):
 
     for ijet in range(0, event.nJet):
       if not (ijet in tightJets_id_in24):continue
-      if (ijet in tightJets_b_DeepCSVmedium_id):continue
+      if (ijet in tightJets_b_DeepJetmedium_id):continue
       #loose/mudium WP
       if self.has_cjet_tag:
         if self.year=="2016apv" and jets[ijet].btagDeepFlavCvL>0.098 and jets[ijet].btagDeepFlavCvB<0.37:
@@ -603,9 +603,9 @@ class BHProducer(Module):
   	  tightJets_c_DeepCSVloose_id.append(ijet)
       
     n_tight_jet = len(tightJets_id_in24)
-    n_bjet_DeepB_loose = len(tightJets_b_DeepCSVloose_id)
-    n_bjet_DeepB_medium = len(tightJets_b_DeepCSVmedium_id)
-    n_bjet_DeepB_tight = len(tightJets_b_DeepCSVtight_id)
+    n_bjet_DeepB_loose = len(tightJets_b_DeepJetloose_id)
+    n_bjet_DeepB_medium = len(tightJets_b_DeepJetmedium_id)
+    n_bjet_DeepB_tight = len(tightJets_b_DeepJettight_id)
     n_cjet_DeepB_medium = len(tightJets_c_DeepCSVmedium_id)
     n_cjet_DeepB_loose = len(tightJets_c_DeepCSVloose_id)
     self.out.fillBranch("n_tight_jet",n_tight_jet)
@@ -690,88 +690,88 @@ class BHProducer(Module):
       j1_mass=event.Jet_mass_nom[tightJets_id_in24[0]]
 
     if n_bjet_DeepB_loose > 2:
-      DeepB_loose_j1_pt=event.Jet_pt_nom[tightJets_b_DeepCSVloose_id[0]]
-      DeepB_loose_j1_eta=event.Jet_eta[tightJets_b_DeepCSVloose_id[0]]
-      DeepB_loose_j1_phi=event.Jet_phi[tightJets_b_DeepCSVloose_id[0]]
-      DeepB_loose_j1_mass=event.Jet_mass_nom[tightJets_b_DeepCSVloose_id[0]]
-      DeepB_loose_j2_pt=event.Jet_pt_nom[tightJets_b_DeepCSVloose_id[1]]
-      DeepB_loose_j2_eta=event.Jet_eta[tightJets_b_DeepCSVloose_id[1]]
-      DeepB_loose_j2_phi=event.Jet_phi[tightJets_b_DeepCSVloose_id[1]]
-      DeepB_loose_j2_mass=event.Jet_mass_nom[tightJets_b_DeepCSVloose_id[1]]
-      DeepB_loose_j3_pt=event.Jet_pt_nom[tightJets_b_DeepCSVloose_id[2]]
-      DeepB_loose_j3_eta=event.Jet_eta[tightJets_b_DeepCSVloose_id[2]]
-      DeepB_loose_j3_phi=event.Jet_phi[tightJets_b_DeepCSVloose_id[2]]
-      DeepB_loose_j3_mass=event.Jet_mass_nom[tightJets_b_DeepCSVloose_id[2]]
+      DeepB_loose_j1_pt=event.Jet_pt_nom[tightJets_b_DeepJetloose_id[0]]
+      DeepB_loose_j1_eta=event.Jet_eta[tightJets_b_DeepJetloose_id[0]]
+      DeepB_loose_j1_phi=event.Jet_phi[tightJets_b_DeepJetloose_id[0]]
+      DeepB_loose_j1_mass=event.Jet_mass_nom[tightJets_b_DeepJetloose_id[0]]
+      DeepB_loose_j2_pt=event.Jet_pt_nom[tightJets_b_DeepJetloose_id[1]]
+      DeepB_loose_j2_eta=event.Jet_eta[tightJets_b_DeepJetloose_id[1]]
+      DeepB_loose_j2_phi=event.Jet_phi[tightJets_b_DeepJetloose_id[1]]
+      DeepB_loose_j2_mass=event.Jet_mass_nom[tightJets_b_DeepJetloose_id[1]]
+      DeepB_loose_j3_pt=event.Jet_pt_nom[tightJets_b_DeepJetloose_id[2]]
+      DeepB_loose_j3_eta=event.Jet_eta[tightJets_b_DeepJetloose_id[2]]
+      DeepB_loose_j3_phi=event.Jet_phi[tightJets_b_DeepJetloose_id[2]]
+      DeepB_loose_j3_mass=event.Jet_mass_nom[tightJets_b_DeepJetloose_id[2]]
     if n_bjet_DeepB_loose==2:
-      DeepB_loose_j1_pt=event.Jet_pt_nom[tightJets_b_DeepCSVloose_id[0]]
-      DeepB_loose_j1_eta=event.Jet_eta[tightJets_b_DeepCSVloose_id[0]]
-      DeepB_loose_j1_phi=event.Jet_phi[tightJets_b_DeepCSVloose_id[0]]
-      DeepB_loose_j1_mass=event.Jet_mass_nom[tightJets_b_DeepCSVloose_id[0]]
-      DeepB_loose_j2_pt=event.Jet_pt_nom[tightJets_b_DeepCSVloose_id[1]]
-      DeepB_loose_j2_eta=event.Jet_eta[tightJets_b_DeepCSVloose_id[1]]
-      DeepB_loose_j2_phi=event.Jet_phi[tightJets_b_DeepCSVloose_id[1]]
-      DeepB_loose_j2_mass=event.Jet_mass_nom[tightJets_b_DeepCSVloose_id[1]]
+      DeepB_loose_j1_pt=event.Jet_pt_nom[tightJets_b_DeepJetloose_id[0]]
+      DeepB_loose_j1_eta=event.Jet_eta[tightJets_b_DeepJetloose_id[0]]
+      DeepB_loose_j1_phi=event.Jet_phi[tightJets_b_DeepJetloose_id[0]]
+      DeepB_loose_j1_mass=event.Jet_mass_nom[tightJets_b_DeepJetloose_id[0]]
+      DeepB_loose_j2_pt=event.Jet_pt_nom[tightJets_b_DeepJetloose_id[1]]
+      DeepB_loose_j2_eta=event.Jet_eta[tightJets_b_DeepJetloose_id[1]]
+      DeepB_loose_j2_phi=event.Jet_phi[tightJets_b_DeepJetloose_id[1]]
+      DeepB_loose_j2_mass=event.Jet_mass_nom[tightJets_b_DeepJetloose_id[1]]
     if n_bjet_DeepB_loose==1:
-      DeepB_loose_j1_pt=event.Jet_pt_nom[tightJets_b_DeepCSVloose_id[0]]
-      DeepB_loose_j1_eta=event.Jet_eta[tightJets_b_DeepCSVloose_id[0]]
-      DeepB_loose_j1_phi=event.Jet_phi[tightJets_b_DeepCSVloose_id[0]]
-      DeepB_loose_j1_mass=event.Jet_mass_nom[tightJets_b_DeepCSVloose_id[0]]
+      DeepB_loose_j1_pt=event.Jet_pt_nom[tightJets_b_DeepJetloose_id[0]]
+      DeepB_loose_j1_eta=event.Jet_eta[tightJets_b_DeepJetloose_id[0]]
+      DeepB_loose_j1_phi=event.Jet_phi[tightJets_b_DeepJetloose_id[0]]
+      DeepB_loose_j1_mass=event.Jet_mass_nom[tightJets_b_DeepJetloose_id[0]]
 
     if n_bjet_DeepB_medium > 2:
-      DeepB_medium_j1_pt=event.Jet_pt_nom[tightJets_b_DeepCSVmedium_id[0]]
-      DeepB_medium_j1_eta=event.Jet_eta[tightJets_b_DeepCSVmedium_id[0]]
-      DeepB_medium_j1_phi=event.Jet_phi[tightJets_b_DeepCSVmedium_id[0]]
-      DeepB_medium_j1_mass=event.Jet_mass_nom[tightJets_b_DeepCSVmedium_id[0]]
-      DeepB_medium_j2_pt=event.Jet_pt_nom[tightJets_b_DeepCSVmedium_id[1]]
-      DeepB_medium_j2_eta=event.Jet_eta[tightJets_b_DeepCSVmedium_id[1]]
-      DeepB_medium_j2_phi=event.Jet_phi[tightJets_b_DeepCSVmedium_id[1]]
-      DeepB_medium_j2_mass=event.Jet_mass_nom[tightJets_b_DeepCSVmedium_id[1]]
-      DeepB_medium_j3_pt=event.Jet_pt_nom[tightJets_b_DeepCSVmedium_id[2]]
-      DeepB_medium_j3_eta=event.Jet_eta[tightJets_b_DeepCSVmedium_id[2]]
-      DeepB_medium_j3_phi=event.Jet_phi[tightJets_b_DeepCSVmedium_id[2]]
-      DeepB_medium_j3_mass=event.Jet_mass_nom[tightJets_b_DeepCSVmedium_id[2]]
+      DeepB_medium_j1_pt=event.Jet_pt_nom[tightJets_b_DeepJetmedium_id[0]]
+      DeepB_medium_j1_eta=event.Jet_eta[tightJets_b_DeepJetmedium_id[0]]
+      DeepB_medium_j1_phi=event.Jet_phi[tightJets_b_DeepJetmedium_id[0]]
+      DeepB_medium_j1_mass=event.Jet_mass_nom[tightJets_b_DeepJetmedium_id[0]]
+      DeepB_medium_j2_pt=event.Jet_pt_nom[tightJets_b_DeepJetmedium_id[1]]
+      DeepB_medium_j2_eta=event.Jet_eta[tightJets_b_DeepJetmedium_id[1]]
+      DeepB_medium_j2_phi=event.Jet_phi[tightJets_b_DeepJetmedium_id[1]]
+      DeepB_medium_j2_mass=event.Jet_mass_nom[tightJets_b_DeepJetmedium_id[1]]
+      DeepB_medium_j3_pt=event.Jet_pt_nom[tightJets_b_DeepJetmedium_id[2]]
+      DeepB_medium_j3_eta=event.Jet_eta[tightJets_b_DeepJetmedium_id[2]]
+      DeepB_medium_j3_phi=event.Jet_phi[tightJets_b_DeepJetmedium_id[2]]
+      DeepB_medium_j3_mass=event.Jet_mass_nom[tightJets_b_DeepJetmedium_id[2]]
     if n_bjet_DeepB_medium==2:
-      DeepB_medium_j1_pt=event.Jet_pt_nom[tightJets_b_DeepCSVmedium_id[0]]
-      DeepB_medium_j1_eta=event.Jet_eta[tightJets_b_DeepCSVmedium_id[0]]
-      DeepB_medium_j1_phi=event.Jet_phi[tightJets_b_DeepCSVmedium_id[0]]
-      DeepB_medium_j1_mass=event.Jet_mass_nom[tightJets_b_DeepCSVmedium_id[0]]
-      DeepB_medium_j2_pt=event.Jet_pt_nom[tightJets_b_DeepCSVmedium_id[1]]
-      DeepB_medium_j2_eta=event.Jet_eta[tightJets_b_DeepCSVmedium_id[1]]
-      DeepB_medium_j2_phi=event.Jet_phi[tightJets_b_DeepCSVmedium_id[1]]
-      DeepB_medium_j2_mass=event.Jet_mass_nom[tightJets_b_DeepCSVmedium_id[1]]
+      DeepB_medium_j1_pt=event.Jet_pt_nom[tightJets_b_DeepJetmedium_id[0]]
+      DeepB_medium_j1_eta=event.Jet_eta[tightJets_b_DeepJetmedium_id[0]]
+      DeepB_medium_j1_phi=event.Jet_phi[tightJets_b_DeepJetmedium_id[0]]
+      DeepB_medium_j1_mass=event.Jet_mass_nom[tightJets_b_DeepJetmedium_id[0]]
+      DeepB_medium_j2_pt=event.Jet_pt_nom[tightJets_b_DeepJetmedium_id[1]]
+      DeepB_medium_j2_eta=event.Jet_eta[tightJets_b_DeepJetmedium_id[1]]
+      DeepB_medium_j2_phi=event.Jet_phi[tightJets_b_DeepJetmedium_id[1]]
+      DeepB_medium_j2_mass=event.Jet_mass_nom[tightJets_b_DeepJetmedium_id[1]]
     if n_bjet_DeepB_medium==1:
-      DeepB_medium_j1_pt=event.Jet_pt_nom[tightJets_b_DeepCSVmedium_id[0]]
-      DeepB_medium_j1_eta=event.Jet_eta[tightJets_b_DeepCSVmedium_id[0]]
-      DeepB_medium_j1_phi=event.Jet_phi[tightJets_b_DeepCSVmedium_id[0]]
-      DeepB_medium_j1_mass=event.Jet_mass_nom[tightJets_b_DeepCSVmedium_id[0]]
+      DeepB_medium_j1_pt=event.Jet_pt_nom[tightJets_b_DeepJetmedium_id[0]]
+      DeepB_medium_j1_eta=event.Jet_eta[tightJets_b_DeepJetmedium_id[0]]
+      DeepB_medium_j1_phi=event.Jet_phi[tightJets_b_DeepJetmedium_id[0]]
+      DeepB_medium_j1_mass=event.Jet_mass_nom[tightJets_b_DeepJetmedium_id[0]]
 
     if n_bjet_DeepB_tight > 2:
-      DeepB_tight_j1_pt=event.Jet_pt_nom[tightJets_b_DeepCSVtight_id[0]]
-      DeepB_tight_j1_eta=event.Jet_eta[tightJets_b_DeepCSVtight_id[0]]
-      DeepB_tight_j1_phi=event.Jet_phi[tightJets_b_DeepCSVtight_id[0]]
-      DeepB_tight_j1_mass=event.Jet_mass_nom[tightJets_b_DeepCSVtight_id[0]]
-      DeepB_tight_j2_pt=event.Jet_pt_nom[tightJets_b_DeepCSVtight_id[1]]
-      DeepB_tight_j2_eta=event.Jet_eta[tightJets_b_DeepCSVtight_id[1]]
-      DeepB_tight_j2_phi=event.Jet_phi[tightJets_b_DeepCSVtight_id[1]]
-      DeepB_tight_j2_mass=event.Jet_mass_nom[tightJets_b_DeepCSVtight_id[1]]
-      DeepB_tight_j3_pt=event.Jet_pt_nom[tightJets_b_DeepCSVtight_id[2]]
-      DeepB_tight_j3_eta=event.Jet_eta[tightJets_b_DeepCSVtight_id[2]]
-      DeepB_tight_j3_phi=event.Jet_phi[tightJets_b_DeepCSVtight_id[2]]
-      DeepB_tight_j3_mass=event.Jet_mass_nom[tightJets_b_DeepCSVtight_id[2]]
+      DeepB_tight_j1_pt=event.Jet_pt_nom[tightJets_b_DeepJettight_id[0]]
+      DeepB_tight_j1_eta=event.Jet_eta[tightJets_b_DeepJettight_id[0]]
+      DeepB_tight_j1_phi=event.Jet_phi[tightJets_b_DeepJettight_id[0]]
+      DeepB_tight_j1_mass=event.Jet_mass_nom[tightJets_b_DeepJettight_id[0]]
+      DeepB_tight_j2_pt=event.Jet_pt_nom[tightJets_b_DeepJettight_id[1]]
+      DeepB_tight_j2_eta=event.Jet_eta[tightJets_b_DeepJettight_id[1]]
+      DeepB_tight_j2_phi=event.Jet_phi[tightJets_b_DeepJettight_id[1]]
+      DeepB_tight_j2_mass=event.Jet_mass_nom[tightJets_b_DeepJettight_id[1]]
+      DeepB_tight_j3_pt=event.Jet_pt_nom[tightJets_b_DeepJettight_id[2]]
+      DeepB_tight_j3_eta=event.Jet_eta[tightJets_b_DeepJettight_id[2]]
+      DeepB_tight_j3_phi=event.Jet_phi[tightJets_b_DeepJettight_id[2]]
+      DeepB_tight_j3_mass=event.Jet_mass_nom[tightJets_b_DeepJettight_id[2]]
     if n_bjet_DeepB_tight==2:
-      DeepB_tight_j1_pt=event.Jet_pt_nom[tightJets_b_DeepCSVtight_id[0]]
-      DeepB_tight_j1_eta=event.Jet_eta[tightJets_b_DeepCSVtight_id[0]]
-      DeepB_tight_j1_phi=event.Jet_phi[tightJets_b_DeepCSVtight_id[0]]
-      DeepB_tight_j1_mass=event.Jet_mass_nom[tightJets_b_DeepCSVtight_id[0]]
-      DeepB_tight_j2_pt=event.Jet_pt_nom[tightJets_b_DeepCSVtight_id[1]]
-      DeepB_tight_j2_eta=event.Jet_eta[tightJets_b_DeepCSVtight_id[1]]
-      DeepB_tight_j2_phi=event.Jet_phi[tightJets_b_DeepCSVtight_id[1]]
-      DeepB_tight_j2_mass=event.Jet_mass_nom[tightJets_b_DeepCSVtight_id[1]]
+      DeepB_tight_j1_pt=event.Jet_pt_nom[tightJets_b_DeepJettight_id[0]]
+      DeepB_tight_j1_eta=event.Jet_eta[tightJets_b_DeepJettight_id[0]]
+      DeepB_tight_j1_phi=event.Jet_phi[tightJets_b_DeepJettight_id[0]]
+      DeepB_tight_j1_mass=event.Jet_mass_nom[tightJets_b_DeepJettight_id[0]]
+      DeepB_tight_j2_pt=event.Jet_pt_nom[tightJets_b_DeepJettight_id[1]]
+      DeepB_tight_j2_eta=event.Jet_eta[tightJets_b_DeepJettight_id[1]]
+      DeepB_tight_j2_phi=event.Jet_phi[tightJets_b_DeepJettight_id[1]]
+      DeepB_tight_j2_mass=event.Jet_mass_nom[tightJets_b_DeepJettight_id[1]]
     if n_bjet_DeepB_tight==1:
-      DeepB_tight_j1_pt=event.Jet_pt_nom[tightJets_b_DeepCSVtight_id[0]]
-      DeepB_tight_j1_eta=event.Jet_eta[tightJets_b_DeepCSVtight_id[0]]
-      DeepB_tight_j1_phi=event.Jet_phi[tightJets_b_DeepCSVtight_id[0]]
-      DeepB_tight_j1_mass=event.Jet_mass_nom[tightJets_b_DeepCSVtight_id[0]]
+      DeepB_tight_j1_pt=event.Jet_pt_nom[tightJets_b_DeepJettight_id[0]]
+      DeepB_tight_j1_eta=event.Jet_eta[tightJets_b_DeepJettight_id[0]]
+      DeepB_tight_j1_phi=event.Jet_phi[tightJets_b_DeepJettight_id[0]]
+      DeepB_tight_j1_mass=event.Jet_mass_nom[tightJets_b_DeepJettight_id[0]]
 
 
     if n_cjet_DeepB_medium>1:
@@ -895,13 +895,17 @@ class BHProducer(Module):
 
     tightJets_id_in24.extend(np.zeros(event.nJet-len(tightJets_id_in24),int)-1)
     tightJets_id_in47.extend(np.zeros(event.nJet-len(tightJets_id_in47),int)-1)
-    tightJets_b_DeepCSVmedium_id.extend(np.zeros(event.nJet-len(tightJets_b_DeepCSVmedium_id),int)-1)
+    tightJets_b_DeepJetloose_id.extend(np.zeros(event.nJet-len(tightJets_b_DeepJetloose_id),int)-1)
+    tightJets_b_DeepJetmedium_id.extend(np.zeros(event.nJet-len(tightJets_b_DeepJetmedium_id),int)-1)
+    tightJets_b_DeepJettight_id.extend(np.zeros(event.nJet-len(tightJets_b_DeepJettight_id),int)-1)
     tightJets_c_DeepCSVmedium_id.extend(np.zeros(event.nJet-len(tightJets_c_DeepCSVmedium_id),int)-1)
     tightJets_c_DeepCSVloose_id.extend(np.zeros(event.nJet-len(tightJets_c_DeepCSVloose_id),int)-1)
 
     self.out.fillBranch("tightJets_id_in24",tightJets_id_in24)
     self.out.fillBranch("tightJets_id_in47",tightJets_id_in47)
-    self.out.fillBranch("tightJets_b_DeepCSVmedium_id",tightJets_b_DeepCSVmedium_id)
+    self.out.fillBranch("tightJets_b_DeepJetloose_id",tightJets_b_DeepJetloose_id)
+    self.out.fillBranch("tightJets_b_DeepJetmedium_id",tightJets_b_DeepJetmedium_id)
+    self.out.fillBranch("tightJets_b_DeepJettight_id",tightJets_b_DeepJettight_id)
     self.out.fillBranch("tightJets_c_DeepCSVmedium_id",tightJets_c_DeepCSVmedium_id)
     self.out.fillBranch("tightJets_c_DeepCSVloose_id",tightJets_c_DeepCSVloose_id)
 
@@ -1124,7 +1128,7 @@ class BHProducer(Module):
     if len(tightLeptons)==3 and tightLeptons[1].Pt()>20 and len(looseLeptons)==0:
       WZ_nl=True
     # no bjet
-    if WZ_nl and tightJets_b_DeepCSVmedium_id[0]==-1:
+    if WZ_nl and tightJets_b_DeepJetmedium_id[0]==-1:
       WZ_nb=True
 
     # mll>4 regardless the flavor and charge sign
