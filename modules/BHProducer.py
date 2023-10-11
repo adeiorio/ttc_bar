@@ -363,11 +363,14 @@ class BHProducer(Module):
     looseLeptons = additional_looseMuons + additional_vetoElectrons
     looseLeptons.sort(key=lambda x: x.Pt(), reverse=True)
 
+    # gkole turn off for revert back to set-I
+    '''
     if len(tightLeptons)<1:return False  
     if self.is_mc:
       if event.MET_T1Smear_pt < 30: return False
     else:
       if event.MET_T1_pt < 30: return False
+    '''
     
     #################
     # Tau collection:
@@ -557,7 +560,7 @@ class BHProducer(Module):
 
     # gkole try (28/09/2023)
     if n_tight_jet < 2: return False
-    if n_bjet_DeepB_medium < 1: return False
+    # if n_bjet_DeepB_medium < 1: return False
 
     self.out.fillBranch("n_tight_jet",n_tight_jet)
     self.out.fillBranch("n_bjet_DeepB_loose",n_bjet_DeepB_loose)
