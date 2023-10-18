@@ -1,4 +1,5 @@
 #!/bin/env python3
+#python check_crab_status.py --match "SingleMuon" --clean
 
 import os
 import sys
@@ -12,9 +13,9 @@ parser = ArgumentParser()
 # Add more options if you like
 parser.add_argument("--match", dest="match", default="",
                     help="When reading CRAB tasks, take only tasks whose names contain this string")
-
+parser.add_argument("-clean", "--clean", action="store_true", dest="clean", default=False,
+                    help="use this flag to clean crab.log inside every input directory")
 opts = parser.parse_args()
-
 
 
 def getFinalCRABDir(opts, crabdir):
@@ -40,5 +41,10 @@ for filen in filesfolders:
            
               print(os.popen("crab status -d "+filen).read())
               print 50*"="
+              # delete crab.log file
+              if (opts.clean):
+                 delcmd = "rm "+filen+"/crab.log"
+                 print colors.colordict['ORANGE'] + delcmd + colors.colordict['CEND']
+                 os.system(delcmd)
            
             
