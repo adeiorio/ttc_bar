@@ -21,7 +21,7 @@ config.Data.inputDBS = 'global'
 config.Data.splitting = 'LumiBased'
 config.Data.unitsPerJob = 80
 config.Data.lumiMask = 'dummy'
-config.Data.outLFNDirBase = '/store/group/phys_top/ExtraYukawa/TTC_version9/'
+config.Data.outLFNDirBase = '/store/group/phys_b2g/ExYukawa/bHplus/2017/'
 config.Data.publication = False
 config.Data.outputDatasetTag = 'dummy'
 
