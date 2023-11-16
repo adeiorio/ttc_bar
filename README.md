@@ -6,8 +6,8 @@
 ```
 # At cmslpc first do: source /cvmfs/cms.cern.ch/cmsset_default.csh
 # And if you are going to use condor/crab at cmslpc, do: voms-proxy-init --valid 192:00 -voms cms
-cmsrel CMSSW_10_6_29
-cd CMSSW_10_6_29/src
+cmsrel CMSSW_10_6_30
+cd CMSSW_10_6_30/src
 git clone https://github.com/cms-nanoAOD/nanoAOD-tools.git PhysicsTools/NanoAODTools
 cd PhysicsTools/NanoAODTools
 cmsenv
