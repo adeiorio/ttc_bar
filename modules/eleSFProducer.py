@@ -62,7 +62,7 @@ class eleRECOIDSF(Module):
         Electron_MVAFall17V2noIso_WP90_SF = []
         Electron_MVAFall17V2noIso_WP90_SFerr = []    
         for ele in electrons:
-            print("pt ", ele.pt, " eta ", ele.eta)
+            # print("pt ", ele.pt, " eta ", ele.eta)
             if ele.pt <= 10:
                 Electron_RECO_SF.append(1.0) #self.evaluator["UL-Electron-ID-SF"].evaluate(self.era,"sf","RecoBelow20", ele.eta, 10.1))
                 Electron_RECO_SFerr.append(0.0) #(self.evaluator["UL-Electron-ID-SF"].evaluate(self.era,"sfup","RecoBelow20", ele.eta, 10.1) - self.evaluator["UL-Electron-ID-SF"].evaluate(self.era,"sfdown","RecoBelow20", ele.eta, 10.1))/2)
