@@ -1,6 +1,6 @@
 #==============
 # Last used:
-# python submit_and_delete_unnecessary_files.py --i "config_crab_2016_signal_11"
+# python submit_and_delete_unnecessary_files.py -i "bhplus_config_crab_2017"
 #==============
 
 #!/bin/env python3
@@ -9,6 +9,7 @@ import os
 import sys
 import re
 import argparse
+from PhysicsTools.NanoAODTools.postprocessing.analysis.scripts.aux import colors
 
 usage = 'usage: %prog [options]'
 parser = argparse.ArgumentParser(description=usage)
@@ -17,10 +18,10 @@ parser.add_argument("--submit", action="store_true")
 args = parser.parse_args()
 
 if args.indir is None:
-    print ("Provide one directory (-i dir_name) with input crab config files")
+    print (colors.colordict['ORANGE']+"Provide one directory (-i dir_name) with input crab config files"+colors.colordict['CEND'])
     sys.exit(1)
 if not args.submit:
-    print ("It was just a test, do ( --submit) for actual submission")
+    print (colors.colordict["ORANGE"]+"It was just a test, "+colors.colordict['CEND']+colors.colordict["GREEN"]+ "do ( --submit) for actual submission"+colors.colordict['CEND'])
     sys.exit(1)
 
 path = args.indir
@@ -28,7 +29,7 @@ files = os.listdir(path)
 for file in files:
     if os.path.isfile(os.path.join(path, file)):
         if ".pyc" not in file and "init" not in file  and "list_input_sample" not in file and file.endswith("py"):
-            print "crab submit -c "+path+"/"+file
+            print (colors.colordict["GREEN"]+"crab submit -c "+path+"/"+file+colors.colordict['CEND'])
             os.popen("crab submit -c "+path+"/"+file).read()
             # latest directory
             fld = os.popen('ls -td -- */ | head -n 1').read().rstrip()
