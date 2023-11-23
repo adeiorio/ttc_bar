@@ -212,5 +212,5 @@ class btagSFProducer(Module):
 # define modules using the syntax 'name = lambda : constructor' to avoid having them loaded when not needed
 btagSF2016ULapv = lambda: btagSFProducer("2016preVFP_UL", "deepJet", "all")
 btagSF2016UL = lambda: btagSFProducer("2016postVFP_UL", "deepJet", "all")
-btagSF2017UL = lambda: btagSFProducer("2017_UL", "deepJet", "shape")
+btagSF2017UL = lambda: btagSFProducer("2017_UL", "deepJet", "all")
 btagSF2018UL = lambda: btagSFProducer("2018_UL", "deepJet", "all")
