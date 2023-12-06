@@ -22,9 +22,13 @@ class BHProducer(Module):
     self.out.branch("HLT_passEle32WPTight", "I")
     self.out.branch("lhe_nlepton", "I")
     self.out.branch("n_tight_muon", "I")
+    self.out.branch("n_tight_muon_noIso", "I")
     self.out.branch("n_loose_muon", "I")
+    self.out.branch("n_loose_muon_noIso", "I")
     self.out.branch("n_tight_ele", "I")
+    self.out.branch("n_tight_ele_noIso", "I")
     self.out.branch("n_loose_ele", "I")
+    self.out.branch("n_loose_ele_noIso", "I")
     self.out.branch("btag_SFall", "F")
     self.out.branch("n_tight_jet", "I")
     self.out.branch("n_bjet_DeepB_loose", "I")
@@ -135,6 +139,15 @@ class BHProducer(Module):
     self.out.branch("bh_mlb1b2", "F")
     self.out.branch("bh_mlb1b3", "F")
     self.out.branch("bh_mlb2b3", "F")
+    self.out.branch("boost_region", "I")
+    self.out.branch("boost_l1_id", "I")
+    self.out.branch("boost_l1_pdgid", "I")
+    self.out.branch("boost_l1_pt", "F")
+    self.out.branch("boost_l1_eta", "F")
+    self.out.branch("boost_l1_phi", "F")
+    self.out.branch("boost_l1_mass", "F")
+    self.out.branch("boost_met" ,"F")
+    self.out.branch("boost_met_phi", "F")
     self.out.branch("WZ_region", "I")
     self.out.branch("WZ_zl1_id", "I")
     self.out.branch("WZ_zl2_id", "I")
@@ -183,9 +196,13 @@ class BHProducer(Module):
     self.out.branch("tightJets_b_DeepJetmedium_id","I",lenVar="nJet")
     self.out.branch("tightJets_b_DeepJettight_id","I",lenVar="nJet")
     self.out.branch("tightElectrons_id","I",lenVar="nElectron")
+    self.out.branch("tightElectrons_noIso_id", "I", lenVar="nElectron")
     self.out.branch("additional_vetoElectrons_id","I",lenVar="nElectron")
+    self.out.branch("additional_vetoElectrons_noIso_id","I",lenVar="nElectron")
     self.out.branch("tightMuons_id","I",lenVar="nMuon")
+    self.out.branch("tightMuons_noIso_id", "I", lenVar="nMuon")
     self.out.branch("additional_looseMuons_id","I",lenVar="nMuon")
+    self.out.branch("additional_looseMuons_noIso_id", "I", lenVar="nMuon")
     self.out.branch("Had_tau_id","I",lenVar="nTau")
     self.out.branch("muon_jet_Ptratio","F",lenVar="nMuon")
     self.out.branch("muon_closest_jetid","I",lenVar="nMuon")
@@ -229,28 +246,39 @@ class BHProducer(Module):
     if not event.nJet>1: return False # meant at least two jets
 
     # lepton pt threshold according to the HLT
-    if self.year=="2016apv":
-      ele_pt=30
-      muon_pt=26
-    if self.year=="2016":
-      ele_pt=30
-      muon_pt=26
-    if self.year=="2017":
-      ele_pt=35
-      muon_pt=30
-    if self.year=="2018":
-      ele_pt=35
-      muon_pt=26
+    #if self.year=="2016apv":
+    #  ele_pt=30
+    #  muon_pt=26
+    #if self.year=="2016":
+    #  ele_pt=30
+    #  muon_pt=26
+    #if self.year=="2017":
+    #  ele_pt=35
+    #  muon_pt=30
+    #if self.year=="2018":
+    #  ele_pt=35
+    #  muon_pt=26
+
+    ele_pt = 20
+    muon_pt = 20
 
     # Muon selection: tight cut-based ID + tight PF iso, or loose cut-based ID + loose PF iso, with pt > 20 GeV
     muons = Collection(event, 'Muon')
     muon_v4_temp=TLorentzVector()
+
     tightMuons = []
     tightMuons_pdgid = []
     tightMuons_id = []
     additional_looseMuons = []
     additional_looseMuons_pdgid = []
     additional_looseMuons_id = []
+
+    tightMuons_noIso = []
+    tightMuons_noIso_pdgid = []
+    tightMuons_noIso_id = []
+    additional_looseMuons_noIso = []
+    additional_looseMuons_noIso_pdgid = []
+    additional_looseMuons_noIso_id = [] 
 
     muon_jet_Ptratio = []
     muon_closest_jetid = []
@@ -275,14 +303,15 @@ class BHProducer(Module):
     
     # Main muon loop
     for imu in range(0, event.nMuon):
-      if (muons[imu].tightId):
-        if (muons[imu].pfRelIso04_all<0.15 and abs(muons[imu].eta)<2.4 and event.Muon_corrected_pt[imu]>15):
+      # topMVA ID: 1:VLoose 2: Loose 3: Medium 4: Tight
+      if (muons[imu].topMVA_ID>2):
+        if (abs(muons[imu].eta)<2.4 and event.Muon_corrected_pt[imu]>20):
           muon_v4_temp.SetPtEtaPhiM(event.Muon_corrected_pt[imu], muons[imu].eta, muons[imu].phi, muons[imu].mass)
           tightMuons.append(muon_v4_temp.Clone())
           tightMuons_pdgid.append(muons[imu].pdgId)
           tightMuons_id.append(imu)
-      elif (muons[imu].looseId):
-        if (muons[imu].pfRelIso04_all<0.25 and abs(muons[imu].eta)<2.4 and event.Muon_corrected_pt[imu]>15):
+      elif (muons[imu].topMVA_ID>1):
+        if (abs(muons[imu].eta)<2.4 and event.Muon_corrected_pt[imu]>10):
           muon_v4_temp.SetPtEtaPhiM(event.Muon_corrected_pt[imu], muons[imu].eta, muons[imu].phi, muons[imu].mass)
           additional_looseMuons.append(muon_v4_temp.Clone())
           additional_looseMuons_pdgid.append(muons[imu].pdgId)
@@ -291,12 +320,35 @@ class BHProducer(Module):
     n_tight_muon = len(tightMuons)
     n_loose_muon = len(additional_looseMuons)
 
+    # noIso muon loop
+    for imu in range(0, event.nMuon):
+      if (muons[imu].mediumId):
+        if (abs(muons[imu].eta)<2.4 and event.Muon_corrected_pt[imu]>20):
+          muon_v4_temp.SetPtEtaPhiM(event.Muon_corrected_pt[imu], muons[imu].eta, muons[imu].phi, muons[imu].mass)
+          tightMuons_noIso.append(muon_v4_temp.Clone())
+          tightMuons_noIso_pdgid.append(muons[imu].pdgId)
+          tightMuons_noIso_id.append(imu)
+      elif (muons[imu].topMVA_ID>1):
+        if (abs(muons[imu].eta)<2.5 and event.Muon_corrected_pt[imu]>10):
+         muon_v4_temp.SetPtEtaPhiM(event.Muon_corrected_pt[imu], muons[imu].eta, muons[imu].phi, muons[imu].mass)
+         additional_looseMuons_noIso.append(muon_v4_temp.Clone())
+         additional_looseMuons_noIso_pdgid.append(muons[imu].pdgId)
+         additional_looseMuons_noIso_id.append(imu)
+    n_tight_muon_noIso = len(tightMuons_noIso)
+    n_loose_muon_noIso = len(additional_looseMuons_noIso)
+
     self.out.fillBranch("n_tight_muon", n_tight_muon)
     self.out.fillBranch("n_loose_muon", n_loose_muon)
     tightMuons_id.extend(np.zeros(event.nMuon-len(tightMuons_id),int)-1)
     additional_looseMuons_id.extend(np.zeros(event.nMuon-len(additional_looseMuons_id),int)-1)
     self.out.fillBranch("tightMuons_id", tightMuons_id)
     self.out.fillBranch("additional_looseMuons_id", additional_looseMuons_id)
+    self.out.fillBranch("n_tight_muon_noIso", n_tight_muon_noIso)
+    self.out.fillBranch("n_loose_muon_noIso", n_loose_muon_noIso)
+    tightMuons_noIso_id.extend(np.zeros(event.nMuon-len(tightMuons_noIso_id), int)-1)
+    additional_looseMuons_noIso_id.extend(np.zeros(event.nMuon-len(additional_looseMuons_noIso_id),int)-1)
+    self.out.fillBranch("tightMuons_noIso_id", tightMuons_noIso_id)
+    self.out.fillBranch("additional_looseMuons_noIso_id", additional_looseMuons_noIso_id)
     self.out.fillBranch("muon_jet_Ptratio", muon_jet_Ptratio)
     self.out.fillBranch("muon_closest_jetid", muon_closest_jetid)
 
@@ -309,6 +361,13 @@ class BHProducer(Module):
     additional_vetoElectrons = []
     additional_vetoElectrons_pdgid = []
     additional_vetoElectrons_id = []
+
+    tightElectrons_noIso = []
+    tightElectrons_noIso_pdgid = []
+    tightElectrons_noIso_id = []
+    additional_vetoElectrons_noIso = []
+    additional_vetoElectrons_noIso_pdgid = []
+    additional_vetoElectrons_noIso_id = []
 
     electron_jet_Ptratio = []
     electron_closest_jetid = []
@@ -332,21 +391,38 @@ class BHProducer(Module):
     
     #Main electron loop
     for iele in range(0, event.nElectron):
-      if (electrons[iele].cutBased==4):
-        if (((abs(electrons[iele].eta+electrons[iele].deltaEtaSC) <1.4442 and abs(electrons[iele].dxy)<0.05 and abs(electrons[iele].dz)<0.1) or (abs(electrons[iele].eta + electrons[iele].deltaEtaSC)>1.566 and abs(electrons[iele].eta + electrons[iele].deltaEtaSC)<2.4 and abs(electrons[iele].dxy)<0.1 and abs(electrons[iele].dz)<0.2)) and electrons[iele].pt>15):
+      if (electrons[iele].topMVA_ID>2):
+        if (((abs(electrons[iele].eta+electrons[iele].deltaEtaSC) <1.4442 and abs(electrons[iele].dxy)<0.05 and abs(electrons[iele].dz)<0.1) or (abs(electrons[iele].eta + electrons[iele].deltaEtaSC)>1.566 and abs(electrons[iele].eta + electrons[iele].deltaEtaSC)<2.4 and abs(electrons[iele].dxy)<0.1 and abs(electrons[iele].dz)<0.2)) and electrons[iele].pt>20):
           electron_v4_temp.SetPtEtaPhiM(electrons[iele].pt, electrons[iele].eta, electrons[iele].phi, electrons[iele].mass)
           tightElectrons.append(electron_v4_temp.Clone())
           tightElectrons_pdgid.append(electrons[iele].pdgId)
           tightElectrons_id.append(iele)
-      elif (electrons[iele].cutBased>0):
-        if (((abs(electrons[iele].eta+electrons[iele].deltaEtaSC) <1.4442 and abs(electrons[iele].dxy)<0.05 and abs(electrons[iele].dz)<0.1) or (abs(electrons[iele].eta + electrons[iele].deltaEtaSC)>1.566 and abs(electrons[iele].eta + electrons[iele].deltaEtaSC)<2.4 and abs(electrons[iele].dxy)<0.1 and abs(electrons[iele].dz)<0.2)) and electrons[iele].pt>15):
+      elif (electrons[iele].topMVA_ID>1):
+        if (((abs(electrons[iele].eta+electrons[iele].deltaEtaSC) <1.4442 and abs(electrons[iele].dxy)<0.05 and abs(electrons[iele].dz)<0.1) or (abs(electrons[iele].eta + electrons[iele].deltaEtaSC)>1.566 and abs(electrons[iele].eta + electrons[iele].deltaEtaSC)<2.4 and abs(electrons[iele].dxy)<0.1 and abs(electrons[iele].dz)<0.2)) and electrons[iele].pt>10):
           electron_v4_temp.SetPtEtaPhiM(electrons[iele].pt, electrons[iele].eta, electrons[iele].phi, electrons[iele].mass)
           additional_vetoElectrons.append(electron_v4_temp.Clone())
           additional_vetoElectrons_pdgid.append(electrons[iele].pdgId)
           additional_vetoElectrons_id.append(iele)
 
+    for iele in range(0, event.nElectron):
+      if (electrons[iele].mvaFall17V2noIso_WP90):
+        if (((abs(electrons[iele].eta+electrons[iele].deltaEtaSC) <1.4442 and abs(electrons[iele].dxy)<0.05 and abs(electrons[iele].dz)<0.1) or (abs(electrons[iele].eta + electrons[iele].deltaEtaSC)>1.566 and abs(electrons[iele].eta + electrons[iele].deltaEtaSC)<2.4 and abs(electrons[iele].dxy)<0.1 and abs(electrons[iele].dz)<0.2)) and electrons[iele].pt>20): 
+          electron_v4_temp.SetPtEtaPhiM(electrons[iele].pt, electrons[iele].eta, electrons[iele].phi, electrons[iele].mass)
+          tightElectrons_noIso.append(electron_v4_temp.Clone())
+          tightElectrons_noIso_pdgid.append(electrons[iele].pdgId)
+          tightElectrons_noIso_id.append(iele)
+      elif (electrons[iele].topMVA_ID>1):
+        if (((abs(electrons[iele].eta+electrons[iele].deltaEtaSC) <1.4442 and abs(electrons[iele].dxy)<0.05 and abs(electrons[iele].dz)<0.1) or (abs(electrons[iele].eta + electrons[iele].deltaEtaSC)>1.566 and abs(electrons[iele].eta + electrons[iele].deltaEtaSC)<2.4 and abs(electrons[iele].dxy)<0.1 and abs(electrons[iele].dz)<0.2)) and electrons[iele].pt>10):
+          electron_v4_temp.SetPtEtaPhiM(electrons[iele].pt, electrons[iele].eta, electrons[iele].phi, electrons[iele].mass)
+          additional_vetoElectrons_noIso.append(electron_v4_temp.Clone())
+          additional_vetoElectrons_noIso_pdgid.append(electrons[iele].pdgId)
+          additional_vetoElectrons_noIso_id.append(iele)
+      
+
     n_tight_ele = len(tightElectrons)
     n_loose_ele = len(additional_vetoElectrons)
+    n_tight_ele_noIso = len(tightElectrons_noIso)
+    n_loose_ele_noIso = len(additional_vetoElectrons_noIso)
 
     self.out.fillBranch("n_tight_ele", n_tight_ele)
     self.out.fillBranch("n_loose_ele", n_loose_ele)
@@ -354,6 +430,12 @@ class BHProducer(Module):
     additional_vetoElectrons_id.extend(np.zeros(event.nElectron-len(additional_vetoElectrons_id),int)-1)
     self.out.fillBranch("tightElectrons_id", tightElectrons_id)
     self.out.fillBranch("additional_vetoElectrons_id", additional_vetoElectrons_id)
+    self.out.fillBranch("n_tight_ele_noIso", n_tight_ele_noIso)
+    self.out.fillBranch("n_loose_ele_noIso", n_loose_ele_noIso) 
+    tightElectrons_noIso_id.extend(np.zeros(event.nElectron-len(tightElectrons_noIso_id),int)-1)
+    additional_vetoElectrons_noIso_id.extend(np.zeros(event.nElectron-len(additional_vetoElectrons_noIso_id), int)-1)
+    self.out.fillBranch("tightElectrons_noIso_id", tightElectrons_noIso_id)
+    self.out.fillBranch("additional_vetoElectrons_noIso_id", additional_vetoElectrons_noIso_id)
     self.out.fillBranch("electron_jet_Ptratio", electron_jet_Ptratio)
     self.out.fillBranch("electron_closest_jetid", electron_closest_jetid)
 
@@ -363,6 +445,10 @@ class BHProducer(Module):
     looseLeptons = additional_looseMuons + additional_vetoElectrons
     looseLeptons.sort(key=lambda x: x.Pt(), reverse=True)
 
+    tightLeptons_noIso = tightMuons_noIso + tightElectrons_noIso
+    tightLeptons_noIso.sort(key=lambda x: x.Pt(), reverse=True)
+    looseLeptons_noIso = additional_looseMuons_noIso + additional_vetoElectrons_noIso
+    looseLeptons_noIso.sort(key=lambda x: x.Pt(), reverse=True)
     # gkole turn off for revert back to set-I
     '''
     if len(tightLeptons)<1:return False  
@@ -987,6 +1073,53 @@ class BHProducer(Module):
     self.out.fillBranch("bh_mlb1b3", bh_mlb1b3)
     self.out.fillBranch("bh_mlb2b3", bh_mlb2b3)
 
+    ####################
+    ## Boosted Region ##
+    ####################
+
+    boost_region=0
+    boost_l1_id=-1
+    boost_l1_pdgid=-99
+    boost_l1_pt=-99
+    boost_l1_eta=-99
+    boost_l1_phi=-99
+    boost_l1_mass=-99
+    boost_met=-99
+    boost_met_phi=-99
+    if len(tightLeptons_noIso)==1 and len(looseLeptons_noIso)==0:
+      if (n_tight_muon_noIso == 1 and tightMuons_noIso[0].Pt() > muon_pt):
+        boost_region = 1
+        boost_l1_id = tightMuons_noIso_id[0]
+        boost_l1_pdgid = tightMuons_noIso_pdgid[0]
+        boost_l1_pt = tightMuons_noIso[0].Pt()
+        boost_l1_eta = tightMuons_noIso[0].Eta()
+        boost_l1_phi = tightMuons_noIso[0].Phi()
+        boost_l1_mass = tightMuons_noIso[0].M()
+      elif (n_tight_ele_noIso == 1 and tightElectrons_noIso[0].Pt() > ele_pt):
+        boost_region = 2
+        boost_l1_id = tightElectrons_noIso_id[0]
+        boost_l1_pdgid = tightElectrons_noIso_pdgid[0]
+        boost_l1_pt = tightElectrons_noIso[0].Pt()
+        boost_l1_eta = tightElectrons_noIso[0].Eta()
+        boost_l1_phi = tightElectrons_noIso[0].Phi()
+        boost_l1_mass = tightElectrons_noIso[0].M()
+    if(boost_region > 0):
+      if self.is_mc:
+        boost_met = event.MET_T1Smear_pt
+        boost_met_phi = event.MET_T1Smear_phi
+      else:
+        boost_met = event.MET_T1_pt
+        boost_met_phi = event.MET_T1_phi
+
+    self.out.fillBranch("boost_region", boost_region)
+    self.out.fillBranch("boost_l1_id", boost_l1_id)
+    self.out.fillBranch("boost_l1_pdgid", boost_l1_pdgid)
+    self.out.fillBranch("boost_l1_pt", boost_l1_pt)
+    self.out.fillBranch("boost_l1_eta", boost_l1_eta)
+    self.out.fillBranch("boost_l1_phi", boost_l1_phi)
+    self.out.fillBranch("boost_l1_mass", boost_l1_mass)
+    self.out.fillBranch("boost_met", boost_met)
+    self.out.fillBranch("boost_met_phi", boost_met_phi)
     ###################
     # WZ region
     ##################

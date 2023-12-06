@@ -8,6 +8,7 @@ class eleRECOIDSF(Module):
     def __init__(self, repo, era):
         self.era = era
         self.evaluator = _core.CorrectionSet.from_file('/cvmfs/cms.cern.ch/rsync/cms-nanoAOD/jsonpog-integration/POG/EGM/' + repo + '/electron.json.gz')
+        self.evaluator_topMVA = _core.CorrectionSet.from_file('../data/leptonmva/scale_factor/egm_v1/' + repo + '/egm_sf_schemaV2.json')
 
     def beginJob(self):
         pass
@@ -35,6 +36,15 @@ class eleRECOIDSF(Module):
         self.out.branch('Electron_MVAFall17V2noIso_WP80_SFerr','F', lenVar='nElectron')
         self.out.branch('Electron_MVAFall17V2noIso_WP90_SF','F', lenVar='nElectron')
         self.out.branch('Electron_MVAFall17V2noIso_WP90_SFerr','F', lenVar='nElectron')
+        self.out.branch('Electron_topMVA_Tight_SF', 'F', lenVar='nElectron')
+        self.out.branch('Electron_topMVA_Tight_SFerr_syst', 'F', lenVar='nElectron')
+        self.out.branch('Electron_topMVA_Tight_SFerr_stat', 'F', lenVar='nElectron')
+        self.out.branch('Electron_topMVA_Medium_SF', 'F', lenVar='nElectron')
+        self.out.branch('Electron_topMVA_Medium_SFerr_syst', 'F', lenVar='nElectron')
+        self.out.branch('Electron_topMVA_Medium_SFerr_stat', 'F', lenVar='nElectron')
+        self.out.branch('Electron_topMVA_Loose_SF', 'F', lenVar='nElectron')
+        self.out.branch('Electron_topMVA_Loose_SFerr_syst', 'F', lenVar='nElectron')
+        self.out.branch('Electron_topMVA_Loose_SFerr_stat', 'F', lenVar='nElectron')
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -60,7 +70,19 @@ class eleRECOIDSF(Module):
         Electron_MVAFall17V2noIso_WP80_SF = []
         Electron_MVAFall17V2noIso_WP80_SFerr = []
         Electron_MVAFall17V2noIso_WP90_SF = []
-        Electron_MVAFall17V2noIso_WP90_SFerr = []    
+        Electron_MVAFall17V2noIso_WP90_SFerr = []   
+
+        Electron_topMVA_Tight_SF = []
+        Electron_topMVA_Tight_SFerr_syst = []
+        Electron_topMVA_Tight_SFerr_stat = []
+        Electron_topMVA_Medium_SF = []
+        Electron_topMVA_Medium_SFerr_syst = []
+        Electron_topMVA_Medium_SFerr_stat = []
+        Electron_topMVA_Loose_SF = []
+        Electron_topMVA_Loose_SFerr_syst = []
+        Electron_topMVA_Loose_SFerr_stat = []
+
+ 
         for ele in electrons:
             # print("pt ", ele.pt, " eta ", ele.eta)
             if ele.pt <= 10:
@@ -121,6 +143,16 @@ class eleRECOIDSF(Module):
                 Electron_MVAFall17V2noIso_WP90_SF.append(self.evaluator["UL-Electron-ID-SF"].evaluate(self.era, "sf", "wp90noiso", ele.eta, ele.pt))
                 Electron_MVAFall17V2noIso_WP90_SFerr.append((self.evaluator["UL-Electron-ID-SF"].evaluate(self.era, "sfup", "wp90noiso", ele.eta, ele.pt) - self.evaluator["UL-Electron-ID-SF"].evaluate(self.era, "sfdown", "wp90noiso", ele.eta, ele.pt)) / 2)
 
+                Electron_topMVA_Tight_SF.append(self.evaluator_topMVA["LeptonMvaTight"].evaluate(ele.eta, ele.pt, "sf"))
+                Electron_topMVA_Tight_SFerr_syst.append(self.evaluator_topMVA["LeptonMvaTight"].evaluate(ele.eta, ele.pt, "sys"))
+                Electron_topMVA_Tight_SFerr_stat.append(self.evaluator_topMVA["LeptonMvaTight"].evaluate(ele.eta, ele.pt, "stat"))
+                Electron_topMVA_Medium_SF.append(self.evaluator_topMVA["LeptonMvaTight"].evaluate(ele.eta, ele.pt, "sf"))
+                Electron_topMVA_Medium_SFerr_syst.append(self.evaluator_topMVA["LeptonMvaMedium"].evaluate(ele.eta, ele.pt, "sys"))
+                Electron_topMVA_Medium_SFerr_stat.append(self.evaluator_topMVA["LeptonMvaMedium"].evaluate(ele.eta, ele.pt, "stat"))
+                Electron_topMVA_Loose_SF.append(self.evaluator_topMVA["LeptonMvaMedium"].evaluate(ele.eta, ele.pt, "sf"))
+                Electron_topMVA_Loose_SFerr_syst.append(self.evaluator_topMVA["LeptonMvaLoose"].evaluate(ele.eta, ele.pt, "sys"))
+                Electron_topMVA_Loose_SFerr_stat.append(self.evaluator_topMVA["LeptonMvaLoose"].evaluate(ele.eta, ele.pt, "stat"))
+
         #print("Electron_RECO_SF is ", Electron_RECO_SF)
         #print("Electron_RECO_SFerr is ", Electron_RECO_SFerr)
         self.out.fillBranch('Electron_RECO_SF', Electron_RECO_SF)
@@ -141,6 +173,17 @@ class eleRECOIDSF(Module):
         self.out.fillBranch('Electron_MVAFall17V2noIso_WP80_SFerr', Electron_MVAFall17V2noIso_WP80_SFerr)
         self.out.fillBranch('Electron_MVAFall17V2noIso_WP90_SF', Electron_MVAFall17V2noIso_WP90_SF)
         self.out.fillBranch('Electron_MVAFall17V2noIso_WP90_SFerr', Electron_MVAFall17V2noIso_WP90_SFerr)
+         
+        self.out.fillBranch('Electron_topMVA_Tight_SF', Electron_topMVA_Tight_SF)
+        self.out.fillBranch('Electron_topMVA_Tight_SFerr_syst', Electron_topMVA_Tight_SFerr_syst)
+        self.out.fillBranch('Electron_topMVA_Tight_SFerr_stat', Electron_topMVA_Tight_SFerr_stat)
+        self.out.fillBranch('Electron_topMVA_Medium_SF', Electron_topMVA_Medium_SF)
+        self.out.fillBranch('Electron_topMVA_Medium_SFerr_syst', Electron_topMVA_Medium_SFerr_syst)
+        self.out.fillBranch('Electron_topMVA_Medium_SFerr_stat', Electron_topMVA_Medium_SFerr_stat)
+        self.out.fillBranch('Electron_topMVA_Loose_SF', Electron_topMVA_Loose_SF)
+        self.out.fillBranch('Electron_topMVA_Loose_SFerr_syst', Electron_topMVA_Loose_SFerr_syst)
+        self.out.fillBranch('Electron_topMVA_Loose_SFerr_stat', Electron_topMVA_Loose_SFerr_stat)
+
         return True
 
 # define modules using the syntax 'name = lambda : constructor' to avoid
