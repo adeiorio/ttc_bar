@@ -1676,7 +1676,7 @@ class BHProducer(Module):
     self.out.fillBranch("DY_z_phi", DY_z_phi)
     self.out.fillBranch("DY_drll", DY_drll)
 
-    if not (bh_nl or WZ_region >0 or DY_region>0):
+    if not (bh_nl or WZ_region >0 or DY_region>0 or boost_region>0):
       return False
 
     return True
