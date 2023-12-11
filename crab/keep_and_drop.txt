@@ -1,7 +1,5 @@
 # this is a comment
 keep *
-drop nFatJet*
-drop FatJet_area*
 drop nSubJet*
 drop SubJet*
 drop nTrigObj*
@@ -18,7 +16,6 @@ drop HLT_PFJet*
 drop HLT_Calo*
 drop HLT_DoublePF*
 drop HLT_BTag*
-drop HLT_Photon*
 drop HLT_Diphoton*
 drop HLT_Dimuon*
 drop HLT_DoubleMu*
@@ -26,7 +23,6 @@ drop HLT_ZeroBias*
 drop HLT_PFMET100*
 drop HLT_PFJetFwd*
 drop HLT_PFMETNoMu*
-drop HLT_Photon*
 drop HLT_QuadPFJet*
 drop HLT_Random*
 drop HLT_Rsq*
@@ -49,7 +45,6 @@ drop CaloMET*
 drop ChsMET*
 drop DeepMETResolutionTune*
 drop DeepMETResponseTune*
-drop FatJet*
 drop FsrPhoton*
 drop GenIsolatedPhoton*
 drop GenJetAK8*
