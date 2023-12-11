@@ -52,7 +52,7 @@ def main():
 
 
 # Sequence for data
-  ifm not (opt.ismc):
+  if not (opt.ismc):
     if opt.year == "2016b" or opt.year == "2016c" or opt.year == "2016d":
       p = PostProcessor(".", inputFiles(), modules=[muonScaleRes2016a(),BH2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis())
     if opt.year == "2016e" or opt.year == "2016f":
