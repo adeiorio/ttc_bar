@@ -33,6 +33,7 @@ if [ "${year}" = "2016apv" ]; then
   cp $WORKING_PATH/analysis/others/for_jme/Summer19UL16APV* $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/
   cp $WORKING_PATH/analysis/others/for_jme/Summer20UL16APV* $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/
   cp $WORKING_PATH/analysis/others/for_jme/jetmetHelperRun2.py $WORKING_PATH/modules/jme
+  cp $WORKING_PATH/analysis/others/for_jme/fatJetUncertainties.py $WORKING_PATH/modules/jme
   
   echo Updating BJet related
   cp $WORKING_PATH/analysis/others/for_btv/btagSFProducer.py $WORKING_PATH/modules/btv
@@ -60,6 +61,7 @@ if [ "${year}" = "2016" ]; then
   cp $WORKING_PATH/analysis/others/for_jme/Summer19UL16_* $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/
   cp $WORKING_PATH/analysis/others/for_jme/Summer20UL16_* $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/
   cp $WORKING_PATH/analysis/others/for_jme/jetmetHelperRun2.py $WORKING_PATH/modules/jme
+  cp $WORKING_PATH/analysis/others/for_jme/fatJetUncertainties.py $WORKING_PATH/modules/jme
   
   echo Updating BJet related
   cp $WORKING_PATH/analysis/others/for_btv/btagSFProducer.py $WORKING_PATH/modules/btv
@@ -93,6 +95,7 @@ if [ "${year}" = "2017" ]; then
   cp $WORKING_PATH/analysis/others/for_jme/Summer19UL17* $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/
   rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/Summer19UL17_Run*_V5_DATA.tar.gz
   cp $WORKING_PATH/analysis/others/for_jme/jetmetHelperRun2.py $WORKING_PATH/modules/jme
+  cp $WORKING_PATH/analysis/others/for_jme/fatJetUncertainties.py $WORKING_PATH/modules/jme
   
   echo Updating BJet related
   cp $WORKING_PATH/analysis/others/for_btv/btagSFProducer.py $WORKING_PATH/modules/btv
@@ -114,6 +117,7 @@ if [ "${year}" = "2018" ]; then
   rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/*.tgz
   cp $WORKING_PATH/analysis/others/for_jme/Summer19UL18* $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/
   cp $WORKING_PATH/analysis/others/for_jme/jetmetHelperRun2.py $WORKING_PATH/modules/jme
+  cp $WORKING_PATH/analysis/others/for_jme/fatJetUncertainties.py $WORKING_PATH/modules/jme
   
   echo Updating BJet related
   cp $WORKING_PATH/analysis/others/for_btv/btagSFProducer.py $WORKING_PATH/modules/btv
