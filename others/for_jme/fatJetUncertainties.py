@@ -50,13 +50,8 @@ class fatJetUncertaintiesProducer(Module):
         # smear jet pT to account for measured difference in JER between data
         # and simulation.
         if jerTag != "":
-            if era == 'UL2017':
-              self.jerInputFileName = jerTag + "_PtResolution_AK4PFchs.txt" # Official files lost for AK8, JME group suggest ot use AK4 files
-              self.jerUncertaintyInputFileName = jerTag + "_SF_AK4PFchs.txt"
-            else:
-              self.jerInputFileName = jerTag + "_PtResolution_" + jetType + ".txt"
-              self.jerUncertaintyInputFileName = jerTag + "_SF_" + jetType + ".txt"
-
+            self.jerInputFileName = jerTag + "_PtResolution_" + jetType + ".txt"
+            self.jerUncertaintyInputFileName = jerTag + "_SF_" + jetType + ".txt"
         else:
             print(
                 "WARNING: jerTag is empty!!! This module will soon be "
@@ -151,7 +146,7 @@ class fatJetUncertaintiesProducer(Module):
             self.jesUncertaintyInputFileName = globalTag + "_Uncertainty_" + jetType + ".txt"
         elif jesUncertainties[0] == "Merged" and not self.isData:
             self.jesUncertaintyInputFileName = "Regrouped_" + \
-                globalTag + "_UncertaintySources_AK4PFchs.txt" #Use AK4 see: https://cms-talk.web.cern.ch/t/question-on-run-2-reduced-set-of-uncertainty-sources-for-ak8-jet/21641/3
+                globalTag + "_UncertaintySources_" + jetType + ".txt"
         else:
             self.jesUncertaintyInputFileName = globalTag + \
                 "_UncertaintySources_" + jetType + ".txt"
