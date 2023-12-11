@@ -259,7 +259,7 @@ class BHProducer(Module):
     #  ele_pt=35
     #  muon_pt=26
 
-    ele_pt = 20
+    ele_pt = 30
     muon_pt = 20
 
     # Muon selection: tight cut-based ID + tight PF iso, or loose cut-based ID + loose PF iso, with pt > 20 GeV
@@ -305,7 +305,7 @@ class BHProducer(Module):
     for imu in range(0, event.nMuon):
       # topMVA ID: 1:VLoose 2: Loose 3: Medium 4: Tight
       if (muons[imu].topMVA_ID>2):
-        if (abs(muons[imu].eta)<2.4 and event.Muon_corrected_pt[imu]>20):
+        if (abs(muons[imu].eta)<2.4 and event.Muon_corrected_pt[imu]>muon_pt):
           muon_v4_temp.SetPtEtaPhiM(event.Muon_corrected_pt[imu], muons[imu].eta, muons[imu].phi, muons[imu].mass)
           tightMuons.append(muon_v4_temp.Clone())
           tightMuons_pdgid.append(muons[imu].pdgId)
@@ -323,7 +323,7 @@ class BHProducer(Module):
     # noIso muon loop
     for imu in range(0, event.nMuon):
       if (muons[imu].mediumId):
-        if (abs(muons[imu].eta)<2.4 and event.Muon_corrected_pt[imu]>20):
+        if (abs(muons[imu].eta)<2.4 and event.Muon_corrected_pt[imu]>muon_pt):
           muon_v4_temp.SetPtEtaPhiM(event.Muon_corrected_pt[imu], muons[imu].eta, muons[imu].phi, muons[imu].mass)
           tightMuons_noIso.append(muon_v4_temp.Clone())
           tightMuons_noIso_pdgid.append(muons[imu].pdgId)
@@ -392,7 +392,7 @@ class BHProducer(Module):
     #Main electron loop
     for iele in range(0, event.nElectron):
       if (electrons[iele].topMVA_ID>2):
-        if (((abs(electrons[iele].eta+electrons[iele].deltaEtaSC) <1.4442 and abs(electrons[iele].dxy)<0.05 and abs(electrons[iele].dz)<0.1) or (abs(electrons[iele].eta + electrons[iele].deltaEtaSC)>1.566 and abs(electrons[iele].eta + electrons[iele].deltaEtaSC)<2.4 and abs(electrons[iele].dxy)<0.1 and abs(electrons[iele].dz)<0.2)) and electrons[iele].pt>20):
+        if (((abs(electrons[iele].eta+electrons[iele].deltaEtaSC) <1.4442 and abs(electrons[iele].dxy)<0.05 and abs(electrons[iele].dz)<0.1) or (abs(electrons[iele].eta + electrons[iele].deltaEtaSC)>1.566 and abs(electrons[iele].eta + electrons[iele].deltaEtaSC)<2.4 and abs(electrons[iele].dxy)<0.1 and abs(electrons[iele].dz)<0.2)) and electrons[iele].pt>ele_pt):
           electron_v4_temp.SetPtEtaPhiM(electrons[iele].pt, electrons[iele].eta, electrons[iele].phi, electrons[iele].mass)
           tightElectrons.append(electron_v4_temp.Clone())
           tightElectrons_pdgid.append(electrons[iele].pdgId)
@@ -406,7 +406,7 @@ class BHProducer(Module):
 
     for iele in range(0, event.nElectron):
       if (electrons[iele].mvaFall17V2noIso_WP90):
-        if (((abs(electrons[iele].eta+electrons[iele].deltaEtaSC) <1.4442 and abs(electrons[iele].dxy)<0.05 and abs(electrons[iele].dz)<0.1) or (abs(electrons[iele].eta + electrons[iele].deltaEtaSC)>1.566 and abs(electrons[iele].eta + electrons[iele].deltaEtaSC)<2.4 and abs(electrons[iele].dxy)<0.1 and abs(electrons[iele].dz)<0.2)) and electrons[iele].pt>20): 
+        if (((abs(electrons[iele].eta+electrons[iele].deltaEtaSC) <1.4442 and abs(electrons[iele].dxy)<0.05 and abs(electrons[iele].dz)<0.1) or (abs(electrons[iele].eta + electrons[iele].deltaEtaSC)>1.566 and abs(electrons[iele].eta + electrons[iele].deltaEtaSC)<2.4 and abs(electrons[iele].dxy)<0.1 and abs(electrons[iele].dz)<0.2)) and electrons[iele].pt>ele_pt): 
           electron_v4_temp.SetPtEtaPhiM(electrons[iele].pt, electrons[iele].eta, electrons[iele].phi, electrons[iele].mass)
           tightElectrons_noIso.append(electron_v4_temp.Clone())
           tightElectrons_noIso_pdgid.append(electrons[iele].pdgId)
@@ -590,6 +590,7 @@ class BHProducer(Module):
 
       if not (pass_jet_lep_Dr>0):continue
       if not (jets[ijet].jetId==6 and event.Jet_pt_nom[ijet]>30):continue #tight jets with pT > 30 GeV
+      if (event.Jet_pt_nom[ijet] < 50 and not (jets[ijet].puId==7)): continue
 
       if abs(jets[ijet].eta)<4.7 and abs(jets[ijet].eta)>=2.4: 
         tightJets_id_in47.append(ijet)

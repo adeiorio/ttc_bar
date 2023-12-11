@@ -8,7 +8,7 @@ class eleRECOIDSF(Module):
     def __init__(self, repo, era):
         self.era = era
         self.evaluator = _core.CorrectionSet.from_file('/cvmfs/cms.cern.ch/rsync/cms-nanoAOD/jsonpog-integration/POG/EGM/' + repo + '/electron.json.gz')
-        self.evaluator_topMVA = _core.CorrectionSet.from_file('../data/leptonmva/scale_factor/egm_v1/' + repo + '/egm_sf_schemaV2.json')
+        self.evaluator_topMVA = _core.CorrectionSet.from_file('../data/leptonmva/scale_factor/egm_v1/' + repo + '/egm_sf_schemaV2.json.gz')
 
     def beginJob(self):
         pass

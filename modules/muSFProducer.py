@@ -8,7 +8,7 @@ class muIDISOSF(Module):
     def __init__(self, repo, era):
         self.era = era
         self.evaluator = _core.CorrectionSet.from_file('/cvmfs/cms.cern.ch/rsync/cms-nanoAOD/jsonpog-integration/POG/MUO/' + repo + '/muon_Z.json.gz')
-        self.evaluator_topMVA = _core.CorrectionSet.from_file('../data/leptonmva/scale_factor/muon_v1/' + repo + '/muon_sf_schemaV2.json')
+        self.evaluator_topMVA = _core.CorrectionSet.from_file('../data/leptonmva/scale_factor/muon_v1/' + repo + '/muon_sf_schemaV2.json.gz')
     def beginJob(self):
         pass
 
