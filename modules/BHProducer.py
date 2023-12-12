@@ -304,14 +304,14 @@ class BHProducer(Module):
     # Main muon loop
     for imu in range(0, event.nMuon):
       # topMVA ID: 1:VLoose 2: Loose 3: Medium 4: Tight
-      if (muons[imu].topMVA_ID>2):
-        if (abs(muons[imu].eta)<2.4 and event.Muon_corrected_pt[imu]>muon_pt):
+      if (muons[imu].topMVA_ID>3):
+        if (abs(muons[imu].eta)<2.4 and event.Muon_corrected_pt[imu]>muon_pt and (abs(muons[imu].dxy)<0.05) and (abs(muons[imu].dz)<0.1)):
           muon_v4_temp.SetPtEtaPhiM(event.Muon_corrected_pt[imu], muons[imu].eta, muons[imu].phi, muons[imu].mass)
           tightMuons.append(muon_v4_temp.Clone())
           tightMuons_pdgid.append(muons[imu].pdgId)
           tightMuons_id.append(imu)
       elif (muons[imu].topMVA_ID>1):
-        if (abs(muons[imu].eta)<2.4 and event.Muon_corrected_pt[imu]>10):
+        if (abs(muons[imu].eta)<2.4 and event.Muon_corrected_pt[imu]>10 and (abs(muons[imu].dxy)<0.05 and (abs(muons[imu].dz)<0.1)):
           muon_v4_temp.SetPtEtaPhiM(event.Muon_corrected_pt[imu], muons[imu].eta, muons[imu].phi, muons[imu].mass)
           additional_looseMuons.append(muon_v4_temp.Clone())
           additional_looseMuons_pdgid.append(muons[imu].pdgId)
@@ -323,13 +323,13 @@ class BHProducer(Module):
     # noIso muon loop
     for imu in range(0, event.nMuon):
       if (muons[imu].mediumId):
-        if (abs(muons[imu].eta)<2.4 and event.Muon_corrected_pt[imu]>muon_pt):
+        if (abs(muons[imu].eta)<2.4 and event.Muon_corrected_pt[imu]>muon_pt and (abs(muons[imu].dxy)<0.05) and (abs(muons[imu].dz)<0.1)):
           muon_v4_temp.SetPtEtaPhiM(event.Muon_corrected_pt[imu], muons[imu].eta, muons[imu].phi, muons[imu].mass)
           tightMuons_noIso.append(muon_v4_temp.Clone())
           tightMuons_noIso_pdgid.append(muons[imu].pdgId)
           tightMuons_noIso_id.append(imu)
       elif (muons[imu].topMVA_ID>1):
-        if (abs(muons[imu].eta)<2.5 and event.Muon_corrected_pt[imu]>10):
+        if (abs(muons[imu].eta)<2.4 and event.Muon_corrected_pt[imu]>10 and (abs(muons[imu].dxy)<0.05) and (abs(muons[imu].dz)<0.1)):
          muon_v4_temp.SetPtEtaPhiM(event.Muon_corrected_pt[imu], muons[imu].eta, muons[imu].phi, muons[imu].mass)
          additional_looseMuons_noIso.append(muon_v4_temp.Clone())
          additional_looseMuons_noIso_pdgid.append(muons[imu].pdgId)
@@ -391,7 +391,7 @@ class BHProducer(Module):
     
     #Main electron loop
     for iele in range(0, event.nElectron):
-      if (electrons[iele].topMVA_ID>2):
+      if (electrons[iele].topMVA_ID>3):
         if (((abs(electrons[iele].eta+electrons[iele].deltaEtaSC) <1.4442 and abs(electrons[iele].dxy)<0.05 and abs(electrons[iele].dz)<0.1) or (abs(electrons[iele].eta + electrons[iele].deltaEtaSC)>1.566 and abs(electrons[iele].eta + electrons[iele].deltaEtaSC)<2.4 and abs(electrons[iele].dxy)<0.1 and abs(electrons[iele].dz)<0.2)) and electrons[iele].pt>ele_pt):
           electron_v4_temp.SetPtEtaPhiM(electrons[iele].pt, electrons[iele].eta, electrons[iele].phi, electrons[iele].mass)
           tightElectrons.append(electron_v4_temp.Clone())
