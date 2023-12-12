@@ -3,11 +3,16 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 import ROOT
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 from correctionlib import _core
+import os
 
 class muIDISOSF(Module):
     def __init__(self, repo, era):
         self.era = era
         self.evaluator = _core.CorrectionSet.from_file('/cvmfs/cms.cern.ch/rsync/cms-nanoAOD/jsonpog-integration/POG/MUO/' + repo + '/muon_Z.json.gz')
+        sfdir = os.path.join(os.path.dirname(__file__), '../data/leptonmva/scale_factor/muon_v1/')
+        if not os.path.exists(sfdir):
+            sfdir = 'data/leptonmva/scale_factor/muon_v1/'
+        self.evaluator_topMVA = _core.CorrectionSet.from_file(sfdir + repo + '/muon_sf_schemaV2.json.gz')
 
     def beginJob(self):
         pass
@@ -55,6 +60,16 @@ class muIDISOSF(Module):
         self.out.branch('Muon_TightRelTkIso_TrkHighPtIDandIPCut_SF', 'F', lenVar='nMuon')
         self.out.branch('Muon_TightRelTkIso_TrkHighPtIDandIPCut_SFerr', 'F', lenVar='nMuon')
 
+        self.out.branch('Muon_topMVA_Tight_SF', 'F', lenVar='nMuon')
+        self.out.branch('Muon_topMVA_Tight_SFerr_syst', 'F', lenVar='nMuon')
+        self.out.branch('Muon_topMVA_Tight_SFerr_stat', 'F', lenVar='nMuon')
+        self.out.branch('Muon_topMVA_Medium_SF', 'F', lenVar='nMuon')
+        self.out.branch('Muon_topMVA_Medium_SFerr_syst', 'F', lenVar='nMuon')
+        self.out.branch('Muon_topMVA_Medium_SFerr_stat', 'F', lenVar='nMuon')
+        self.out.branch('Muon_topMVA_Loose_SF', 'F', lenVar='nMuon')
+        self.out.branch('Muon_topMVA_Loose_SFerr_syst', 'F', lenVar='nMuon')
+        self.out.branch('Muon_topMVA_Loose_SFerr_stat', 'F', lenVar='nMuon')
+
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
 
@@ -98,6 +113,16 @@ class muIDISOSF(Module):
         Muon_TightRelIso_TightIDandIPCut_SFerr = []
         Muon_TightRelTkIso_HighPtIDandIPCut_SFerr = []
         Muon_TightRelTkIso_TrkHighPtIDandIPCut_SFerr = []
+
+        Muon_topMVA_Tight_SF = []
+        Muon_topMVA_Tight_SFerr_syst = []
+        Muon_topMVA_Tight_SFerr_stat = []
+        Muon_topMVA_Medium_SF = []
+        Muon_topMVA_Medium_SFerr_syst = []
+        Muon_topMVA_Medium_SFerr_stat = []
+        Muon_topMVA_Loose_SF = []
+        Muon_topMVA_Loose_SFerr_syst = []
+        Muon_topMVA_Loose_SFerr_stat = []
 
         value = 1.0
         error = 0.0
@@ -143,6 +168,7 @@ class muIDISOSF(Module):
                 Muon_TightRelTkIso_HighPtIDandIPCut_SFerr.append(error)
                 Muon_TightRelTkIso_TrkHighPtIDandIPCut_SF.append(value)
                 Muon_TightRelTkIso_TrkHighPtIDandIPCut_SFerr.append(error)
+                Muon_topMVA_Tight_SF.append(value)
             else: 
                 Muon_CutBased_LooseID_SF.append(self.evaluator["NUM_LooseID_DEN_TrackerMuons"].evaluate(self.era, abs(mu.eta), mu.pt, "sf"))
                 Muon_CutBased_LooseID_SFerr.append(self.evaluator["NUM_LooseID_DEN_TrackerMuons"].evaluate(self.era, abs(mu.eta), mu.pt, "syst"))
@@ -181,6 +207,16 @@ class muIDISOSF(Module):
                 Muon_TightRelTkIso_HighPtIDandIPCut_SFerr.append(self.evaluator["NUM_TightRelTkIso_DEN_HighPtIDandIPCut"].evaluate(self.era, abs(mu.eta), mu.pt, "syst"))
                 Muon_TightRelTkIso_TrkHighPtIDandIPCut_SF.append(self.evaluator["NUM_TightRelTkIso_DEN_TrkHighPtIDandIPCut"].evaluate(self.era, abs(mu.eta), mu.pt, "sf"))
                 Muon_TightRelTkIso_TrkHighPtIDandIPCut_SFerr.append(self.evaluator["NUM_TightRelTkIso_DEN_TrkHighPtIDandIPCut"].evaluate(self.era, abs(mu.eta), mu.pt, "syst"))
+               
+                Muon_topMVA_Tight_SF.append(self.evaluator_topMVA["NUM_LeptonMvaTight_DEN_TrackerMuons_abseta_pt"].evaluate(abs(mu.eta), mu.pt, "sf"))
+                Muon_topMVA_Tight_SFerr_syst.append(self.evaluator_topMVA["NUM_LeptonMvaTight_DEN_TrackerMuons_abseta_pt"].evaluate(abs(mu.eta), mu.pt, "combined_syst"))
+                Muon_topMVA_Tight_SFerr_stat.append(self.evaluator_topMVA["NUM_LeptonMvaTight_DEN_TrackerMuons_abseta_pt"].evaluate(abs(mu.eta), mu.pt, "staterr"))
+                Muon_topMVA_Medium_SF.append(self.evaluator_topMVA["NUM_LeptonMvaMedium_DEN_TrackerMuons_abseta_pt"].evaluate(abs(mu.eta), mu.pt, "sf"))
+                Muon_topMVA_Medium_SFerr_syst.append(self.evaluator_topMVA["NUM_LeptonMvaMedium_DEN_TrackerMuons_abseta_pt"].evaluate(abs(mu.eta), mu.pt, "combined_syst"))
+                Muon_topMVA_Medium_SFerr_stat.append(self.evaluator_topMVA["NUM_LeptonMvaMedium_DEN_TrackerMuons_abseta_pt"].evaluate(abs(mu.eta), mu.pt, "staterr"))
+                Muon_topMVA_Loose_SF.append(self.evaluator_topMVA["NUM_LeptonMvaLoose_DEN_TrackerMuons_abseta_pt"].evaluate(abs(mu.eta), mu.pt, "sf"))
+                Muon_topMVA_Loose_SFerr_syst.append(self.evaluator_topMVA["NUM_LeptonMvaLoose_DEN_TrackerMuons_abseta_pt"].evaluate(abs(mu.eta), mu.pt, "combined_syst"))
+                Muon_topMVA_Loose_SFerr_stat.append(self.evaluator_topMVA["NUM_LeptonMvaLoose_DEN_TrackerMuons_abseta_pt"].evaluate(abs(mu.eta), mu.pt, "staterr"))
 
         #print(Muon_CutBased_LooseID_SF)
         self.out.fillBranch('Muon_CutBased_LooseID_SF', Muon_CutBased_LooseID_SF)
@@ -220,6 +256,17 @@ class muIDISOSF(Module):
         self.out.fillBranch('Muon_TightRelTkIso_HighPtIDandIPCut_SFerr',Muon_TightRelTkIso_HighPtIDandIPCut_SFerr)
         self.out.fillBranch('Muon_TightRelTkIso_TrkHighPtIDandIPCut_SF',Muon_TightRelTkIso_TrkHighPtIDandIPCut_SF)
         self.out.fillBranch('Muon_TightRelTkIso_TrkHighPtIDandIPCut_SFerr',Muon_TightRelTkIso_TrkHighPtIDandIPCut_SFerr)
+
+        self.out.fillBranch('Muon_topMVA_Tight_SF', Muon_topMVA_Tight_SF)
+        self.out.fillBranch('Muon_topMVA_Tight_SFerr_syst', Muon_topMVA_Tight_SFerr_syst)
+        self.out.fillBranch('Muon_topMVA_Tight_SFerr_stat', Muon_topMVA_Tight_SFerr_stat)
+        self.out.fillBranch('Muon_topMVA_Medium_SF', Muon_topMVA_Medium_SF)
+        self.out.fillBranch('Muon_topMVA_Medium_SFerr_syst', Muon_topMVA_Medium_SFerr_syst)
+        self.out.fillBranch('Muon_topMVA_Medium_SFerr_stat', Muon_topMVA_Medium_SFerr_stat)
+        self.out.fillBranch('Muon_topMVA_Loose_SF', Muon_topMVA_Loose_SF)
+        self.out.fillBranch('Muon_topMVA_Loose_SFerr_syst', Muon_topMVA_Loose_SFerr_syst)
+        self.out.fillBranch('Muon_topMVA_Loose_SFerr_stat', Muon_topMVA_Loose_SFerr_stat)
+
         return True
 
 # define modules using the syntax 'name = lambda : constructor' to avoid
