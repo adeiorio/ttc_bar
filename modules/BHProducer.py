@@ -311,7 +311,7 @@ class BHProducer(Module):
           tightMuons_pdgid.append(muons[imu].pdgId)
           tightMuons_id.append(imu)
       elif (muons[imu].topMVA_ID>1):
-        if (abs(muons[imu].eta)<2.4 and event.Muon_corrected_pt[imu]>10 and (abs(muons[imu].dxy)<0.05 and (abs(muons[imu].dz)<0.1)):
+        if (abs(muons[imu].eta)<2.4 and event.Muon_corrected_pt[imu]>10 and (abs(muons[imu].dxy)<0.05) and (abs(muons[imu].dz)<0.1)):
           muon_v4_temp.SetPtEtaPhiM(event.Muon_corrected_pt[imu], muons[imu].eta, muons[imu].phi, muons[imu].mass)
           additional_looseMuons.append(muon_v4_temp.Clone())
           additional_looseMuons_pdgid.append(muons[imu].pdgId)
