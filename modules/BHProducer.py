@@ -1143,7 +1143,7 @@ class BHProducer(Module):
         boost_l1_eta = tightMuons_noIso[0].Eta()
         boost_l1_phi = tightMuons_noIso[0].Phi()
         boost_l1_mass = tightMuons_noIso[0].M()
-      elif (n_tight_ele_noIso == 1 and (tightElectrons_noIso[0].Pt() > ele_pt) and len(addition_looseMuons_noIso)==1):
+      elif (n_tight_ele_noIso == 1 and (tightElectrons_noIso[0].Pt() > ele_pt) and len(additional_looseMuons_noIso)==1):
         boost_region = 4
         boost_l1_id = tightElectrons_noIso_id[0]
         boost_l1_pdgid = tightElectrons_noIso_pdgid[0]
