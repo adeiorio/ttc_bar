@@ -99,7 +99,6 @@ if [ "${year}" = "2017" ]; then
   
   echo Updating BJet related
   cp $WORKING_PATH/analysis/others/for_btv/btagSFProducer.py $WORKING_PATH/modules/btv
-  cp $WORKING_PATH/analysis/others/for_btv/DeepJet_106XUL17SF_V2p1.csv $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/
 
 fi
 
@@ -127,9 +126,8 @@ if [ "${year}" = "2018" ]; then
 fi
 
 echo Cleaning
-echo Cleaning
-rm -r $WORKING_PATH/analysis/others/
-rm -r $WORKING_PATH/data/roccor*
+rm -rf $WORKING_PATH/analysis/others/
+rm -rf $WORKING_PATH/data/roccor*
 
 echo redo scram
 cd $CMSSW_BASE/src
