@@ -6,11 +6,24 @@
 ```
 # At cmslpc first do: source /cvmfs/cms.cern.ch/cmsset_default.csh
 # And if you are going to use condor/crab at cmslpc, do: voms-proxy-init --valid 192:00 -voms cms
-cmsrel CMSSW_10_6_30
-cd CMSSW_10_6_30/src
+# login to lxplus9: like ``ssh USERNAME@lxplus.cern.ch``
+cmsrel CMSSW_13_2_6
+cd CMSSW_13_2_6/src
 git clone https://github.com/cms-nanoAOD/nanoAOD-tools.git PhysicsTools/NanoAODTools
 cd PhysicsTools/NanoAODTools
 cmsenv
+```
+
+1.5 Update the haddnano.py shebang
+```
+cd scripts
+```
+Open the haddnano.py file with your favorite text editor and make the first line as: ``` #!/bin/env python3 ``` 
+
+Save the file and compile
+
+```
+cd ../
 scram b -j8
 ```
 
@@ -60,7 +73,7 @@ drop GenPart_*
 To create skimmed ntuple with [bhplusproducer](https://github.com/ExtraYukawa/ttc_bar/blob/lep_mvaID/modules/BHProducer.py)
 ```
 cd test
-python localrun_bhplus.py -m -i /eos/cms/store/group/phys_top/ExtraYukawa/input_for_tests/BGToTHpm_MH-200_TuneCP5_13TeV_G2HDM-rhott06_rhotc04_rhotu00.root --year 2017 -o $CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis/test -n 1000
+python3 localrun_bhplus.py -m -i /eos/cms/store/group/phys_top/ExtraYukawa/input_for_tests/BGToTHpm_MH-200_TuneCP5_13TeV_G2HDM-rhott06_rhotc04_rhotu00.root --year 2017 -o $CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis/test -n 1000
 ```
 It will create ntuple with name: ``Events`` tree
 
