@@ -35,6 +35,6 @@ page = 0
 res = mcm.get('requests',query='member_of_campaign='+campaign+'*&dataset_name=TAToTTQ_MA-*GeV_TuneCP5_13TeV_G2HDM-rt*-madgraphMLM-pythia8', page=page)
 while len(res) !=0:
     for r in res:
-        print str(r['prepid'])+"  "+str(r['dataset_name'])+"  "+str(r['output_dataset'])+"   "+str(r['status'])+"   "+str(r['completed_events'])  
+        print (str(r['prepid'])+"  "+str(r['dataset_name'])+"  "+str(r['output_dataset'])+"   "+str(r['status'])+"   "+str(r['completed_events']))
     page += 1
     res = mcm.get('requests',query='member_of_campaign='+campaign+'*&dataset_name=TAToTTQ_MA-*GeV_TuneCP5_13TeV_G2HDM-rt*-madgraphMLM-pythia8', page=page)

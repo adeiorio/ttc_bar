@@ -28,7 +28,7 @@ def main():
   parser.add_option('-o', '--out', dest='output', help='output directory with files', default=None, type='string')
   (opt, args) = parser.parse_args()
 
-  print 'ismc:',opt.ismc
+  print ('ismc:',opt.ismc)
 
   if opt.ismc:
     if opt.year == "2016":

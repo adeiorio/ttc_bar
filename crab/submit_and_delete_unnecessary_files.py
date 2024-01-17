@@ -33,6 +33,6 @@ for file in files:
             os.popen("crab submit -c "+path+"/"+file).read()
             # latest directory
             fld = os.popen('ls -td -- */ | head -n 1').read().rstrip()
-            print fld
+            print (fld)
             fld = "rm "+fld+"/inputs/*.tgz"
             os.popen(fld).read().rstrip()

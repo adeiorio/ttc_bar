@@ -37,14 +37,14 @@ for filen in filesfolders:
            
            finalDir = getFinalCRABDir(opts, filen)
            if finalDir != None:
-              print colors.colordict["GREEN"] + "Checking status for crab directory: " + colors.colordict['CEND'], colors.colordict['BLUE'] + finalDir + colors.colordict['CEND']
+              print (colors.colordict["GREEN"] + "Checking status for crab directory: " + colors.colordict['CEND'], colors.colordict['BLUE'] + finalDir + colors.colordict['CEND'])
            
               print(os.popen("crab status -d "+filen).read())
-              print 50*"="
+              print (50*"=")
               # delete crab.log file
               if (opts.clean):
                  delcmd = "rm "+filen+"/crab.log"
-                 print colors.colordict['ORANGE'] + delcmd + colors.colordict['CEND']
+                 print (colors.colordict['ORANGE'] + delcmd + colors.colordict['CEND'])
                  os.system(delcmd)
            
             
