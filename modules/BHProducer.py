@@ -905,7 +905,6 @@ class BHProducer(Module):
     #region: only 1 tight leptons, at least three jets
     #bh region lepton number selections
     bh_nl=False
-    bh_nl_em=False
     #bh region jet and bjet selection
     bh_jets=False
     #bh region tag, 1: muon, 2:ele
@@ -944,9 +943,6 @@ class BHProducer(Module):
       if (n_tight_muon==1 and tightMuons[0].Pt() > muon_pt) or (n_tight_ele==1 and tightElectrons[0].Pt() > ele_pt):
         bh_nl=True
 
-    if len(tightLeptons)==2 and len(looseLeptons)==0:
-      if (n_tight_muon==1 and tightMuons[0].Pt() > muon_pt) or (n_tight_ele==1 and tightElectrons[0].Pt() > ele_pt):
-        bh_nl_em=True
     # at least three jets (bjet requirement will applied at plot level)
     if bh_nl and n_tight_jet>2:
       bh_jets=True
@@ -975,29 +971,6 @@ class BHProducer(Module):
         bh_l1_phi=tightElectrons[0].Phi()
         bh_l1_mass=tightElectrons[0].M()
 
-    if bh_nl_em:
-      if self.is_mc:
-        bh_met=event.MET_T1Smear_pt
-        bh_met_phi=event.MET_T1Smear_phi
-      else:
-        bh_met=event.MET_T1_pt
-        bh_met_phi=event.MET_T1_phi
-      if len(tightMuons)==1:
-        bh_region=3
-        bh_l1_id=tightMuons_id[0]
-        bh_l1_pdgid=tightMuons_pdgid[0]
-        bh_l1_pt=tightMuons[0].Pt()
-        bh_l1_eta=tightMuons[0].Eta()
-        bh_l1_phi=tightMuons[0].Phi()
-        bh_l1_mass=tightMuons[0].M()
-      if len(tightElectrons)==1:
-        bh_region=4
-        bh_l1_id=tightElectrons_id[0]
-        bh_l1_pdgid=tightElectrons_pdgid[0]
-        bh_l1_pt=tightElectrons[0].Pt()
-        bh_l1_eta=tightElectrons[0].Eta()
-        bh_l1_phi=tightElectrons[0].Phi()
-        bh_l1_mass=tightElectrons[0].M()
 
     if bh_region>0: # bh_region = 1 i.e, (muon) and bh_region = 2 i.e, (electron)
       l1_v4_temp=TLorentzVector()
@@ -1137,24 +1110,6 @@ class BHProducer(Module):
         boost_l1_phi = tightElectrons_noIso[0].Phi()
         boost_l1_mass = tightElectrons_noIso[0].M()
 
-    elif (n_tight_ele == 1 and tightElectrons[0].Pt() > ele_pt and n_loose_ele == 0):
-      if (n_tight_muon_noIso == 1 and (tightMuons_noIso[0].Pt() > muon_pt) and len(additional_vetoElectrons_noIso)==1):
-        boost_region = 3
-        boost_l1_id = tightMuons_noIso_id[0]
-        boost_l1_pdgid = tightMuons_noIso_pdgid[0]
-        boost_l1_pt = tightMuons_noIso[0].Pt()
-        boost_l1_eta = tightMuons_noIso[0].Eta()
-        boost_l1_phi = tightMuons_noIso[0].Phi()
-        boost_l1_mass = tightMuons_noIso[0].M()
-    elif (n_tight_muon == 1 and tightMuons[0].Pt() > muon_pt and n_loose_muon == 0):
-      if (n_tight_ele_noIso == 1 and (tightElectrons_noIso[0].Pt() > ele_pt) and len(additional_looseMuons_noIso)==1):
-        boost_region = 4
-        boost_l1_id = tightElectrons_noIso_id[0]
-        boost_l1_pdgid = tightElectrons_noIso_pdgid[0]
-        boost_l1_pt = tightElectrons_noIso[0].Pt()
-        boost_l1_eta = tightElectrons_noIso[0].Eta()
-        boost_l1_phi = tightElectrons_noIso[0].Phi()
-        boost_l1_mass = tightElectrons_noIso[0].M()
 
     if(boost_region > 0):
       if self.is_mc:
@@ -1174,9 +1129,22 @@ class BHProducer(Module):
     self.out.fillBranch("boost_met", boost_met)
     self.out.fillBranch("boost_met_phi", boost_met_phi)
 
-
-
-
+    ##################
+    ##  Trigger EM  ##
+    ##################
+    Trigger_derived_region = False 
+    # There are four kind of trigger scale factors ['resolved', 'boost'] (region) x ['Electron', 'Muon'](lepton) and the derivation region is more or less overlap with each others, so we only select the union of them and separate them offline.
+    if (n_tight_muon==1 and tightMuons[0].Pt() > muon_pt and n_loose_muon==0):  # Muon as "Tag"
+      if (n_tight_ele==1 and tightElectrons[0].Pt() > ele_pt and n_loose_ele==0):
+	Trigger_derived_region = True
+      elif (n_tight_ele_noIso == 1 and tightElectrons_noIso[0].Pt() > ele_pt and n_loose_ele_noIso==0):
+	Trigger_derived_region = True
+    elif (n_tight_ele==1 and tightElectrons[0].Pt() > ele_pt and n_loose_ele==0): # Electron as "Tag"
+      if (n_tight_muon == 1 and tightMuons[0].Pt() > muon_pt and n_loose_muon==0):
+        Trigger_derived_region = True
+      elif (n_tight_muon_noIso == 1 and tightMuons_noIso[0].Pt() > muon_pt and n_loose_muon_noIso==0):
+        Trigger_derived_region = True
+    self.out.fillBranch("Trigger_derived_region", Trigger_derived_region)
 
     ###################
     # WZ region
@@ -1734,7 +1702,7 @@ class BHProducer(Module):
     self.out.fillBranch("DY_z_phi", DY_z_phi)
     self.out.fillBranch("DY_drll", DY_drll)
 
-    if not (bh_nl or WZ_region >0 or DY_region>0 or boost_region>0 or bh_nl_em):
+    if not (bh_nl or Trigger_derived_region or WZ_region >0 or DY_region>0 or boost_region>0 or bh_nl_em):
       return False
 
     return True
