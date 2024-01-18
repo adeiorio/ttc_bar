@@ -148,6 +148,7 @@ class BHProducer(Module):
     self.out.branch("boost_l1_mass", "F")
     self.out.branch("boost_met" ,"F")
     self.out.branch("boost_met_phi", "F")
+    self.out.branch("Trigger_derived_region", "B")
     self.out.branch("WZ_region", "I")
     self.out.branch("WZ_zl1_id", "I")
     self.out.branch("WZ_zl2_id", "I")
@@ -1702,7 +1703,7 @@ class BHProducer(Module):
     self.out.fillBranch("DY_z_phi", DY_z_phi)
     self.out.fillBranch("DY_drll", DY_drll)
 
-    if not (bh_nl or Trigger_derived_region or WZ_region >0 or DY_region>0 or boost_region>0 or bh_nl_em):
+    if not (bh_nl or Trigger_derived_region or WZ_region >0 or DY_region>0 or boost_region>0):
       return False
 
     return True
