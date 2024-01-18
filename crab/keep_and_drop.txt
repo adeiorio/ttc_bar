@@ -20,9 +20,7 @@ drop HLT_Diphoton*
 drop HLT_Dimuon*
 drop HLT_DoubleMu*
 drop HLT_ZeroBias*
-drop HLT_PFMET100*
 drop HLT_PFJetFwd*
-drop HLT_PFMETNoMu*
 drop HLT_QuadPFJet*
 drop HLT_Random*
 drop HLT_Rsq*
@@ -39,8 +37,6 @@ drop HLT_Mu12_IP6*
 drop HLT_Mu15_IsoVVVL_PFHT*
 drop HLT_Mu3er1p5*
 drop HLT_PFJet*
-drop HLT_PFHT*
-drop HLT_PFMET*
 drop CaloMET*
 drop ChsMET*
 drop DeepMETResolutionTune*

@@ -52,5 +52,10 @@
 "SingleMuonC": ["SingleMuon_C","/SingleMuon/Run2017C-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD","crab_script_bhplus_dataC.sh"],
 "SingleMuonD": ["SingleMuon_D","/SingleMuon/Run2017D-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD","crab_script_bhplus_dataD.sh"],
 "SingleMuonE": ["SingleMuon_E","/SingleMuon/Run2017E-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD","crab_script_bhplus_dataE.sh"],
-"SingleMuonF": ["SingleMuon_F","/SingleMuon/Run2017F-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD","crab_script_bhplus_dataF.sh"]
+"SingleMuonF": ["SingleMuon_F","/SingleMuon/Run2017F-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD","crab_script_bhplus_dataF.sh"],
+"METB": ["MET_B","/MET/Run2017B-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD","crab_script_bhplus_dataB.sh"],
+"METC": ["MET_C","/MET/Run2017C-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD","crab_script_bhplus_dataC.sh"],
+"METD": ["MET_D","/MET/Run2017D-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD","crab_script_bhplus_dataD.sh"],
+"METE": ["MET_E","/MET/Run2017E-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD","crab_script_bhplus_dataE.sh"],
+"METF": ["MET_F","/MET/Run2017F-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD","crab_script_bhplus_dataF.sh"]
 }
