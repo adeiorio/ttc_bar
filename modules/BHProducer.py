@@ -404,6 +404,7 @@ class BHProducer(Module):
           additional_vetoElectrons_pdgid.append(electrons[iele].pdgId)
           additional_vetoElectrons_id.append(iele)
 
+    # no Isolation electron loop
     for iele in range(0, event.nElectron):
       if (electrons[iele].mvaFall17V2noIso_WP90):
         if (((abs(electrons[iele].eta+electrons[iele].deltaEtaSC) <1.4442 and abs(electrons[iele].dxy)<0.05 and abs(electrons[iele].dz)<0.1) or (abs(electrons[iele].eta + electrons[iele].deltaEtaSC)>1.566 and abs(electrons[iele].eta + electrons[iele].deltaEtaSC)<2.4 and abs(electrons[iele].dxy)<0.1 and abs(electrons[iele].dz)<0.2)) and electrons[iele].pt>ele_pt): 
@@ -449,6 +450,8 @@ class BHProducer(Module):
     tightLeptons_noIso.sort(key=lambda x: x.Pt(), reverse=True)
     looseLeptons_noIso = additional_looseMuons_noIso + additional_vetoElectrons_noIso
     looseLeptons_noIso.sort(key=lambda x: x.Pt(), reverse=True)
+
+
     # gkole turn off for revert back to set-I
     '''
     if len(tightLeptons)<1:return False  
@@ -941,8 +944,8 @@ class BHProducer(Module):
       if (n_tight_muon==1 and tightMuons[0].Pt() > muon_pt) or (n_tight_ele==1 and tightElectrons[0].Pt() > ele_pt):
         bh_nl=True
 
-    if len(tightLeptons)==1 and len(looseLeptons)==1:
-      if (n_tight_muon==1 and tightMuons[0].Pt() > muon_pt and len(additional_vetoElectrons)==1) or (n_tight_ele==1 and tightElectrons[0].Pt() > ele_pt and len(additional_looseMuons)==1):
+    if len(tightLeptons)==2 and len(looseLeptons)==0:
+      if (n_tight_muon==1 and tightMuons[0].Pt() > muon_pt) or (n_tight_ele==1 and tightElectrons[0].Pt() > ele_pt):
         bh_nl_em=True
     # at least three jets (bjet requirement will applied at plot level)
     if bh_nl and n_tight_jet>2:
@@ -1134,7 +1137,7 @@ class BHProducer(Module):
         boost_l1_phi = tightElectrons_noIso[0].Phi()
         boost_l1_mass = tightElectrons_noIso[0].M()
 
-    elif len(tightLeptons_noIso)==1 and len(looseLeptons_noIso)==1:
+    elif (n_tight_ele == 1 and tightElectrons[0].Pt() > ele_pt and n_loose_ele == 0):
       if (n_tight_muon_noIso == 1 and (tightMuons_noIso[0].Pt() > muon_pt) and len(additional_vetoElectrons_noIso)==1):
         boost_region = 3
         boost_l1_id = tightMuons_noIso_id[0]
@@ -1143,7 +1146,8 @@ class BHProducer(Module):
         boost_l1_eta = tightMuons_noIso[0].Eta()
         boost_l1_phi = tightMuons_noIso[0].Phi()
         boost_l1_mass = tightMuons_noIso[0].M()
-      elif (n_tight_ele_noIso == 1 and (tightElectrons_noIso[0].Pt() > ele_pt) and len(additional_looseMuons_noIso)==1):
+    elif (n_tight_muon == 1 and tightMuons[0].Pt() > muon_pt and n_loose_muon == 0):
+      if (n_tight_ele_noIso == 1 and (tightElectrons_noIso[0].Pt() > ele_pt) and len(additional_looseMuons_noIso)==1):
         boost_region = 4
         boost_l1_id = tightElectrons_noIso_id[0]
         boost_l1_pdgid = tightElectrons_noIso_pdgid[0]
@@ -1169,6 +1173,11 @@ class BHProducer(Module):
     self.out.fillBranch("boost_l1_mass", boost_l1_mass)
     self.out.fillBranch("boost_met", boost_met)
     self.out.fillBranch("boost_met_phi", boost_met_phi)
+
+
+
+
+
     ###################
     # WZ region
     ##################
