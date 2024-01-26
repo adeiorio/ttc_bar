@@ -294,7 +294,7 @@ class BHProducer(Module):
             dr_mu_jet = 99.
             muon_closest_jetid_temp = -1
             muon_v4_temp.SetPtEtaPhiM(
-                event.Muon_corrected_pt[imu], muons[imu].eta, muons[imu].phi, muons[imu].mass)
+                muons[imu].pt, muons[imu].eta, muons[imu].phi, muons[imu].mass)
             for ijet in range(0, event.nJet):
                 jet_v4_temp.SetPtEtaPhiM(
                     event.Jet_pt_nom[ijet], event.Jet_eta[ijet], event.Jet_phi[ijet], event.Jet_mass_nom[ijet])
@@ -304,7 +304,7 @@ class BHProducer(Module):
 
             if dr_mu_jet < 0.4:
                 muon_jet_Ptratio.append(
-                    event.Muon_corrected_pt[imu]/(0.85*event.Jet_pt_nom[muon_closest_jetid_temp]))
+                    muons[imu].pt/(0.85*event.Jet_pt_nom[muon_closest_jetid_temp]))
                 muon_closest_jetid.append(muon_closest_jetid_temp)
             else:
                 muon_jet_Ptratio.append(
@@ -315,16 +315,16 @@ class BHProducer(Module):
         for imu in range(0, event.nMuon):
             # topMVA ID: 1:VLoose 2: Loose 3: Medium 4: Tight
             if (muons[imu].topMVA_ID > 3):
-                if (abs(muons[imu].eta) < 2.4 and event.Muon_corrected_pt[imu] > muon_pt and (abs(muons[imu].dxy) < 0.05) and (abs(muons[imu].dz) < 0.1)):
+                if (abs(muons[imu].eta) < 2.4 and muons[imu].pt > muon_pt and (abs(muons[imu].dxy) < 0.05) and (abs(muons[imu].dz) < 0.1)):
                     muon_v4_temp.SetPtEtaPhiM(
-                        event.Muon_corrected_pt[imu], muons[imu].eta, muons[imu].phi, muons[imu].mass)
+                        muons[imu].pt, muons[imu].eta, muons[imu].phi, muons[imu].mass)
                     tightMuons.append(muon_v4_temp.Clone())
                     tightMuons_pdgid.append(muons[imu].pdgId)
                     tightMuons_id.append(imu)
             elif (muons[imu].topMVA_ID > 1):
-                if (abs(muons[imu].eta) < 2.4 and event.Muon_corrected_pt[imu] > 10 and (abs(muons[imu].dxy) < 0.05) and (abs(muons[imu].dz) < 0.1)):
+                if (abs(muons[imu].eta) < 2.4 and muons[imu].pt > 10 and (abs(muons[imu].dxy) < 0.05) and (abs(muons[imu].dz) < 0.1)):
                     muon_v4_temp.SetPtEtaPhiM(
-                        event.Muon_corrected_pt[imu], muons[imu].eta, muons[imu].phi, muons[imu].mass)
+                        muons[imu].pt, muons[imu].eta, muons[imu].phi, muons[imu].mass)
                     additional_looseMuons.append(muon_v4_temp.Clone())
                     additional_looseMuons_pdgid.append(muons[imu].pdgId)
                     additional_looseMuons_id.append(imu)
@@ -335,16 +335,16 @@ class BHProducer(Module):
         # noIso muon loop
         for imu in range(0, event.nMuon):
             if (muons[imu].mediumId):
-                if (abs(muons[imu].eta) < 2.4 and event.Muon_corrected_pt[imu] > muon_pt and (abs(muons[imu].dxy) < 0.05) and (abs(muons[imu].dz) < 0.1)):
+                if (abs(muons[imu].eta) < 2.4 and muons[imu].pt > muon_pt and (abs(muons[imu].dxy) < 0.05) and (abs(muons[imu].dz) < 0.1)):
                     muon_v4_temp.SetPtEtaPhiM(
-                        event.Muon_corrected_pt[imu], muons[imu].eta, muons[imu].phi, muons[imu].mass)
+                        muons[imu].pt, muons[imu].eta, muons[imu].phi, muons[imu].mass)
                     tightMuons_noIso.append(muon_v4_temp.Clone())
                     tightMuons_noIso_pdgid.append(muons[imu].pdgId)
                     tightMuons_noIso_id.append(imu)
             elif (muons[imu].topMVA_ID > 1):
-                if (abs(muons[imu].eta) < 2.4 and event.Muon_corrected_pt[imu] > 10 and (abs(muons[imu].dxy) < 0.05) and (abs(muons[imu].dz) < 0.1)):
+                if (abs(muons[imu].eta) < 2.4 and muons[imu].pt > 10 and (abs(muons[imu].dxy) < 0.05) and (abs(muons[imu].dz) < 0.1)):
                     muon_v4_temp.SetPtEtaPhiM(
-                        event.Muon_corrected_pt[imu], muons[imu].eta, muons[imu].phi, muons[imu].mass)
+                        muons[imu].pt, muons[imu].eta, muons[imu].phi, muons[imu].mass)
                     additional_looseMuons_noIso.append(muon_v4_temp.Clone())
                     additional_looseMuons_noIso_pdgid.append(muons[imu].pdgId)
                     additional_looseMuons_noIso_id.append(imu)
