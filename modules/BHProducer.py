@@ -150,6 +150,7 @@ class BHProducer(Module):
         self.out.branch("boost_l1_mass", "F")
         self.out.branch("boost_met", "F")
         self.out.branch("boost_met_phi", "F")
+        self.out.branch("Trigger_derived_region", "B")
         self.out.branch("WZ_region", "I")
         self.out.branch("WZ_zl1_id", "I")
         self.out.branch("WZ_zl2_id", "I")
@@ -448,6 +449,7 @@ class BHProducer(Module):
                         electrons[iele].pdgId)
                     additional_vetoElectrons_id.append(iele)
 
+        # no Isolation electron loop
         for iele in range(0, event.nElectron):
             if (electrons[iele].mvaFall17V2noIso_WP90):
                 if (((abs(electrons[iele].eta+electrons[iele].deltaEtaSC) < 1.4442 and abs(electrons[iele].dxy) < 0.05 and abs(electrons[iele].dz) < 0.1) or (abs(electrons[iele].eta + electrons[iele].deltaEtaSC) > 1.566 and abs(electrons[iele].eta + electrons[iele].deltaEtaSC) < 2.4 and abs(electrons[iele].dxy) < 0.1 and abs(electrons[iele].dz) < 0.2)) and electrons[iele].pt > ele_pt):
@@ -502,6 +504,7 @@ class BHProducer(Module):
         tightLeptons_noIso.sort(key=lambda x: x.Pt(), reverse=True)
         looseLeptons_noIso = additional_looseMuons_noIso + additional_vetoElectrons_noIso
         looseLeptons_noIso.sort(key=lambda x: x.Pt(), reverse=True)
+
         # gkole turn off for revert back to set-I
         '''
     if len(tightLeptons)<1:return False  
@@ -992,6 +995,7 @@ class BHProducer(Module):
         if len(tightLeptons) == 1 and len(looseLeptons) == 0:
             if (n_tight_muon == 1 and tightMuons[0].Pt() > muon_pt) or (n_tight_ele == 1 and tightElectrons[0].Pt() > ele_pt):
                 bh_nl = True
+
         # at least three jets (bjet requirement will applied at plot level)
         if bh_nl and n_tight_jet > 2:
             bh_jets = True
@@ -1164,6 +1168,7 @@ class BHProducer(Module):
                 boost_l1_eta = tightElectrons_noIso[0].Eta()
                 boost_l1_phi = tightElectrons_noIso[0].Phi()
                 boost_l1_mass = tightElectrons_noIso[0].M()
+
         if (boost_region > 0):
             if self.is_mc:
                 boost_met = event.MET_T1Smear_pt
@@ -1181,6 +1186,26 @@ class BHProducer(Module):
         self.out.fillBranch("boost_l1_mass", boost_l1_mass)
         self.out.fillBranch("boost_met", boost_met)
         self.out.fillBranch("boost_met_phi", boost_met_phi)
+
+        ##################
+        ##  Trigger EM  ##
+        ##################
+        Trigger_derived_region = False
+        # There are four kind of trigger scale factors ['resolved', 'boost'] (region) x ['Electron', 'Muon'](lepton) and the derivation region is more or less overlap with each others, so we only select the union of them and separate them offline.
+        # Muon as "Tag"
+        if (n_tight_muon == 1 and tightMuons[0].Pt() > muon_pt and n_loose_muon == 0):
+            if (n_tight_ele == 1 and tightElectrons[0].Pt() > ele_pt and n_loose_ele == 0):
+                Trigger_derived_region = True
+            elif (n_tight_ele_noIso == 1 and tightElectrons_noIso[0].Pt() > ele_pt and n_loose_ele_noIso == 0):
+                Trigger_derived_region = True
+        # Electron as "Tag"
+        elif (n_tight_ele == 1 and tightElectrons[0].Pt() > ele_pt and n_loose_ele == 0):
+            if (n_tight_muon == 1 and tightMuons[0].Pt() > muon_pt and n_loose_muon == 0):
+                Trigger_derived_region = True
+            elif (n_tight_muon_noIso == 1 and tightMuons_noIso[0].Pt() > muon_pt and n_loose_muon_noIso == 0):
+                Trigger_derived_region = True
+        self.out.fillBranch("Trigger_derived_region", Trigger_derived_region)
+
         ###################
         # WZ region
         ##################
@@ -1736,7 +1761,7 @@ class BHProducer(Module):
         self.out.fillBranch("DY_z_phi", DY_z_phi)
         self.out.fillBranch("DY_drll", DY_drll)
 
-        if not (bh_nl or WZ_region > 0 or DY_region > 0 or boost_region > 0):
+        if not (bh_nl or Trigger_derived_region or WZ_region > 0 or DY_region > 0 or boost_region > 0):
             return False
 
         return True
