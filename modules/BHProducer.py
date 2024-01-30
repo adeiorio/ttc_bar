@@ -218,7 +218,7 @@ class BHProducer(Module):
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
-
+    
     def analyze(self, event):
 
         # PV selection
@@ -644,37 +644,28 @@ class BHProducer(Module):
                 tightJets_id_in24.append(ijet)
                 jet_v4_all.append(jet_v4_temp.Clone())
 
-            # https://btv-wiki.docs.cern.ch/ScaleFactors/UL2016preVFP/
-            if self.year == "2016apv" and jets[ijet].btagDeepFlavB > 0.0508:
-                tightJets_b_DeepJetloose_id.append(ijet)
-            if self.year == "2016apv" and jets[ijet].btagDeepFlavB > 0.2598:
-                tightJets_b_DeepJetmedium_id.append(ijet)
-            if self.year == "2016apv" and jets[ijet].btagDeepFlavB > 0.6502:
-                tightJets_b_DeepJettight_id.append(ijet)
+                # https://btv-wiki.docs.cern.ch/ScaleFactors/UL2016preVFP/
+                # https://btv-wiki.docs.cern.ch/ScaleFactors/UL2016postVFP/
+                # https://btv-wiki.docs.cern.ch/ScaleFactors/UL2017/
+                # https://btv-wiki.docs.cern.ch/ScaleFactors/UL2018/
+                WPbtagger = {
+                    '2016apv':{'L': 0.0508, 'M': 0.2598, 'T': 0.6502},
+                    '2016':{'L': 0.0480, 'M': 0.2489, 'T': 0.6377},
+                    '2017':{'L': 0.0532, 'M': 0.3040, 'T': 0.7476},
+                    '2018':{'L': 0.0490, 'M': 0.2783, 'T': 0.7100}
+                }
 
-            # https://btv-wiki.docs.cern.ch/ScaleFactors/UL2016postVFP/
-            if self.year == "2016" and jets[ijet].btagDeepFlavB > 0.0480:
-                tightJets_b_DeepJetloose_id.append(ijet)
-            if self.year == "2016" and jets[ijet].btagDeepFlavB > 0.2489:
-                tightJets_b_DeepJetmedium_id.append(ijet)
-            if self.year == "2016" and jets[ijet].btagDeepFlavB > 0.6377:
-                tightJets_b_DeepJettight_id.append(ijet)
+                #Taking b-jets
+                if jets[ijet].btagDeepFlavB > WPbtagger[self.year]["T"]: 
+                    tightJets_b_DeepJetloose_id.append(ijet)
+                    tightJets_b_DeepJetmedium_id.append(ijet)
+                    tightJets_b_DeepJettight_id.append(ijet)
+                elif jets[ijet].btagDeepFlavB > WPbtagger[self.year]["M"]:
+                    tightJets_b_DeepJetloose_id.append(ijet)
+                    tightJets_b_DeepJetmedium_id.append(ijet)
+                elif jets[ijet].btagDeepFlavB > WPbtagger[self.year]["L"]:
+                    tightJets_b_DeepJetloose_id.append(ijet)
 
-            # https://btv-wiki.docs.cern.ch/ScaleFactors/UL2017/
-            if self.year == "2017" and jets[ijet].btagDeepFlavB > 0.0532:
-                tightJets_b_DeepJetloose_id.append(ijet)
-            if self.year == "2017" and jets[ijet].btagDeepFlavB > 0.3040:
-                tightJets_b_DeepJetmedium_id.append(ijet)
-            if self.year == "2017" and jets[ijet].btagDeepFlavB > 0.7476:
-                tightJets_b_DeepJettight_id.append(ijet)
-
-            # https://btv-wiki.docs.cern.ch/ScaleFactors/UL2018/
-            if self.year == "2018" and jets[ijet].btagDeepFlavB > 0.0490:
-                tightJets_b_DeepJetloose_id.append(ijet)
-            if self.year == "2018" and jets[ijet].btagDeepFlavB > 0.2783:
-                tightJets_b_DeepJetmedium_id.append(ijet)
-            if self.year == "2018" and jets[ijet].btagDeepFlavB > 0.7100:
-                tightJets_b_DeepJettight_id.append(ijet)
 
         # HT (sum of all tightjets)
         HT = 0
