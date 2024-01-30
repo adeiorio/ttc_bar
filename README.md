@@ -30,7 +30,7 @@ scram b -j8
 2. Set up TTC codes
 ```
 cd python/postprocessing
-git clone -b lep_mvaID git@github.com:ExtraYukawa/ttc_bar.git analysis
+git clone -b lxplus-9 git@github.com:ExtraYukawa/ttc_bar.git analysis
 
 mv analysis/crab/auto_crab_example/crab_help.py analysis/crab/auto_crab_example/crab_help.py.bak
 
@@ -83,7 +83,7 @@ input NANOAODv9 dataset: ``/BGToTHpm_MH-200_TuneCP5_13TeV_G2HDM-rhott06_rhotc04_
 ### crab jobs for bH+ to follow---> (working version)
 Please follow a dedicated README inside ``crab`` folder
 
-## Submit crab jobs (TTC)
+## Submit crab jobs (TTC): OLD stuff (already published the analysis DOES not maintain anymore for python3)
 using the configure files under 'configs', to make a test:
 ```
 cd crab
@@ -129,7 +129,7 @@ See ```https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3FAQ#Can_I_send_CRAB_o
 To add the outputs:
 ```
 ADD HERE ALSO THE METHOD TO HANDLE ALL OUTPUT FOLDERS AT ONCE WITH crab_helper
-python ../scripts/haddnano.py combined.root /eos/cms/store/group/phys_top/ExtraYukawa/test/.../*.root
+python3 ../scripts/haddnano.py combined.root /eos/cms/store/group/phys_top/ExtraYukawa/test/.../*.root
 ```
 
 ## corrections
