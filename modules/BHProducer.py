@@ -12,6 +12,9 @@ ROOT.PyConfig.IgnoreCommandLineOptions = True
 class BHProducer(Module):
     def __init__(self, year):
         self.year = year
+        self.mucheck_has_run = False
+        self.echeck_has_run = False
+        self.jetcheck_has_run = False
 
     def beginJob(self):
         pass
@@ -83,7 +86,6 @@ class BHProducer(Module):
         self.out.branch("DeepB_loose_j3_eta", "F")
         self.out.branch("DeepB_loose_j3_phi", "F")
         self.out.branch("DeepB_loose_j3_mass", "F")
-
         self.out.branch("DeepB_medium_j1_pt", "F")
         self.out.branch("DeepB_medium_j1_eta", "F")
         self.out.branch("DeepB_medium_j1_phi", "F")
@@ -96,7 +98,6 @@ class BHProducer(Module):
         self.out.branch("DeepB_medium_j3_eta", "F")
         self.out.branch("DeepB_medium_j3_phi", "F")
         self.out.branch("DeepB_medium_j3_mass", "F")
-
         self.out.branch("DeepB_tight_j1_pt", "F")
         self.out.branch("DeepB_tight_j1_eta", "F")
         self.out.branch("DeepB_tight_j1_phi", "F")
@@ -150,6 +151,7 @@ class BHProducer(Module):
         self.out.branch("boost_l1_mass", "F")
         self.out.branch("boost_met", "F")
         self.out.branch("boost_met_phi", "F")
+        self.out.branch("Trigger_derived_region", "B")
         self.out.branch("WZ_region", "I")
         self.out.branch("WZ_zl1_id", "I")
         self.out.branch("WZ_zl2_id", "I")
@@ -214,21 +216,11 @@ class BHProducer(Module):
         self.is_mc = bool(inputTree.GetBranch("GenJet_pt"))
         self.is_lhe = bool(inputTree.GetBranch("nLHEPart"))
         self.has_cjet_tag = bool(inputTree.GetBranch("Jet_btagDeepFlavCvL"))
-        self.is_mu_corr = bool(inputTree.GetBranch("Muon_corrected_pt"))
-        self.is_ele_corr = bool(inputTree.GetBranch("Electron_eCorr"))
-        self.is_jet_corr = bool(inputTree.GetBranch("Jet_mass_nom"))
-        if not self.is_mu_corr:
-            print("WARNING: Muon Rochester corrections not present!")
-        if not self.is_ele_corr:
-            print("WARNING: Electron energy corrections not present!")
-        if not self.is_jet_corr:
-            print("WARNING: Jet energy corrections not present!")
-
+        
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
 
     def analyze(self, event):
-
         # PV selection
         if (event.PV_npvsGood < 1):
             return False
@@ -249,12 +241,35 @@ class BHProducer(Module):
         jets = Collection(event, 'Jet')
         met = Object(event, 'MET')
         lhe_nlepton = 0
+        ##############################################
+        ###  Checking the presence of corrections  ###
+        ##############################################
+        if not self.mucheck_has_run and len(muons) > 0:
+            self.is_mu_corr = hasattr(muons, "corrected_pt")
+            if not self.is_mu_corr:
+                print("WARNING: Muon Rochester corrections not present!")
+            self.mucheck_has_run = True
+        if not self.echeck_has_run and len(electrons) > 0:
+            self.is_ele_corr = hasattr(electrons[0], "eCorr")
+            if not self.is_ele_corr:
+                print("WARNING: Electron energy corrections not present!")
+            self.echeck_has_run = True
+        if not self.jetcheck_has_run and len(jets) > 0:
+            self.is_jet_corr = hasattr(jets[0], "mass_nom")
+            if not self.is_jet_corr:
+                print("WARNING: Jet energy corrections not present!")
+            self.jetcheck_has_run = True
+        '''
+        self.is_jet_corr = True
+        self.is_ele_corr = True
+        self.is_mu_corr = False
+        '''
+        
         if self.is_lhe:
             lheparticle = Collection(event, 'LHEPart')
             for lhe in lheparticle:
                 if lhe.status == 1 and (abs(lhe.pdgId) == 11 or abs(lhe.pdgId) == 13 or abs(lhe.pdgId) == 15):
                     lhe_nlepton = lhe_nlepton+1
-
         self.out.fillBranch("lhe_nlepton", lhe_nlepton)
 
         # total number of ele+muon, currently require at least 1 leptons
@@ -429,6 +444,7 @@ class BHProducer(Module):
         self.out.fillBranch("additional_vetoElectrons_noIso_id", additional_vetoElectrons_noIso_id)
         self.out.fillBranch("electron_jet_Ptratio", electron_jet_Ptratio)
         self.out.fillBranch("electron_closest_jetid", electron_closest_jetid)
+
 
         # tight leptons and additional loose leptons collection
         tightLeptons = tightMuons + tightElectrons
@@ -977,6 +993,27 @@ class BHProducer(Module):
         self.out.fillBranch("boost_l1_mass", boost_l1_mass)
         self.out.fillBranch("boost_met", boost_met)
         self.out.fillBranch("boost_met_phi", boost_met_phi)
+
+
+        ##################
+        ##  Trigger EM  ##
+        ##################
+        Trigger_derived_region = False
+        # There are four kind of trigger scale factors ['resolved', 'boost'] (region) x ['Electron', 'Muon'](lepton) and the derivation region is more or less overlap with each others, so we only select the union of them and separate them offline.
+        # Muon as "Tag"
+        if (n_tight_muon == 1 and tightMuons[0].pt > muon_pt and n_loose_muon == 0):
+            if (n_tight_ele == 1 and tightElectrons[0].pt > ele_pt and n_loose_ele == 0):
+                Trigger_derived_region = True
+            elif (n_tight_ele_noIso == 1 and tightElectrons_noIso[0].pt > ele_pt and n_loose_ele_noIso == 0):
+                Trigger_derived_region = True
+        # Electron as "Tag"
+        elif (n_tight_ele == 1 and tightElectrons[0].pt > ele_pt and n_loose_ele == 0):
+            if (n_tight_muon == 1 and tightMuons[0].pt > muon_pt and n_loose_muon == 0):
+                Trigger_derived_region = True
+            elif (n_tight_muon_noIso == 1 and tightMuons_noIso[0].pt > muon_pt and n_loose_muon_noIso == 0):
+                Trigger_derived_region = True
+        self.out.fillBranch("Trigger_derived_region", Trigger_derived_region)
+
         ###################
         # WZ region
         ##################
@@ -1212,7 +1249,7 @@ class BHProducer(Module):
                     WZ_Z_eta = (tightMuons[0].p4()+tightMuons[1].p4()).Eta()
                     WZ_Z_phi = (tightMuons[0].p4()+tightMuons[1].p4()).Phi()
 
-                        # 1 muon case
+            # 1 muon case
             if len(tightElectrons) == 2 and (tightElectrons_pdgid[0]-tightElectrons_pdgid[1]) == 0:
                 if abs((tightElectrons[0].p4()+tightElectrons[1].p4()).M()-91.1876) < 15:
                     WZ_region = 3
@@ -1343,7 +1380,7 @@ class BHProducer(Module):
                         WZ_Z_phi = (tightElectrons[1]+tightElectrons[2]).Phi()
                 # two combination 0+1 or 0+2
                 else:
-                    if abs((tightElectrons[0]+tightElectrons[1]).M()-91.1876) < abs((tightElectrons[0]+tightElectrons[2]).M()-91.1876) and abs((tightElectrons[0]+tightElectrons[1]).M()-91.1876) < 15:
+                    if abs((tightElectrons[0].p4()+tightElectrons[1].p4()).M()-91.1876) < abs((tightElectrons[0].p4()+tightElectrons[2].p4()).M()-91.1876) and abs((tightElectrons[0].p4()+tightElectrons[1].p4()).M()-91.1876) < 15:
                         WZ_region = 4
                         WZ_zl1_id = tightElectrons_id[0]
                         WZ_zl2_id = tightElectrons_id[1]
@@ -1363,11 +1400,11 @@ class BHProducer(Module):
                         WZ_l3_eta = tightElectrons[2].eta
                         WZ_l3_phi = tightElectrons[2].phi
                         WZ_l3_mass = tightElectrons[2].mass
-                        WZ_Z_mass = (tightElectrons[0]+tightElectrons[1]).M()
-                        WZ_Z_pt = (tightElectrons[0]+tightElectrons[1]).pt
-                        WZ_Z_eta = (tightElectrons[0]+tightElectrons[1]).Eta()
-                        WZ_Z_phi = (tightElectrons[0]+tightElectrons[1]).Phi()
-                    if abs((tightElectrons[0]+tightElectrons[1]).M()-91.1876) > abs((tightElectrons[0]+tightElectrons[2]).M()-91.1876) and abs((tightElectrons[0]+tightElectrons[2]).M()-91.1876) < 15:
+                        WZ_Z_mass = (tightElectrons[0].p4()+tightElectrons[1].p4()).M()
+                        WZ_Z_pt = (tightElectrons[0].p4()+tightElectrons[1].p4()).pt
+                        WZ_Z_eta = (tightElectrons[0].p4()+tightElectrons[1].p4()).Eta()
+                        WZ_Z_phi = (tightElectrons[0].p4()+tightElectrons[1].p4()).Phi()
+                    if abs((tightElectrons[0].p4()+tightElectrons[1].p4()).M()-91.1876) > abs((tightElectrons[0].p4()+tightElectrons[2].p4()).M()-91.1876) and abs((tightElectrons[0].p4()+tightElectrons[2].p4()).M()-91.1876) < 15:
                         WZ_region = 4
                         WZ_zl1_id = tightElectrons_id[0]
                         WZ_zl2_id = tightElectrons_id[2]
@@ -1495,7 +1532,7 @@ class BHProducer(Module):
         self.out.fillBranch("DY_z_phi", DY_z_phi)
         self.out.fillBranch("DY_drll", DY_drll)
 
-        if not (bh_nl or WZ_region > 0 or DY_region > 0 or boost_region > 0):
+        if not (bh_nl or Trigger_derived_region or WZ_region > 0 or DY_region > 0 or boost_region > 0):
             return False
 
         return True
