@@ -45,7 +45,38 @@ if not os.path.exists(scriptpath):
 # Create file inside <YEAR_script> (e.g. 2017_script) from template file
 
 #for data only need to create different eras
-if year == '2017':
+if year == '2016apv':
+  #MC
+  copyfile('template/crab_script_bhplus.sh',year+'_script/crab_script_bhplus.sh')
+  os.system(r'sed -i "26s/YEARTAG/%s/g" %s' %('2016a', year+'_script/crab_script_bhplus.sh'))
+  # change permission of the newly created file
+  os.system("chmod 755 "+year+'_script/crab_script_bhplus.sh')
+
+  #Data
+  for subERA in ["B","C","D","E","F"]: #2016apv has B,C,D,E,F eras
+    copyfile('template/crab_script_bhplus_data.sh',year+'_script/crab_script_bhplus_data'+subERA+'.sh')
+    if subERA == 'F':
+      os.system(r'sed -i "26s/YEARTAG/%s/g" %s' %('2016f_apv', year+'_script/crab_script_bhplus_data'+subERA+'.sh'))
+    else:
+      os.system(r'sed -i "26s/YEARTAG/%s/g" %s' %('2016'+subERA.lower(), year+'_script/crab_script_bhplus_data'+subERA+'.sh'))
+    # change permission of the newly created file
+    os.system("chmod 755 "+year+'_script/crab_script_bhplus_data'+subERA+'.sh')
+
+elif year == '2016':
+  #MC
+  copyfile('template/crab_script_bhplus.sh',year+'_script/crab_script_bhplus.sh')
+  os.system(r'sed -i "26s/YEARTAG/%s/g" %s' %('2016b', year+'_script/crab_script_bhplus.sh'))
+  # change permission of the newly created file
+  os.system("chmod 755 "+year+'_script/crab_script_bhplus.sh')
+
+  #Data
+  for subERA in ["F","G","H"]: #2016 has F,G,H eras
+    copyfile('template/crab_script_bhplus_data.sh',year+'_script/crab_script_bhplus_data'+subERA+'.sh')
+    os.system(r'sed -i "26s/YEARTAG/%s/g" %s' %(year+subERA.lower(), year+'_script/crab_script_bhplus_data'+subERA+'.sh'))
+    # change permission of the newly created file
+    os.system("chmod 755 "+year+'_script/crab_script_bhplus_data'+subERA+'.sh')
+
+elif year == '2017':
   #MC
   copyfile('template/crab_script_bhplus.sh',year+'_script/crab_script_bhplus.sh')
   os.system(r'sed -i "26s/YEARTAG/%s/g" %s' %(year, year+'_script/crab_script_bhplus.sh'))
@@ -132,7 +163,7 @@ if year=='2018':
     os.system(r'sed -i "s/bHplus\/2017/bHplus\/2018/g" bhplus_config_crab_2018/*_cfg.py')
 
 if year=='2016apv':
-  os.system(r'sed -i "s/TTC_version9/bhplus_2016apv/g" bhplus_config_crab_2016apv/*_cfg.py')
+  os.system(r'sed -i "s/bHplus\/2017/bHplus\/2016apv/g" bhplus_config_crab_2016apv/*_cfg.py')
 
 if year=='2016':
-  os.system(r'sed -i "s/TTC_version9/bhplus_2016postapv/g" bhplus_config_crab_2016/*_cfg.py')
+  os.system(r'sed -i "s/bHplus\/2017/bHplus\/2016/g" bhplus_config_crab_2016/*_cfg.py')
