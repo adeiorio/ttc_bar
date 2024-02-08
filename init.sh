@@ -37,7 +37,6 @@ if [ "${year}" = "2016apv" ]; then
   
   echo Updating BJet related
   cp $WORKING_PATH/analysis/others/for_btv/btagSFProducer.py $WORKING_PATH/modules/btv
-  cp $WORKING_PATH/analysis/others/for_btv/DeepJet_106XUL16preVFPSF_v2_skimmed.csv $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/
 
 fi
 
@@ -65,7 +64,6 @@ if [ "${year}" = "2016" ]; then
   
   echo Updating BJet related
   cp $WORKING_PATH/analysis/others/for_btv/btagSFProducer.py $WORKING_PATH/modules/btv
-  cp $WORKING_PATH/analysis/others/for_btv/DeepJet_106XUL16postVFPSF_v3_skimmed.csv $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/
 
 fi
 
