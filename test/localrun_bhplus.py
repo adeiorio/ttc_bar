@@ -42,9 +42,9 @@ def main():
 
   if opt.ismc:
     if opt.year == "2016a":
-      p = PostProcessor(opt.output, [opt.inputs], modules=[countHistogramsModule(),puAutoWeight_2016_preAPV(),PrefCorr2016(), LeptonVariablesModule(), TopMVA2016apvProducer(), mu_idisosf_2016APV(),muonScaleRes2016a(),ele_recoidsf_2016APV(), jmeCorrections_UL2016APVMC(), jmeCorrections_fatJet_UL2016APVMC(), btagSF2016ULapv(), BH2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(), outputbranchsel="keep_and_drop.txt",maxEntries=opt.nEvent)
+      p = PostProcessor(opt.output, [opt.inputs], modules=[countHistogramsModule(),puAutoWeight_2016_preAPV(), LeptonVariablesModule(), TopMVA2016apvProducer(), mu_idisosf_2016APV(),muonScaleRes2016a(),ele_recoidsf_2016APV(), jmeCorrections_UL2016APVMC(), jmeCorrections_fatJet_UL2016APVMC(), btagSF2016ULapv(), BH2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(), outputbranchsel="keep_and_drop.txt",maxEntries=opt.nEvent)
     if opt.year == "2016b":
-      p = PostProcessor(opt.output, [opt.inputs], modules=[countHistogramsModule(),puAutoWeight_2016_postAPV(), PrefCorr2016(), LeptonVariablesModule(), TopMVA2016postapvProducer(), mu_idisosf_2016(),muonScaleRes2016b(),ele_recoidsf_2016(), jmeCorrections_UL2016MC(), jmeCorrections_fatJet_UL2016MC(), btagSF2016UL(), BH2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(), outputbranchsel="keep_and_drop.txt",maxEntries=opt.nEvent)
+      p = PostProcessor(opt.output, [opt.inputs], modules=[countHistogramsModule(),puAutoWeight_2016_postAPV(), LeptonVariablesModule(), TopMVA2016postapvProducer(), mu_idisosf_2016(),muonScaleRes2016b(),ele_recoidsf_2016(), jmeCorrections_UL2016MC(), jmeCorrections_fatJet_UL2016MC(), btagSF2016UL(), BH2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(), outputbranchsel="keep_and_drop.txt",maxEntries=opt.nEvent)
     if opt.year == "2017":
       p = PostProcessor(opt.output, [opt.inputs], modules=[countHistogramsModule(),puWeight_2017(),LeptonVariablesModule(), TopMVA2017Producer(), mu_idisosf_2017(),ele_recoidsf_2017(), jmeCorrections_UL2017MC(), jmeCorrections_fatJet_UL2017MC(), btagSF2017UL(), BH2017()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt",maxEntries=opt.nEvent)
     if opt.year == "2018":

@@ -1,0 +1,10 @@
+{
+"TTto2L": ["TTTo2L","/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"],
+"TTto1L": ["TTTo1L","/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"],
+"TTtoHadronic": ["TTtoHadronic","/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"],
+"METB": ["MET_B","/MET/Run2016B-ver2_HIPM_UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD","crab_script_bhplus_dataB.sh"],
+"METC": ["MET_C","/MET/Run2016C-HIPM_UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD","crab_script_bhplus_dataC.sh"],
+"METD": ["MET_D","/MET/Run2016D-HIPM_UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD","crab_script_bhplus_dataD.sh"],
+"METE": ["MET_E","/MET/Run2016E-HIPM_UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD","crab_script_bhplus_dataE.sh"],
+"METF": ["MET_F","/MET/Run2016F-HIPM_UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD","crab_script_bhplus_dataF.sh"]
+}
