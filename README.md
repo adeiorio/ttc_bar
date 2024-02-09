@@ -62,7 +62,7 @@ sh init.sh 2018
 # mv analysis/crab/auto_crab_example/crab_help.py.bak analysis/crab/auto_crab_example/crab_help.py
 ```
 4. If you want to keep GEN info in the ntuples, in 
-https://github.com/ExtraYukawa/ttc_bar/blob/lep_mvaID/crab/keep_and_drop.txt
+https://github.com/ExtraYukawa/ttc_bar/blob/lxplus-9/crab/keep_and_drop.txt
 remove the following line:
 ```
 drop GenPart_*
@@ -70,7 +70,7 @@ drop GenPart_*
 
 
 ## ** bH+ ** Local Test
-To create skimmed ntuple with [bhplusproducer](https://github.com/ExtraYukawa/ttc_bar/blob/lep_mvaID/modules/BHProducer.py)
+To create skimmed ntuple with [bhplusproducer](https://github.com/ExtraYukawa/ttc_bar/blob/lxplus-9/modules/BHProducer.py)
 ```
 cd test
 python3 localrun_bhplus.py -m -i /eos/cms/store/group/phys_top/ExtraYukawa/input_for_tests/BGToTHpm_MH-200_TuneCP5_13TeV_G2HDM-rhott06_rhotc04_rhotu00.root --year 2017 -o $CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis/test -n 1000
