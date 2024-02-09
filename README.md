@@ -72,7 +72,7 @@ drop GenPart_*
 ## ** bH+ ** Local Test
 To create skimmed ntuple with [bhplusproducer](https://github.com/ExtraYukawa/ttc_bar/blob/lxplus-9/modules/BHProducer.py)
 ```
-cd test
+cd $CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis/test
 python3 localrun_bhplus.py -m -i /eos/cms/store/group/phys_top/ExtraYukawa/input_for_tests/BGToTHpm_MH-200_TuneCP5_13TeV_G2HDM-rhott06_rhotc04_rhotu00.root --year 2017 -o $CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis/test -n 1000
 ```
 It will create ntuple with name: ``Events`` tree
