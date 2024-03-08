@@ -8,7 +8,7 @@ import os
 class muIDISOSF(Module):
     def __init__(self, repo, era):
         self.era = era
-        self.evaluator = _core.CorrectionSet.from_file('/cvmfs/cms.cern.ch/rsync/cms-nanoAOD/jsonpog-integration/POG/MUO/' + repo + '/muon_Z_v2.json.gz')
+        self.evaluator = _core.CorrectionSet.from_file('/cvmfs/cms.cern.ch/rsync/cms-nanoAOD/jsonpog-integration/POG/MUO/' + repo + '/muon_Z.json.gz')
         sfdir = os.path.join(os.path.dirname(__file__), '../data/leptonmva/scale_factor/muon_v1/')
         if not os.path.exists(sfdir):
             sfdir = 'data/leptonmva/scale_factor/muon_v1/'
