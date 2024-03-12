@@ -15,6 +15,8 @@ parser.add_argument("--match", dest="match", default="",
                     help="When reading CRAB tasks, take only tasks whose names contain this string")
 parser.add_argument("-clean", "--clean", action="store_true", dest="clean", default=False,
                     help="use this flag to clean crab.log inside every input directory")
+parser.add_argument("-resubmit", "--resubmit", action="store_true", dest="resubmit", default=False,
+                    help="use this flag to resubmit the crab jobs")
 opts = parser.parse_args()
 
 
@@ -42,10 +44,14 @@ for filen in filesfolders:
            
               print(os.popen("crab status -d "+filen).read())
               print (50*"=")
+              # resubmit the crab task
+              if (opts.resubmit):
+                 print (colors.colordict['ORANGE'] + "Resubmit:  " + colors.colordict['CEND']),
+                 print (colors.colordict['BLUE'] + finalDir + colors.colordict['CEND'])
+                 print(os.popen("crab resubmit -d "+filen).read())
+
               # delete crab.log file
               if (opts.clean):
                  delcmd = "rm "+filen+"/crab.log"
                  print (colors.colordict['ORANGE'] + delcmd + colors.colordict['CEND'])
                  os.system(delcmd)
-           
-            
