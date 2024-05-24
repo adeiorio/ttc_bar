@@ -73,5 +73,8 @@
 "SingleMuonH": ["SingleMuon_H","/SingleMuon/Run2016H-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD","crab_script_bhplus_dataH.sh"],
 "METF": ["MET_F","/MET/Run2016F-UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD","crab_script_bhplus_dataF.sh"],
 "METG": ["MET_G","/MET/Run2016G-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD","crab_script_bhplus_dataG.sh"],
-"METH": ["MET_H","/MET/Run2016H-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD","crab_script_bhplus_dataH.sh"]
+"METH": ["MET_H","/MET/Run2016H-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD","crab_script_bhplus_dataH.sh"],
+"SinglePhotonF": ["SinglePhoton_F","/SinglePhoton/Run2016F-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD","crab_script_bhplus_dataF.sh"],
+"SinglePhotonG": ["SinglePhoton_G","/SinglePhoton/Run2016G-UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD","crab_script_bhplus_dataG.sh"],
+"SinglePhotonH": ["SinglePhoton_H","/SinglePhoton/Run2016H-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD","crab_script_bhplus_dataH.sh"]
 }
