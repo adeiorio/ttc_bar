@@ -416,14 +416,14 @@ class BHProducer(Module):
         # Main electron loop
         for iele in range(0, event.nElectron):
             if (electrons[iele].topMVA_ID > 3):
-                if (((abs(electrons[iele].eta+electrons[iele].deltaEtaSC) < 1.4442 and abs(electrons[iele].dxy) < 0.05 and abs(electrons[iele].dz) < 0.1) or (abs(electrons[iele].eta + electrons[iele].deltaEtaSC) > 1.566 and abs(electrons[iele].eta + electrons[iele].deltaEtaSC) < 2.4 and abs(electrons[iele].dxy) < 0.1 and abs(electrons[iele].dz) < 0.2)) and electrons[iele].pt > ele_pt):
+                if (((abs(electrons[iele].eta+electrons[iele].deltaEtaSC) < 1.4442 and abs(electrons[iele].dxy) < 0.05 and abs(electrons[iele].dz) < 0.1) or (abs(electrons[iele].eta + electrons[iele].deltaEtaSC) > 1.566 and abs(electrons[iele].eta + electrons[iele].deltaEtaSC) < 2.5 and abs(electrons[iele].dxy) < 0.1 and abs(electrons[iele].dz) < 0.2)) and electrons[iele].pt > ele_pt):
                     electron_v4_temp.SetPtEtaPhiM(
                         electrons[iele].pt, electrons[iele].eta, electrons[iele].phi, electrons[iele].mass)
                     tightElectrons.append(electron_v4_temp.Clone())
                     tightElectrons_pdgid.append(electrons[iele].pdgId)
                     tightElectrons_id.append(iele)
             elif (electrons[iele].topMVA_ID > 1):
-                if (((abs(electrons[iele].eta+electrons[iele].deltaEtaSC) < 1.4442 and abs(electrons[iele].dxy) < 0.05 and abs(electrons[iele].dz) < 0.1) or (abs(electrons[iele].eta + electrons[iele].deltaEtaSC) > 1.566 and abs(electrons[iele].eta + electrons[iele].deltaEtaSC) < 2.4 and abs(electrons[iele].dxy) < 0.1 and abs(electrons[iele].dz) < 0.2)) and electrons[iele].pt > 10):
+                if (((abs(electrons[iele].eta+electrons[iele].deltaEtaSC) < 1.4442 and abs(electrons[iele].dxy) < 0.05 and abs(electrons[iele].dz) < 0.1) or (abs(electrons[iele].eta + electrons[iele].deltaEtaSC) > 1.566 and abs(electrons[iele].eta + electrons[iele].deltaEtaSC) < 2.5 and abs(electrons[iele].dxy) < 0.1 and abs(electrons[iele].dz) < 0.2)) and electrons[iele].pt > 10):
                     electron_v4_temp.SetPtEtaPhiM(
                         electrons[iele].pt, electrons[iele].eta, electrons[iele].phi, electrons[iele].mass)
                     additional_vetoElectrons.append(electron_v4_temp.Clone())
@@ -434,14 +434,14 @@ class BHProducer(Module):
         # no Isolation electron loop
         for iele in range(0, event.nElectron):
             if (electrons[iele].mvaFall17V2noIso_WP90):
-                if (((abs(electrons[iele].eta+electrons[iele].deltaEtaSC) < 1.4442 and abs(electrons[iele].dxy) < 0.05 and abs(electrons[iele].dz) < 0.1) or (abs(electrons[iele].eta + electrons[iele].deltaEtaSC) > 1.566 and abs(electrons[iele].eta + electrons[iele].deltaEtaSC) < 2.4 and abs(electrons[iele].dxy) < 0.1 and abs(electrons[iele].dz) < 0.2)) and electrons[iele].pt > ele_pt):
+                if (((abs(electrons[iele].eta+electrons[iele].deltaEtaSC) < 1.4442 and abs(electrons[iele].dxy) < 0.05 and abs(electrons[iele].dz) < 0.1) or (abs(electrons[iele].eta + electrons[iele].deltaEtaSC) > 1.566 and abs(electrons[iele].eta + electrons[iele].deltaEtaSC) < 2.5 and abs(electrons[iele].dxy) < 0.1 and abs(electrons[iele].dz) < 0.2)) and electrons[iele].pt > ele_pt):
                     electron_v4_temp.SetPtEtaPhiM(
                         electrons[iele].pt, electrons[iele].eta, electrons[iele].phi, electrons[iele].mass)
                     tightElectrons_noIso.append(electron_v4_temp.Clone())
                     tightElectrons_noIso_pdgid.append(electrons[iele].pdgId)
                     tightElectrons_noIso_id.append(iele)
             elif (electrons[iele].topMVA_ID > 1):
-                if (((abs(electrons[iele].eta+electrons[iele].deltaEtaSC) < 1.4442 and abs(electrons[iele].dxy) < 0.05 and abs(electrons[iele].dz) < 0.1) or (abs(electrons[iele].eta + electrons[iele].deltaEtaSC) > 1.566 and abs(electrons[iele].eta + electrons[iele].deltaEtaSC) < 2.4 and abs(electrons[iele].dxy) < 0.1 and abs(electrons[iele].dz) < 0.2)) and electrons[iele].pt > 10):
+                if (((abs(electrons[iele].eta+electrons[iele].deltaEtaSC) < 1.4442 and abs(electrons[iele].dxy) < 0.05 and abs(electrons[iele].dz) < 0.1) or (abs(electrons[iele].eta + electrons[iele].deltaEtaSC) > 1.566 and abs(electrons[iele].eta + electrons[iele].deltaEtaSC) < 2.5 and abs(electrons[iele].dxy) < 0.1 and abs(electrons[iele].dz) < 0.2)) and electrons[iele].pt > 10):
                     electron_v4_temp.SetPtEtaPhiM(
                         electrons[iele].pt, electrons[iele].eta, electrons[iele].phi, electrons[iele].mass)
                     additional_vetoElectrons_noIso.append(
