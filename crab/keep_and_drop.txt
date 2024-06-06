@@ -23,7 +23,6 @@ drop HLT_PFJetFwd*
 drop HLT_QuadPFJet*
 drop HLT_Random*
 drop HLT_Rsq*
-drop HLT_SinglePhoton*
 drop HLT_Tau*
 drop HLT_TripleMu*
 drop HLT_TriplePhoton*
