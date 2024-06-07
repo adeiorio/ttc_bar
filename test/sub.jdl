@@ -1,0 +1,13 @@
+Universe = vanilla
+Notification = Error
+Output = condor/output/hello.$(ClusterId).$(ProcId).out
+Log = condor/log/hello.$(ClusterId).log
+Error = condor/error/hello.$(ClusterId).$(ProcId).err
+
+transfer_input_files = wrapper.sh
+Executable = ./wrapper.sh
+Initialdir = .
+notification = Error
+when_to_transfer_output = ON_EXIT
++JobFlavour = "nextweek"
+queue 1

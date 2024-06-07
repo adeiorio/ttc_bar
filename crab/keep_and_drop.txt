@@ -9,7 +9,6 @@ drop HLT_AK*
 drop HLT_DoubleMu4*
 drop HLT_Mu7p5*
 drop HLT_IsoMu20*
-drop HLT_IsoMu24*
 drop HLT_L2Mu*
 drop HLT_DiPFJet*
 drop HLT_PFJet*
@@ -24,7 +23,6 @@ drop HLT_PFJetFwd*
 drop HLT_QuadPFJet*
 drop HLT_Random*
 drop HLT_Rsq*
-drop HLT_SinglePhoton*
 drop HLT_Tau*
 drop HLT_TripleMu*
 drop HLT_TriplePhoton*
