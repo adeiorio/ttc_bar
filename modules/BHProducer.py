@@ -336,22 +336,22 @@ class BHProducer(Module):
 
             # topMVA ID: 1:VLoose 2: Loose 3: Medium 4: Tight
             if (mu.topMVA_ID > 3):
-                if (abs(mu.eta) < 2.4 and mu.pt > muon_pt and (abs(mu.dxy) < 0.2) and (abs(mu.dz) < 0.1)):
+                if (abs(mu.eta) < 2.4 and mu.pt > muon_pt and (abs(mu.dxy) < 0.05) and (abs(mu.dz) < 0.1)):
                     tightMuons.append(mu)
                     tightMuons_pdgid.append(mu.pdgId)
                     tightMuons_id.append(mu._index)
             elif (mu.topMVA_ID > 1):
-                if (abs(mu.eta) < 2.4 and mu.pt > 10 and (abs(mu.dxy) < 0.2) and (abs(mu.dz) < 0.1)):
+                if (abs(mu.eta) < 2.4 and mu.pt > 10 and (abs(mu.dxy) < 0.05) and (abs(mu.dz) < 0.1)):
                     additional_looseMuons.append(mu)
                     additional_looseMuons_pdgid.append(mu.pdgId)
                     additional_looseMuons_id.append(mu._index)
             if (mu.mediumId):
-                if (abs(mu.eta) < 2.4 and mu.pt > muon_pt and (abs(mu.dxy) < 0.2) and (abs(mu.dz) < 0.1)):
+                if (abs(mu.eta) < 2.4 and mu.pt > muon_pt and (abs(mu.dxy) < 0.05) and (abs(mu.dz) < 0.1)):
                     tightMuons_noIso.append(mu)
                     tightMuons_noIso_pdgid.append(mu.pdgId)
                     tightMuons_noIso_id.append(mu._index)
             elif (mu.topMVA_ID > 1):
-                if (abs(mu.eta) < 2.4 and mu.pt > 10 and (abs(mu.dxy) < 0.2) and (abs(mu.dz) < 0.1)):
+                if (abs(mu.eta) < 2.4 and mu.pt > 10 and (abs(mu.dxy) < 0.05) and (abs(mu.dz) < 0.1)):
                     additional_looseMuons_noIso.append(mu)
                     additional_looseMuons_noIso_pdgid.append(mu.pdgId)
                     additional_looseMuons_noIso_id.append(mu._index)
@@ -404,13 +404,12 @@ class BHProducer(Module):
             else:
                 electron_jet_Ptratio.append(1. / (1 + ele.miniPFRelIso_all))
 
-            if (ele.topMVA_ID > 3):
-                if (((abs(ele.eta+ele.deltaEtaSC) < 1.4442 and abs(ele.dxy) < 0.05 and abs(ele.dz) < 0.1) or (abs(ele.eta + ele.deltaEtaSC) > 1.566 and abs(ele.eta + ele.deltaEtaSC) < 2.5 and abs(ele.dxy) < 0.1 and abs(ele.dz) < 0.2)) and ele.pt > ele_pt):
+            if (((abs(ele.eta+ele.deltaEtaSC) < 1.4442) or (abs(ele.eta + ele.deltaEtaSC) > 1.566 and abs(ele.eta + ele.deltaEtaSC) < 2.5)) and abs(ele.dxy) < 0.05 and abs(ele.dz) < 0.1 and ele.lostHits <= 1 and ele.sip3d < 8):
+                if (ele.topMVA_ID > 3 and ele.pt > ele_pt):
                     tightElectrons.append(ele)
                     tightElectrons_pdgid.append(ele.pdgId)
                     tightElectrons_id.append(iele)
-            elif (ele.topMVA_ID > 1):
-                if (((abs(ele.eta+ele.deltaEtaSC) < 1.4442 and abs(ele.dxy) < 0.05 and abs(ele.dz) < 0.1) or (abs(ele.eta + ele.deltaEtaSC) > 1.566 and abs(ele.eta + ele.deltaEtaSC) < 2.5 and abs(ele.dxy) < 0.1 and abs(ele.dz) < 0.2)) and ele.pt > 10):
+                elif (ele.topMVA_ID > 1 and ele.pt > 10):
                     additional_vetoElectrons.append(ele)
                     additional_vetoElectrons_pdgid.append(ele.pdgId)
                     additional_vetoElectrons_id.append(iele)
