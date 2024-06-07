@@ -351,7 +351,7 @@ class BHProducer(Module):
                     tightMuons_noIso_pdgid.append(mu.pdgId)
                     tightMuons_noIso_id.append(mu._index)
             elif (mu.topMVA_ID > 1):
-                if (abs(mu.eta) < 2.4 and mu.pt > 10 and (abs(mu.dxy) < 0.05) and (abs(mu.dz) < 0.1)):
+                if (abs(mu.eta) < 2.4 and mu.pt > 10 and (abs(mu.dxy) < 0.05) and (abs(mu.dz) < 0.1) and mu.miniPFRelIso_all < 0.4):
                     additional_looseMuons_noIso.append(mu)
                     additional_looseMuons_noIso_pdgid.append(mu.pdgId)
                     additional_looseMuons_noIso_id.append(mu._index)
@@ -417,7 +417,7 @@ class BHProducer(Module):
                     tightElectrons_noIso.append(ele)
                     tightElectrons_noIso_pdgid.append(ele.pdgId)
                     tightElectrons_noIso_id.append(iele)
-                elif (ele.topMVA_ID > 1 and ele.pt > 10):
+                elif (ele.topMVA_ID > 1 and ele.pt > 10 and ele.miniPFRelIso_all < 0.4):
                     additional_vetoElectrons_noIso.append(ele)
                     additional_vetoElectrons_noIso_pdgid.append(ele.pdgId)
                     additional_vetoElectrons_noIso_id.append(iele)
