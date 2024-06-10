@@ -13,6 +13,7 @@ class eleRECOIDSF(Module):
         if not os.path.exists(sfdir):
             sfdir = 'data/leptonmva/scale_factor/egm_v1/'
         self.evaluator_topMVA = _core.CorrectionSet.from_file(sfdir + repo + '/egm_sf_schemaV2.json.gz')
+        # https://twiki.cern.ch/twiki/bin/view/CMS/EgammaSFJSON
         self.evaluator_EGM_Scale = _core.CorrectionSet.from_file(os.path.join(os.path.dirname(__file__), '../data/EGM_scale', repo, 'EGM_ScaleUnc.json.gz'))
     def beginJob(self):
         pass
