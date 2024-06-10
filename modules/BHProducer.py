@@ -336,22 +336,22 @@ class BHProducer(Module):
 
             # topMVA ID: 1:VLoose 2: Loose 3: Medium 4: Tight
             if (mu.topMVA_ID > 3):
-                if (abs(mu.eta) < 2.4 and mu.pt > muon_pt and (abs(mu.dxy) < 0.05) and (abs(mu.dz) < 0.1) and mu.miniPFRelIso_all < 0.4):
+                if (abs(mu.eta) < 2.4 and mu.pt > muon_pt and (abs(mu.dxy) < 0.05) and (abs(mu.dz) < 0.1) and mu.miniPFRelIso_all < 0.4 and mu.sip3d < 8.):
                     tightMuons.append(mu)
                     tightMuons_pdgid.append(mu.pdgId)
                     tightMuons_id.append(mu._index)
             elif (mu.topMVA_ID > 1):
-                if (abs(mu.eta) < 2.4 and mu.pt > 10 and (abs(mu.dxy) < 0.05) and (abs(mu.dz) < 0.1) and mu.miniPFRelIso_all < 0.4):
+                if (abs(mu.eta) < 2.4 and mu.pt > 10 and (abs(mu.dxy) < 0.05) and (abs(mu.dz) < 0.1) and mu.miniPFRelIso_all < 0.4 and mu.sip3d < 8.):
                     additional_looseMuons.append(mu)
                     additional_looseMuons_pdgid.append(mu.pdgId)
                     additional_looseMuons_id.append(mu._index)
             if (mu.mediumId):
-                if (abs(mu.eta) < 2.4 and mu.pt > muon_pt and (abs(mu.dxy) < 0.05) and (abs(mu.dz) < 0.1)):
+                if (abs(mu.eta) < 2.4 and mu.pt > muon_pt and (abs(mu.dxy) < 0.05) and (abs(mu.dz) < 0.1) and mu.sip3d < 8.):
                     tightMuons_noIso.append(mu)
                     tightMuons_noIso_pdgid.append(mu.pdgId)
                     tightMuons_noIso_id.append(mu._index)
             elif (mu.topMVA_ID > 1):
-                if (abs(mu.eta) < 2.4 and mu.pt > 10 and (abs(mu.dxy) < 0.05) and (abs(mu.dz) < 0.1) and mu.miniPFRelIso_all < 0.4):
+                if (abs(mu.eta) < 2.4 and mu.pt > 10 and (abs(mu.dxy) < 0.05) and (abs(mu.dz) < 0.1) and mu.miniPFRelIso_all < 0.4 and mu.sip3d < 8.):
                     additional_looseMuons_noIso.append(mu)
                     additional_looseMuons_noIso_pdgid.append(mu.pdgId)
                     additional_looseMuons_noIso_id.append(mu._index)
