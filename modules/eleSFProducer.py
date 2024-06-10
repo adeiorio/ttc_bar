@@ -14,7 +14,7 @@ class eleRECOIDSF(Module):
             sfdir = 'data/leptonmva/scale_factor/egm_v1/'
         self.evaluator_topMVA = _core.CorrectionSet.from_file(sfdir + repo + '/egm_sf_schemaV2.json.gz')
         # https://twiki.cern.ch/twiki/bin/view/CMS/EgammaSFJSON
-        self.evaluator_EGM_Scale = _core.CorrectionSet.from_file(os.path.join(os.path.dirname(__file__), '../data/EGM_scale', repo, 'EGM_ScaleUnc.json.gz'))
+        self.evaluator_EGM_Scale = _core.CorrectionSet.from_file(os.path.join(os.path.dirname(__file__), '../data/EGM_scale/' + repo + '/EGM_ScaleUnc.json.gz'))
     def beginJob(self):
         pass
 
@@ -96,9 +96,9 @@ class eleRECOIDSF(Module):
  
         for ele in electrons:
             # print("pt ", ele.pt, " eta ", ele.eta)
-            Electron_energy_scaleunc.append(self.evaluator["UL-EGM_ScaleUnc"].evaluate(self.era,"scaleunc", ele.eta, ele.seedGain))
-            Electron_energy_scaleup.append(self.evaluator["UL-EGM_ScaleUnc"].evaluate(self.era,"scaleup", ele.eta, ele.seedGain))
-            Electron_energy_scaledown.append(self.evaluator["UL-EGM_ScaleUnc"].evaluate(self.era,"scaledown", ele.eta, ele.seedGain))
+            Electron_energy_scaleunc.append(self.evaluator_EGM_Scale["UL-EGM_ScaleUnc"].evaluate(self.era,"scaleunc", ele.eta, ele.seedGain))
+            Electron_energy_scaleup.append(self.evaluator_EGM_Scale["UL-EGM_ScaleUnc"].evaluate(self.era,"scaleup", ele.eta, ele.seedGain))
+            Electron_energy_scaledown.append(self.evaluator_EGM_Scale["UL-EGM_ScaleUnc"].evaluate(self.era,"scaledown", ele.eta, ele.seedGain))
             if ele.pt <= 10:
                 Electron_RECO_SF.append(1.0) #self.evaluator["UL-Electron-ID-SF"].evaluate(self.era,"sf","RecoBelow20", ele.eta, 10.1))
                 Electron_RECO_SFerr.append(0.0) #(self.evaluator["UL-Electron-ID-SF"].evaluate(self.era,"sfup","RecoBelow20", ele.eta, 10.1) - self.evaluator["UL-Electron-ID-SF"].evaluate(self.era,"sfdown","RecoBelow20", ele.eta, 10.1))/2)
