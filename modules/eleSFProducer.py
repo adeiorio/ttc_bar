@@ -13,7 +13,8 @@ class eleRECOIDSF(Module):
         if not os.path.exists(sfdir):
             sfdir = 'data/leptonmva/scale_factor/egm_v1/'
         self.evaluator_topMVA = _core.CorrectionSet.from_file(sfdir + repo + '/egm_sf_schemaV2.json.gz')
-
+        # https://twiki.cern.ch/twiki/bin/view/CMS/EgammaSFJSON
+        self.evaluator_EGM_Scale = _core.CorrectionSet.from_file(os.path.join(os.path.dirname(__file__), '../data/EGM_scale/' + repo + '/EGM_ScaleUnc.json.gz'))
     def beginJob(self):
         pass
 
@@ -49,6 +50,9 @@ class eleRECOIDSF(Module):
         self.out.branch('Electron_topMVA_Loose_SF', 'F', lenVar='nElectron')
         self.out.branch('Electron_topMVA_Loose_SFerr_syst', 'F', lenVar='nElectron')
         self.out.branch('Electron_topMVA_Loose_SFerr_stat', 'F', lenVar='nElectron')
+        self.out.branch('Electron_energy_scaledown', 'F', lenVar='nElectron')
+        self.out.branch('Electron_energy_scaleup',   'F', lenVar='nElectron')
+        self.out.branch('Electron_energy_scaleunc',  'F', lenVar='nElectron')
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -86,9 +90,15 @@ class eleRECOIDSF(Module):
         Electron_topMVA_Loose_SFerr_syst = []
         Electron_topMVA_Loose_SFerr_stat = []
 
+        Electron_energy_scaleunc = []
+        Electron_energy_scaleup  = []
+        Electron_energy_scaledown= []
  
         for ele in electrons:
             # print("pt ", ele.pt, " eta ", ele.eta)
+            Electron_energy_scaleunc.append(self.evaluator_EGM_Scale["UL-EGM_ScaleUnc"].evaluate(self.era,"scaleunc", ele.eta, ele.seedGain))
+            Electron_energy_scaleup.append(self.evaluator_EGM_Scale["UL-EGM_ScaleUnc"].evaluate(self.era,"scaleup", ele.eta, ele.seedGain))
+            Electron_energy_scaledown.append(self.evaluator_EGM_Scale["UL-EGM_ScaleUnc"].evaluate(self.era,"scaledown", ele.eta, ele.seedGain))
             if ele.pt <= 10:
                 Electron_RECO_SF.append(1.0) #self.evaluator["UL-Electron-ID-SF"].evaluate(self.era,"sf","RecoBelow20", ele.eta, 10.1))
                 Electron_RECO_SFerr.append(0.0) #(self.evaluator["UL-Electron-ID-SF"].evaluate(self.era,"sfup","RecoBelow20", ele.eta, 10.1) - self.evaluator["UL-Electron-ID-SF"].evaluate(self.era,"sfdown","RecoBelow20", ele.eta, 10.1))/2)
@@ -108,6 +118,16 @@ class eleRECOIDSF(Module):
                 Electron_MVAFall17V2noIso_WP80_SFerr.append(0.0)
                 Electron_MVAFall17V2noIso_WP90_SF.append(1.0)
                 Electron_MVAFall17V2noIso_WP90_SFerr.append(0.0)
+                Electron_topMVA_Tight_SF.append(1.0)
+                Electron_topMVA_Tight_SFerr_syst.append(0.0)
+                Electron_topMVA_Tight_SFerr_stat.append(0.0)
+                Electron_topMVA_Medium_SF.append(1.0)
+                Electron_topMVA_Medium_SFerr_syst.append(0.0)
+                Electron_topMVA_Medium_SFerr_stat.append(0.0)
+                Electron_topMVA_Loose_SF.append(1.0)
+                Electron_topMVA_Loose_SFerr_syst.append(0.0)
+                Electron_topMVA_Loose_SFerr_stat.append(0.0)
+
             elif ele.pt > 10 and ele.pt < 20: 
                 Electron_RECO_SF.append(self.evaluator["UL-Electron-ID-SF"].evaluate(self.era,"sf","RecoBelow20", ele.eta, ele.pt))
                 Electron_RECO_SFerr.append((self.evaluator["UL-Electron-ID-SF"].evaluate(self.era,"sfup","RecoBelow20", ele.eta, ele.pt) - self.evaluator["UL-Electron-ID-SF"].evaluate(self.era,"sfdown","RecoBelow20", ele.eta, ele.pt)) / 2)
@@ -127,6 +147,16 @@ class eleRECOIDSF(Module):
                 Electron_MVAFall17V2noIso_WP80_SFerr.append((self.evaluator["UL-Electron-ID-SF"].evaluate(self.era, "sfup", "wp80noiso", ele.eta, ele.pt) - self.evaluator["UL-Electron-ID-SF"].evaluate(self.era, "sfdown", "wp80noiso", ele.eta, ele.pt)) / 2)
                 Electron_MVAFall17V2noIso_WP90_SF.append(self.evaluator["UL-Electron-ID-SF"].evaluate(self.era, "sf", "wp90noiso", ele.eta, ele.pt))
                 Electron_MVAFall17V2noIso_WP90_SFerr.append((self.evaluator["UL-Electron-ID-SF"].evaluate(self.era, "sfup", "wp90noiso", ele.eta, ele.pt) - self.evaluator["UL-Electron-ID-SF"].evaluate(self.era, "sfdown", "wp90noiso", ele.eta, ele.pt)) / 2)
+
+                Electron_topMVA_Tight_SF.append(self.evaluator_topMVA["LeptonMvaTight"].evaluate(ele.eta, ele.pt, "sf"))
+                Electron_topMVA_Tight_SFerr_syst.append(self.evaluator_topMVA["LeptonMvaTight"].evaluate(ele.eta, ele.pt, "sys"))
+                Electron_topMVA_Tight_SFerr_stat.append(self.evaluator_topMVA["LeptonMvaTight"].evaluate(ele.eta, ele.pt, "stat"))
+                Electron_topMVA_Medium_SF.append(self.evaluator_topMVA["LeptonMvaMedium"].evaluate(ele.eta, ele.pt, "sf"))
+                Electron_topMVA_Medium_SFerr_syst.append(self.evaluator_topMVA["LeptonMvaMedium"].evaluate(ele.eta, ele.pt, "sys"))
+                Electron_topMVA_Medium_SFerr_stat.append(self.evaluator_topMVA["LeptonMvaMedium"].evaluate(ele.eta, ele.pt, "stat"))
+                Electron_topMVA_Loose_SF.append(self.evaluator_topMVA["LeptonMvaLoose"].evaluate(ele.eta, ele.pt, "sf"))
+                Electron_topMVA_Loose_SFerr_syst.append(self.evaluator_topMVA["LeptonMvaLoose"].evaluate(ele.eta, ele.pt, "sys"))
+                Electron_topMVA_Loose_SFerr_stat.append(self.evaluator_topMVA["LeptonMvaLoose"].evaluate(ele.eta, ele.pt, "stat"))
             else:
                 Electron_RECO_SF.append(self.evaluator["UL-Electron-ID-SF"].evaluate(self.era,"sf","RecoAbove20", ele.eta, ele.pt))
                 Electron_RECO_SFerr.append((self.evaluator["UL-Electron-ID-SF"].evaluate(self.era,"sfup","RecoAbove20", ele.eta, ele.pt) - self.evaluator["UL-Electron-ID-SF"].evaluate(self.era,"sfdown","RecoAbove20", ele.eta, ele.pt)) / 2)
@@ -150,10 +180,10 @@ class eleRECOIDSF(Module):
                 Electron_topMVA_Tight_SF.append(self.evaluator_topMVA["LeptonMvaTight"].evaluate(ele.eta, ele.pt, "sf"))
                 Electron_topMVA_Tight_SFerr_syst.append(self.evaluator_topMVA["LeptonMvaTight"].evaluate(ele.eta, ele.pt, "sys"))
                 Electron_topMVA_Tight_SFerr_stat.append(self.evaluator_topMVA["LeptonMvaTight"].evaluate(ele.eta, ele.pt, "stat"))
-                Electron_topMVA_Medium_SF.append(self.evaluator_topMVA["LeptonMvaTight"].evaluate(ele.eta, ele.pt, "sf"))
+                Electron_topMVA_Medium_SF.append(self.evaluator_topMVA["LeptonMvaMedium"].evaluate(ele.eta, ele.pt, "sf"))
                 Electron_topMVA_Medium_SFerr_syst.append(self.evaluator_topMVA["LeptonMvaMedium"].evaluate(ele.eta, ele.pt, "sys"))
                 Electron_topMVA_Medium_SFerr_stat.append(self.evaluator_topMVA["LeptonMvaMedium"].evaluate(ele.eta, ele.pt, "stat"))
-                Electron_topMVA_Loose_SF.append(self.evaluator_topMVA["LeptonMvaMedium"].evaluate(ele.eta, ele.pt, "sf"))
+                Electron_topMVA_Loose_SF.append(self.evaluator_topMVA["LeptonMvaLoose"].evaluate(ele.eta, ele.pt, "sf"))
                 Electron_topMVA_Loose_SFerr_syst.append(self.evaluator_topMVA["LeptonMvaLoose"].evaluate(ele.eta, ele.pt, "sys"))
                 Electron_topMVA_Loose_SFerr_stat.append(self.evaluator_topMVA["LeptonMvaLoose"].evaluate(ele.eta, ele.pt, "stat"))
 
@@ -187,6 +217,10 @@ class eleRECOIDSF(Module):
         self.out.fillBranch('Electron_topMVA_Loose_SF', Electron_topMVA_Loose_SF)
         self.out.fillBranch('Electron_topMVA_Loose_SFerr_syst', Electron_topMVA_Loose_SFerr_syst)
         self.out.fillBranch('Electron_topMVA_Loose_SFerr_stat', Electron_topMVA_Loose_SFerr_stat)
+
+        self.out.fillBranch('Electron_energy_scaleunc', Electron_energy_scaleunc)
+        self.out.fillBranch('Electron_energy_scaleup', Electron_energy_scaleup)
+        self.out.fillBranch('Electron_energy_scaledown', Electron_energy_scaledown)
 
         return True
 
