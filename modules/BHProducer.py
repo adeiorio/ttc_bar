@@ -470,8 +470,8 @@ class BHProducer(Module):
         Had_tau_id = []
         for tau in taus:
             pass_tau_lep_Dr = 1
-            #if tau.pt > 20 and abs(tau.eta) < 2.3 and tau.idDecayModeOldDMs and tau.idDeepTau2017v2p1VSe >= 4 and tau.idDeepTau2017v2p1VSjet >= 4 and tau.idDeepTau2017v2p1VSmu >= 1:
-            if tau.pt>20 and abs(tau.eta)<2.3 and abs(tau.dz)<0.2 and tau.idDecayModeNewDMs and tau.idDeepTau2017v2p1VSe>=4 and tau.idDeepTau2017v2p1VSjet>=4 and tau.idDeepTau2017v2p1VSmu>=1 and tau.decayMode!=5 and tau.decayMode!=6: # use this for non-nanoaodv9
+            if tau.pt > 20 and abs(tau.eta) < 2.3 and tau.idDecayModeOldDMs and tau.idDeepTau2017v2p1VSe >= 4 and tau.idDeepTau2017v2p1VSjet >= 4 and tau.idDeepTau2017v2p1VSmu >= 1:
+                #if tau.pt>20 and abs(tau.eta)<2.3 and abs(tau.dz)<0.2 and tau.idDecayModeNewDMs and tau.idDeepTau2017v2p1VSe>=4 and tau.idDeepTau2017v2p1VSjet>=4 and tau.idDeepTau2017v2p1VSmu>=1 and tau.decayMode!=5 and tau.decayMode!=6: # use this for non-nanoaodv9
                 for tightlep in tightLeptons:
                     if tau.DeltaR(tightlep) < 0.4:
                         pass_tau_lep_Dr = 0
@@ -612,9 +612,16 @@ class BHProducer(Module):
             if (jet.pt < 50 and not (jet.puId == 7)):
                 continue
 
-            if abs(jet.eta) < 4.7 and abs(jet.eta) >= 2.4:
+            etacentraljet = {
+            '2016preVFP':2.4,
+            '2016postVFP':2.4,
+            '2017':2.5,
+            '2018':2.5,
+            }
+
+            if abs(jet.eta) < 4.7 and abs(jet.eta) >= etacentraljet[self.year]:
                 tightJets_id_in47.append(jet._index)
-            if abs(jet.eta) < 2.4:
+            if abs(jet.eta) < etacentraljet[self.year]:
                 tightJets_in24.append(jet)
                 tightJets_id_in24.append(jet._index)
                 HT += jet.pt
