@@ -15,6 +15,7 @@ class BHProducer(Module):
         self.mucheck_has_run = False
         self.echeck_has_run = False
         self.jetcheck_has_run = False
+        print(year)
 
     def beginJob(self):
         pass
@@ -470,7 +471,7 @@ class BHProducer(Module):
         Had_tau_id = []
         for tau in taus:
             pass_tau_lep_Dr = 1
-            if tau.pt > 20 and abs(tau.eta) < 2.3 and tau.idDecayModeOldDMs and tau.idDeepTau2017v2p1VSe >= 4 and tau.idDeepTau2017v2p1VSjet >= 4 and tau.idDeepTau2017v2p1VSmu >= 1:
+            if tau.pt > 20 and abs(tau.eta) < 2.3 and abs(tau.dz)<0.2 and tau.idDecayModeOldDMs and tau.idDeepTau2017v2p1VSe >= 4 and tau.idDeepTau2017v2p1VSjet >= 4 and tau.idDeepTau2017v2p1VSmu >= 1:
                 #if tau.pt>20 and abs(tau.eta)<2.3 and abs(tau.dz)<0.2 and tau.idDecayModeNewDMs and tau.idDeepTau2017v2p1VSe>=4 and tau.idDeepTau2017v2p1VSjet>=4 and tau.idDeepTau2017v2p1VSmu>=1 and tau.decayMode!=5 and tau.decayMode!=6: # use this for non-nanoaodv9
                 for tightlep in tightLeptons:
                     if tau.DeltaR(tightlep) < 0.4:
@@ -582,8 +583,8 @@ class BHProducer(Module):
         # https://btv-wiki.docs.cern.ch/ScaleFactors/UL2017/
         # https://btv-wiki.docs.cern.ch/ScaleFactors/UL2018/
         WPbtagger = {
-            '2016preVFP':{'L': 0.0508, 'M': 0.2598, 'T': 0.6502},
-            '2016postVFP':{'L': 0.0480, 'M': 0.2489, 'T': 0.6377},
+            '2016apv':{'L': 0.0508, 'M': 0.2598, 'T': 0.6502},
+            '2016':{'L': 0.0480, 'M': 0.2489, 'T': 0.6377},
             '2017':{'L': 0.0532, 'M': 0.3040, 'T': 0.7476},
             '2018':{'L': 0.0490, 'M': 0.2783, 'T': 0.7100}
         }
@@ -613,10 +614,10 @@ class BHProducer(Module):
                 continue
 
             etacentraljet = {
-            '2016preVFP':2.4,
-            '2016postVFP':2.4,
-            '2017':2.5,
-            '2018':2.5,
+                '2016apv':2.4,
+                '2016':2.4,
+                '2017':2.5,
+                '2018':2.5,
             }
 
             if abs(jet.eta) < 4.7 and abs(jet.eta) >= etacentraljet[self.year]:
