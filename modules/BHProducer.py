@@ -1406,7 +1406,7 @@ class BHProducer(Module):
                         WZ_l3_phi = tightElectrons[2].phi
                         WZ_l3_mass = tightElectrons[2].mass
                         WZ_Z_mass = (tightElectrons[0].p4()+tightElectrons[1].p4()).M()
-                        WZ_Z_pt = (tightElectrons[0].p4()+tightElectrons[1].p4()).pt
+                        WZ_Z_pt = (tightElectrons[0].p4()+tightElectrons[1].p4()).Pt()
                         WZ_Z_eta = (tightElectrons[0].p4()+tightElectrons[1].p4()).Eta()
                         WZ_Z_phi = (tightElectrons[0].p4()+tightElectrons[1].p4()).Phi()
                     if abs((tightElectrons[0].p4()+tightElectrons[1].p4()).M()-91.1876) > abs((tightElectrons[0].p4()+tightElectrons[2].p4()).M()-91.1876) and abs((tightElectrons[0].p4()+tightElectrons[2].p4()).M()-91.1876) < 15:
