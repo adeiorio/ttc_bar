@@ -471,8 +471,8 @@ class BHProducer(Module):
         Had_tau_id = []
         for tau in taus:
             pass_tau_lep_Dr = 1
-            if tau.pt > 20 and abs(tau.eta) < 2.3 and abs(tau.dz)<0.2 and tau.idDecayModeOldDMs and tau.idDeepTau2017v2p1VSe >= 4 and tau.idDeepTau2017v2p1VSjet >= 4 and tau.idDeepTau2017v2p1VSmu >= 1:
-                #if tau.pt>20 and abs(tau.eta)<2.3 and abs(tau.dz)<0.2 and tau.idDecayModeNewDMs and tau.idDeepTau2017v2p1VSe>=4 and tau.idDeepTau2017v2p1VSjet>=4 and tau.idDeepTau2017v2p1VSmu>=1 and tau.decayMode!=5 and tau.decayMode!=6: # use this for non-nanoaodv9
+            #if tau.pt > 20 and abs(tau.eta) < 2.3 and abs(tau.dz)<0.2 and tau.idDecayModeOldDMs and tau.idDeepTau2017v2p1VSe >= 4 and tau.idDeepTau2017v2p1VSjet >= 4 and tau.idDeepTau2017v2p1VSmu >= 1:
+            if tau.pt>20 and abs(tau.eta)<2.3 and abs(tau.dz)<0.2 and tau.idDeepTau2017v2p1VSe>=4 and tau.idDeepTau2017v2p1VSjet>=4 and tau.idDeepTau2017v2p1VSmu>=1 and tau.decayMode!=5 and tau.decayMode!=6: # use this for non-nanoaodv9
                 for tightlep in tightLeptons:
                     if tau.DeltaR(tightlep) < 0.4:
                         pass_tau_lep_Dr = 0
