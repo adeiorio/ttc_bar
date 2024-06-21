@@ -17,6 +17,17 @@ python3 create_crab_bhplus.py <2016apv/2016/2017/2018>
 ### Do crab submissions etc and then once all jobs are submitted
 ``python3 crab_submission_preparation.py off``
 
+### Write crab output files
+In case you need to have a txt file with the list of root files produced by crab, you can use the `check_crab_status.py` macro, by doing:
+```
+python3 check_crab_status.py --getout
+```
+
+### Merging root file on condor
+Once txt files are produced, root files can be merged, by doing:
+```
+python3 condor_merging.py -e ERA -f FOLDER_VERSION
+```
 
 
 ## TTC instructions (Have NOT tested yet in python3)
