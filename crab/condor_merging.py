@@ -77,9 +77,11 @@ with open(samplesjson[era], 'r') as fin:
         i = 0
         runner_writer(value[0], i, " ".join(f for f in files_list if f.startswith("root:")), folder, era)
         sub_writer(value[0], i, folder)
-        os.system('condor_submit condor.sub')
+        #os.system('condor_submit condor.sub')
     else:
         for i in range(int(len(files_list)/split)+1):
-            runner_writer(value[0], i+1, " ".join( e for e in files_list[split*i:split*(i+1)]), folder, era)
+            print(i)
+            runner_writer(value[0], i+1, " ".join( e for e in files_list[split*i:split*(i+1)] if e.startswith("root:")), folder, era)
             sub_writer(value[0], i+1, folder)
-            os.system('condor_submit condor.sub')
+            if "TTTo2L" in value[0]:
+                os.system('condor_submit condor.sub')
