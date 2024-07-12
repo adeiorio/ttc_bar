@@ -26,7 +26,7 @@ def getfile(sample):
     s2=s1[1].split('0000')
     print(s2)
     path_xrd = 'root://cms-xrd-global.cern.ch//store/user/' + str(os.environ.get('USER')) + s2[0]
-    newurl = 'srm://stormfe1.pi.infn.it:8444/cms/store/user/' + str(os.environ.get('USER')) + s2[0] #:8444/srm/managerv2?SFN=
+    newurl = 'davs://stwebdav.pi.infn.it:8443/cms/store/user/' + str(os.environ.get('USER')) + s2[0] #:8444/srm/managerv2?SFN=
 
     print(newurl)
     
@@ -34,7 +34,7 @@ def getfile(sample):
     print('\nChecking files in the folder '+newurl.strip('\n')+'\n')
     while True:
         print('gfal-ls '+ newurl.strip('\n')+'000'+str(i))
-        folder = os.popen('eval `scram unsetenv -sh`; gfal-ls '+ newurl.strip('\n')+'000'+str(i)).readlines()
+        folder = os.popen('davix-ls  -E ~adeiorio/x509up_u103214 --capath /cvmfs/cms.cern.ch/grid/etc/grid-security/certificates/ '+ newurl.strip('\n')+'000'+str(i)).readlines()
         newpath_xrd = path_xrd.strip('\n')+'000'+str(i)
         if(len(folder)==0):
             print("The folder does not exist: "+ str(folder))
