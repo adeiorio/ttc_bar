@@ -610,6 +610,8 @@ class BHProducer(Module):
                 continue
             if not (jet.jetId == 6 and jet.pt > 30):
                 continue  # tight jets with pT > 30 GeV
+            # https://twiki.cern.ch/twiki/bin/view/CMS/JetID#nanoAOD_Flags
+            # https://twiki.cern.ch/twiki/bin/view/CMS/PileupJetIDUL#Trainings
             if (jet.pt < 50 and not (jet.puId == 7)):
                 continue
 
