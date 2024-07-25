@@ -335,7 +335,9 @@ class BHProducer(Module):
             else:
                 muon_jet_Ptratio.append(1. / (1 + mu.miniPFRelIso_all))
 
-            # topMVA ID: 1:VLoose 2: Loose 3: Medium 4: Tight
+            if not mu.isPFCand == 1 and not (mu.isGlobal == 1 or mu.isTracker == 1):
+                continue
+             # topMVA ID: 1:VLoose 2: Loose 3: Medium 4: Tight
             if (mu.topMVA_ID > 3):
                 if (abs(mu.eta) < 2.4 and mu.pt > muon_pt and (abs(mu.dxy) < 0.05) and (abs(mu.dz) < 0.1) and mu.miniPFRelIso_all < 0.4 and mu.sip3d < 8.):
                     tightMuons.append(mu)
