@@ -324,6 +324,8 @@ class BHProducer(Module):
         muon_closest_jetid = []
 
         for mu in muons:
+            if not mu.isPFcand and not (mu.isGlobal or mu.isTracker):
+                continue
             mu.pt_raw = mu.pt
             if self.is_mu_corr:
                 mu.pt = mu.corrected_pt
@@ -335,8 +337,6 @@ class BHProducer(Module):
             else:
                 muon_jet_Ptratio.append(1. / (1 + mu.miniPFRelIso_all))
 
-            if not mu.isPFCand == 1 and not (mu.isGlobal == 1 or mu.isTracker == 1):
-                continue
              # topMVA ID: 1:VLoose 2: Loose 3: Medium 4: Tight
             if (mu.topMVA_ID > 3):
                 if (abs(mu.eta) < 2.4 and mu.pt > muon_pt and (abs(mu.dxy) < 0.05) and (abs(mu.dz) < 0.1) and mu.miniPFRelIso_all < 0.4 and mu.sip3d < 8.):
